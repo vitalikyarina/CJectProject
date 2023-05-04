@@ -1,0 +1,88 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["prettier"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.js"],
+      "extends": ["prettier"],
+      "rules": {
+        "prettier/prettier": ["error"]
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "no-console": "warn",
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowTypedFunctionExpressions": true,
+            "allowExpressions": true
+          }
+        ],
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": [
+          "error",
+          {
+            "allow": ["constructors"]
+          }
+        ],
+        "no-multiple-empty-lines": [
+          "error",
+          {
+            "max": 1,
+            "maxEOF": 1
+          }
+        ],
+        "no-else-return": ["error"],
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "overrides": {
+              "constructors": "no-public"
+            }
+          }
+        ],
+        "lines-between-class-members": [
+          "error",
+          "always",
+          { "exceptAfterSingleLine": true }
+        ],
+        "eslint-disable-next-line": "off",
+        "@typescript-eslint/member-ordering": [
+          "error",
+          {
+            "default": [
+              "signature",
+              "public-static-field",
+              "protected-static-field",
+              "private-static-field",
+              "public-instance-field",
+              "protected-instance-field",
+              "private-instance-field",
+              "public-abstract-field",
+              "protected-abstract-field",
+              "public-constructor",
+              "protected-constructor",
+              "public-static-method",
+              "protected-static-method",
+              "private-static-method",
+              "public-instance-method",
+              "protected-instance-method",
+              "private-instance-method",
+              "public-abstract-method",
+              "protected-abstract-method"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
