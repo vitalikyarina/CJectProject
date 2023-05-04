@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "projects/frontend",
   "projects": {
     "comic": {
       "projectType": "application",
@@ -35,26 +35,26 @@
           "skipTests": true
         }
       },
-      "root": "projects/comic",
-      "sourceRoot": "projects/comic/src",
+      "root": "projects/frontend/comic",
+      "sourceRoot": "projects/frontend/comic/src",
       "prefix": "cjp",
       "architect": {
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "dist/comic",
-            "index": "projects/comic/src/index.html",
-            "main": "projects/comic/src/main.ts",
+            "outputPath": "dist/frontend/comic",
+            "index": "projects/frontend/comic/src/index.html",
+            "main": "projects/frontend/comic/src/main.ts",
             "polyfills": ["zone.js"],
-            "tsConfig": "projects/comic/tsconfig.app.json",
+            "tsConfig": "projects/frontend/comic/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/comic/src/favicon.ico",
-              "projects/comic/src/assets"
+              "projects/frontend/comic/src/favicon.ico",
+              "projects/frontend/comic/src/assets"
             ],
-            "styles": ["projects/comic/src/styles.scss"],
+            "styles": ["projects/frontend/comic/src/styles.scss"],
             "scripts": [],
-            "extraWebpackConfig": "projects/comic/webpack.config.js",
+            "extraWebpackConfig": "projects/frontend/comic/webpack.config.js",
             "commonChunk": false
           },
           "configurations": {
@@ -72,7 +72,7 @@
                 }
               ],
               "outputHashing": "all",
-              "extraWebpackConfig": "projects/comic/webpack.prod.config.js"
+              "extraWebpackConfig": "projects/frontend/comic/webpack.prod.config.js"
             },
             "development": {
               "buildOptimizer": false,
@@ -90,7 +90,7 @@
           "configurations": {
             "production": {
               "browserTarget": "comic:build:production",
-              "extraWebpackConfig": "projects/comic/webpack.prod.config.js"
+              "extraWebpackConfig": "projects/frontend/comic/webpack.prod.config.js"
             },
             "development": {
               "browserTarget": "comic:build:development"
@@ -100,28 +100,20 @@
           "options": {
             "port": 4201,
             "publicHost": "http://localhost:4201",
-            "extraWebpackConfig": "projects/comic/webpack.config.js"
+            "extraWebpackConfig": "projects/frontend/comic/webpack.config.js"
           }
         },
         "extract-i18n": {
           "builder": "ngx-build-plus:extract-i18n",
           "options": {
             "browserTarget": "comic:build",
-            "extraWebpackConfig": "projects/comic/webpack.config.js"
+            "extraWebpackConfig": "projects/frontend/comic/webpack.config.js"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/comic/tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/comic/src/favicon.ico",
-              "projects/comic/src/assets"
-            ],
-            "styles": ["projects/comic/src/styles.scss"],
-            "scripts": []
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.component.html"]
           }
         }
       }
@@ -158,26 +150,26 @@
           "skipTests": true
         }
       },
-      "root": "projects/host",
-      "sourceRoot": "projects/host/src",
+      "root": "projects/frontend/host",
+      "sourceRoot": "projects/frontend/host/src",
       "prefix": "cjp",
       "architect": {
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "dist/host",
-            "index": "projects/host/src/index.html",
-            "main": "projects/host/src/main.ts",
+            "outputPath": "dist/frontend/host",
+            "index": "projects/frontend/host/src/index.html",
+            "main": "projects/frontend/host/src/main.ts",
             "polyfills": ["zone.js"],
-            "tsConfig": "projects/host/tsconfig.app.json",
+            "tsConfig": "projects/frontend/host/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/host/src/favicon.ico",
-              "projects/host/src/assets"
+              "projects/frontend/host/src/favicon.ico",
+              "projects/frontend/host/src/assets"
             ],
-            "styles": ["projects/host/src/styles.scss"],
+            "styles": ["projects/frontend/host/src/styles.scss"],
             "scripts": [],
-            "extraWebpackConfig": "projects/host/webpack.config.js",
+            "extraWebpackConfig": "projects/frontend/host/webpack.config.js",
             "commonChunk": false
           },
           "configurations": {
@@ -195,7 +187,7 @@
                 }
               ],
               "outputHashing": "all",
-              "extraWebpackConfig": "projects/host/webpack.prod.config.js"
+              "extraWebpackConfig": "projects/frontend/host/webpack.prod.config.js"
             },
             "development": {
               "buildOptimizer": false,
@@ -213,7 +205,7 @@
           "configurations": {
             "production": {
               "browserTarget": "host:build:production",
-              "extraWebpackConfig": "projects/host/webpack.prod.config.js"
+              "extraWebpackConfig": "projects/frontend/host/webpack.prod.config.js"
             },
             "development": {
               "browserTarget": "host:build:development"
@@ -223,28 +215,20 @@
           "options": {
             "port": 4200,
             "publicHost": "http://localhost:4200",
-            "extraWebpackConfig": "projects/host/webpack.config.js"
+            "extraWebpackConfig": "projects/frontend/host/webpack.config.js"
           }
         },
         "extract-i18n": {
           "builder": "ngx-build-plus:extract-i18n",
           "options": {
             "browserTarget": "host:build",
-            "extraWebpackConfig": "projects/host/webpack.config.js"
+            "extraWebpackConfig": "projects/frontend/host/webpack.config.js"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/host/tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/host/src/favicon.ico",
-              "projects/host/src/assets"
-            ],
-            "styles": ["projects/host/src/styles.scss"],
-            "scripts": []
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.component.html"]
           }
         }
       }

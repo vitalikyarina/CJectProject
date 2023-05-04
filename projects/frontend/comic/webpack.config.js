@@ -4,7 +4,7 @@ const path = require("path");
 const share = mf.share;
 
 const sharedMappings = new mf.SharedMappings();
-sharedMappings.register(path.join(__dirname, "../../tsconfig.json"), [
+sharedMappings.register(path.join(__dirname, "../../../tsconfig.json"), [
   /* mapped paths to share */
 ]);
 
@@ -30,7 +30,7 @@ module.exports = {
       name: "comic",
       filename: "remoteEntry.js",
       exposes: {
-        "./Routes": "./projects/comic/src/app/comic/routes.ts",
+        "./Routes": "./projects/frontend/comic/src/app/comic/routes.ts",
       },
 
       shared: share({
