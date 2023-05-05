@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "importHelpers": true,
+    "baseUrl": "./",
+    "paths": {
+      "@cjp/configuration": ["libs/configuration/src"]
+    }
+  }
+}
