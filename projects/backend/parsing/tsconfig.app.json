@@ -2,7 +2,7 @@
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "declaration": false,
-    "outDir": "../../../dist/projects/backend/parsing"
+    "outDir": "../../../dist/backend/parsing"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
