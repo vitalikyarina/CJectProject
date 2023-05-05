@@ -6,6 +6,7 @@
     "paths": {
       "@cjp/configuration": ["libs/configuration/src"],
       "@cjp/shared": ["libs/shared/src"],
+      "@cjp/static-files": ["libs/static-files/src"],
       "@cjp/mongo": ["libs/mongo/src"]
     }
   }
