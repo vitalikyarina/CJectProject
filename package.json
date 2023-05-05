@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-nest": "nest start",
     "build": "ng build",
     "build-all": "ng build comic & ng build host",
     "watch": "ng build --watch --configuration development",
@@ -25,6 +26,7 @@
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
     "@nestjs/common": "^9.4.0",
+    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.4.0",
     "@nestjs/platform-fastify": "^9.4.0",
     "@ngxs/store": "^3.8.0",
