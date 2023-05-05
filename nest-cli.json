@@ -11,11 +11,11 @@
     "spec": false
   },
   "monorepo": true,
-  "root": "projects/backend/host",
+  "root": "backend/host",
   "projects": {
     "host": {
       "type": "application",
-      "root": "projects/backend/host",
+      "root": "backend/host",
       "entryFile": "main",
       "sourceRoot": "projects/backend/host/src",
       "compilerOptions": {
@@ -24,7 +24,7 @@
     },
     "parsing": {
       "type": "application",
-      "root": "projects/backend/parsing",
+      "root": "backend/parsing",
       "entryFile": "main",
       "sourceRoot": "projects/backend/parsing/src",
       "compilerOptions": {
