@@ -4,7 +4,9 @@
     "importHelpers": true,
     "baseUrl": "./",
     "paths": {
-      "@cjp/configuration": ["libs/configuration/src"]
+      "@cjp/configuration": ["libs/configuration/src"],
+      "@cjp/shared": ["libs/shared/src"],
+      "@cjp/mongo": ["libs/mongo/src"]
     }
   }
 }
