@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<div class="wrapper" fxLayout="column" fxLayoutAlign="straight">
+  <header class="header">
+    <cjp-header />
+  </header>
+  <cjp-sidenav class="wrapper__sidenav">
+    <main class="wrapper__content">
+      <div class="wrapper__page">
+        <router-outlet />
+      </div>
+    </main>
+  </cjp-sidenav>
+</div>
