@@ -30,6 +30,15 @@
       "compilerOptions": {
         "tsConfigPath": "projects/backend/parsing/tsconfig.app.json"
       }
+    },
+    "libs/configuration": {
+      "type": "library",
+      "root": "projects/backend/libs/configuration",
+      "entryFile": "index",
+      "sourceRoot": "projects/backend/libs/configuration/src",
+      "compilerOptions": {
+        "tsConfigPath": "projects/backend/libs/configuration/tsconfig.lib.json"
+      }
     }
   }
 }
