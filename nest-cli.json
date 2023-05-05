@@ -57,6 +57,15 @@
       "compilerOptions": {
         "tsConfigPath": "projects/backend/libs/shared/tsconfig.lib.json"
       }
+    },
+    "libs/static-files": {
+      "type": "library",
+      "root": "backend/libs/static-files",
+      "entryFile": "index",
+      "sourceRoot": "projects/backend/libs/static-files/src",
+      "compilerOptions": {
+        "tsConfigPath": "projects/backend/libs/static-files/tsconfig.lib.json"
+      }
     }
   }
 }
