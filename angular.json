@@ -157,7 +157,7 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "dist/frontend/host",
+            "outputPath": "dist/host/browser",
             "index": "projects/frontend/host/src/index.html",
             "main": "projects/frontend/host/src/main.ts",
             "polyfills": ["zone.js"],
