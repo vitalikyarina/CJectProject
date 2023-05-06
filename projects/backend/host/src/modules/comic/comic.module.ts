@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
-import { ComicSiteController } from "./controllers";
+import { ComicController, ComicSiteController } from "./controllers";
 import { SchemasComicModule } from "@cjp-back/mongo/comic";
 
 @Module({
   imports: [SchemasComicModule],
-  controllers: [ComicSiteController],
+  controllers: [ComicSiteController, ComicController],
   providers: [],
 })
 export class ComicModule {}
