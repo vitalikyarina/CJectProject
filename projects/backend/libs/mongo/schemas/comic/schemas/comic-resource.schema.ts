@@ -12,7 +12,7 @@ export class Resource implements IResource {
   public link: string;
 
   @Prop({
-    type: String,
+    type: Number,
   })
   public type: ResourceType;
 
@@ -31,7 +31,7 @@ export class Resource implements IResource {
 
   @Prop({
     default: null,
-    type: String,
+    type: Number,
   })
   public errorType: ResourceError;
 }

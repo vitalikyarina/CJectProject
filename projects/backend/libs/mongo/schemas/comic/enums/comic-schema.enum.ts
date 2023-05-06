@@ -1,8 +1,8 @@
 export const ComicSchema = {
   COMIC: "comic",
-  COMICS_SITE: "comic_sites",
-  COMICS_CHAPTER: "comic_chapters",
-  COMICS_RESOURCE: "comic_resources",
+  COMICS_SITE: "comic_site",
+  COMICS_CHAPTER: "comic_chapter",
+  COMICS_RESOURCE: "comic_resource",
 } as const;
 
 export type ComicSchema = (typeof ComicSchema)[keyof typeof ComicSchema];
