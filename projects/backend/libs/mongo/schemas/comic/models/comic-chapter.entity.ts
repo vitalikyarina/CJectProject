@@ -1,4 +1,4 @@
-import { ComicError, IChapter } from "@cjp/shared/comic";
+import { ChapterError, IChapter } from "@cjp/shared/comic";
 import { ApiProperty, PartialType, PickType } from "@nestjs/swagger";
 import { Expose } from "class-transformer";
 import { ResourceEntity } from "./comic-resource.entity";
@@ -47,7 +47,7 @@ export class ChapterEntity implements IChapter {
 
   @ApiProperty({ nullable: true })
   @IsNotEmpty()
-  public errorType: ComicError;
+  public errorType: ChapterError;
 
   @ApiProperty({ nullable: false })
   public images: string[];
