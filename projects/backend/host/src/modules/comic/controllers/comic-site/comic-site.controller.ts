@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Observable, toArray } from "rxjs";
-import { ComicController } from "../../enums";
+import { ComicControllerName } from "../../enums";
 import {
   SiteCreateDTO,
   SiteEntity,
@@ -10,7 +10,7 @@ import {
 } from "@cjp-back/mongo/comic";
 
 @ApiTags("Comic Sites")
-@Controller(ComicController.COMIC_SITES)
+@Controller(ComicControllerName.COMIC_SITES)
 export class ComicSiteController {
   constructor(private readonly comicSiteService: SiteService) {}
 

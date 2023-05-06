@@ -1,7 +1,7 @@
-export const ComicController = {
+export const ComicControllerName = {
   COMIC: "comics",
   COMIC_SITES: "comic-sites",
 } as const;
 
-export type ComicController =
-  (typeof ComicController)[keyof typeof ComicController];
+export type ComicControllerName =
+  (typeof ComicControllerName)[keyof typeof ComicControllerName];
