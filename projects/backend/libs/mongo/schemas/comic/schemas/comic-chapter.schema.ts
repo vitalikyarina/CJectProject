@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory, raw } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { ResourceEntity } from "../models";
-import { ComicError, IChapter } from "@cjp/shared/comic";
+import { ChapterError, IChapter } from "@cjp/shared/comic";
 import { ComicSchema } from "../enums";
 export type ChapterDocument = HydratedDocument<Chapter>;
 
@@ -34,7 +34,7 @@ export class Chapter implements IChapter {
     default: null,
     type: String,
   })
-  public errorType: ComicError;
+  public errorType: ChapterError;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,

@@ -1,4 +1,4 @@
-import { ComicError } from "./enums";
+import { ChapterError } from "./enums";
 
 export interface IChapter {
   number: number;
@@ -8,5 +8,5 @@ export interface IChapter {
   countPage: number;
   isLoaded: boolean;
   errorPages: Record<number, boolean>;
-  errorType: ComicError;
+  errorType: ChapterError;
 }
