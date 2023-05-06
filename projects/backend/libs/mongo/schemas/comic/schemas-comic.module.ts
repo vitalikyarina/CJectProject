@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ComicSchema } from "./enums";
-import { ComicSiteSchema } from "./schemas";
-import { ComicSiteAPIService } from "./api";
-import { ComicSiteService } from "./services";
+import { ComicResourceSchema, ComicSiteSchema } from "./schemas";
+import { ComicResourceAPIService, ComicSiteAPIService } from "./api";
+import { ComicResourceService, ComicSiteService } from "./services";
 
 @Module({
   imports: [
@@ -12,9 +12,18 @@ import { ComicSiteService } from "./services";
         name: ComicSchema.COMICS_SITE,
         schema: ComicSiteSchema,
       },
+      {
+        name: ComicSchema.COMICS_RESOURCE,
+        schema: ComicResourceSchema,
+      },
     ]),
   ],
-  providers: [ComicSiteAPIService, ComicSiteService],
-  exports: [ComicSiteService],
+  providers: [
+    ComicSiteAPIService,
+    ComicSiteService,
+    ComicResourceAPIService,
+    ComicResourceService,
+  ],
+  exports: [ComicSiteService, ComicResourceService],
 })
 export class SchemasComicModule {}
