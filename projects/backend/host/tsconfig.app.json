@@ -1,8 +1,6 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "declaration": false,
-    "module": "CommonJS",
     "outDir": "../../../dist/backend/host"
   },
   "include": ["src/**/*"],
