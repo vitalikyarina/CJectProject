@@ -1,1 +1,1 @@
-export * from "./comic-schema.enum";
+export * from "./comic-schema-name.enum";

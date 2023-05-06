@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory, raw } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { ResourceEntity } from "../models";
 import { ChapterError, IChapter } from "@cjp/shared/comic";
-import { ComicSchema } from "../enums";
+import { ComicSchemaName } from "../enums";
 export type ChapterDocument = HydratedDocument<Chapter>;
 
 @Schema()
@@ -38,7 +38,7 @@ export class Chapter implements IChapter {
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: ComicSchema.COMICS_RESOURCE,
+    ref: ComicSchemaName.COMICS_RESOURCE,
     required: true,
     autopopulate: { select: "-__v" },
   })
