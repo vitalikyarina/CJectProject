@@ -1,19 +1,19 @@
 import { Injectable } from "@nestjs/common";
-import { ComicResourceAPIService } from "../api";
+import { ResourceAPIService } from "../api";
 import {
-  ComicResourceCreateDTO,
-  ComicResourceEntity,
-  ComicResourceUpdateDTO,
+  ResourceCreateDTO,
+  ResourceEntity,
+  ResourceUpdateDTO,
 } from "../models";
 import { BaseMongoService } from "@cjp-back/mongo";
 
 @Injectable()
-export class ComicResourceService extends BaseMongoService<
-  ComicResourceEntity,
-  ComicResourceCreateDTO,
-  ComicResourceUpdateDTO
+export class ResourceService extends BaseMongoService<
+  ResourceEntity,
+  ResourceCreateDTO,
+  ResourceUpdateDTO
 > {
-  constructor(private readonly api: ComicResourceAPIService) {
+  constructor(private readonly api: ResourceAPIService) {
     super(api);
   }
 }

@@ -1,9 +1,9 @@
-import { IComicResource, ResourceError, ResourceType } from "@cjp/shared/comic";
+import { IResource, ResourceError, ResourceType } from "@cjp/shared/comic";
 import { ApiProperty, OmitType, PartialType } from "@nestjs/swagger";
-import { ComicSiteEntity } from "./comic-site.entity";
+import { SiteEntity } from "./comic-site.entity";
 import { IsNotEmpty } from "class-validator";
 
-export class ComicResourceEntity implements IComicResource {
+export class ResourceEntity implements IResource {
   @ApiProperty({ nullable: false })
   public _id: string;
 
@@ -20,13 +20,13 @@ export class ComicResourceEntity implements IComicResource {
   public priority: number;
 
   @ApiProperty({ nullable: false })
-  public siteData: ComicSiteEntity;
+  public siteData: SiteEntity;
 
   @ApiProperty({ nullable: true })
   public errorType: ResourceError | undefined | null;
 }
 
-export class ComicResourceCreateDTO extends OmitType(ComicResourceEntity, [
+export class ResourceCreateDTO extends OmitType(ResourceEntity, [
   "_id",
   "siteData",
 ]) {
@@ -35,6 +35,4 @@ export class ComicResourceCreateDTO extends OmitType(ComicResourceEntity, [
   public siteData: string;
 }
 
-export class ComicResourceUpdateDTO extends PartialType(
-  ComicResourceCreateDTO,
-) {}
+export class ResourceUpdateDTO extends PartialType(ResourceCreateDTO) {}

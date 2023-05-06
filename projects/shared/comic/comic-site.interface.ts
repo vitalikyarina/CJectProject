@@ -1,4 +1,4 @@
-export interface IComicSite {
+export interface ISite {
   mainImagePath: string;
   chaptersPath: string;
   chapterNamePath: string;
