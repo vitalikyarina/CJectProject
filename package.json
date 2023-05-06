@@ -30,6 +30,7 @@
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.4.0",
     "@nestjs/mongoose": "^9.2.2",
+    "@nestjs/ng-universal": "7.0.0",
     "@nestjs/platform-express": "^9.4.0",
     "@nestjs/serve-static": "^3.0.1",
     "@nestjs/swagger": "^6.3.0",

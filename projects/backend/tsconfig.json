@@ -12,7 +12,8 @@
       "@cjp-back/mongo": ["projects/backend/libs/mongo/src"],
       "@cjp-back/mongo/comic": ["projects/backend/libs/mongo/schemas/comic"],
       "@cjp/shared": ["projects/shared"],
-      "@cjp/shared/comic": ["projects/shared/comic"]
+      "@cjp/shared/comic": ["projects/shared/comic"],
+      "@cjp-front/app": ["projects/frontend/host/src/main-server.ts"]
     }
   }
 }
