@@ -1,16 +1,9 @@
 import { NestFactory } from "@nestjs/core";
 import { HostModule } from "./host.module";
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from "@nestjs/platform-fastify";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    HostModule,
-    new FastifyAdapter(),
-  );
+  const app = await NestFactory.create(HostModule);
   const globalPrefix = "api";
   app.setGlobalPrefix(globalPrefix);
 
