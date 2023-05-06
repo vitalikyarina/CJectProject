@@ -3,22 +3,22 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { ComicSchema } from "../enums";
 import {
-  ComicResourceCreateDTO,
-  ComicResourceEntity,
-  ComicResourceUpdateDTO,
+  ResourceCreateDTO,
+  ResourceEntity,
+  ResourceUpdateDTO,
 } from "../models";
-import { ComicResourceDocument } from "../schemas";
+import { ResourceDocument } from "../schemas";
 import { BaseMongoAPIService } from "@cjp-back/mongo";
 
 @Injectable()
-export class ComicResourceAPIService extends BaseMongoAPIService<
-  ComicResourceEntity,
-  ComicResourceCreateDTO,
-  ComicResourceUpdateDTO
+export class ResourceAPIService extends BaseMongoAPIService<
+  ResourceEntity,
+  ResourceCreateDTO,
+  ResourceUpdateDTO
 > {
   constructor(
     @InjectModel(ComicSchema.COMICS_RESOURCE)
-    protected readonly model: Model<ComicResourceDocument>,
+    protected readonly model: Model<ResourceDocument>,
   ) {
     super(model);
   }

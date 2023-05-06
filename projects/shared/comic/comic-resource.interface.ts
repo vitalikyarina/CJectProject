@@ -1,6 +1,6 @@
 import { ResourceError, ResourceType } from "./enums";
 
-export interface IComicResource {
+export interface IResource {
   link: string;
   type: ResourceType;
   siteData: unknown;

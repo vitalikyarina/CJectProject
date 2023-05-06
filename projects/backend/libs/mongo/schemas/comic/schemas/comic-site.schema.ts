@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
-import { IComicSite } from "@cjp/shared/comic";
+import { ISite } from "@cjp/shared/comic";
 
-export type ComicSiteDocument = HydratedDocument<ComicSite>;
+export type SiteDocument = HydratedDocument<Site>;
 @Schema()
-export class ComicSite implements IComicSite {
+export class Site implements ISite {
   @Prop({ required: true })
   public mainImagePath: string;
 
@@ -38,4 +38,4 @@ export class ComicSite implements IComicSite {
   constructor() {}
 }
 
-export const ComicSiteSchema = SchemaFactory.createForClass(ComicSite);
+export const SiteSchema = SchemaFactory.createForClass(Site);

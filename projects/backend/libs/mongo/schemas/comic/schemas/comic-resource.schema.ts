@@ -1,13 +1,13 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
-import { IComicResource, ResourceError, ResourceType } from "@cjp/shared/comic";
-import { ComicSiteEntity } from "../models";
+import { IResource, ResourceError, ResourceType } from "@cjp/shared/comic";
+import { SiteEntity } from "../models";
 import { ComicSchema } from "../enums";
 
-export type ComicResourceDocument = HydratedDocument<ComicResource>;
+export type ResourceDocument = HydratedDocument<Resource>;
 
 @Schema()
-export class ComicResource implements IComicResource {
+export class Resource implements IResource {
   @Prop({ required: true })
   public link: string;
 
@@ -27,7 +27,7 @@ export class ComicResource implements IComicResource {
     required: true,
     autopopulate: { select: "-__v" },
   })
-  public siteData: ComicSiteEntity;
+  public siteData: SiteEntity;
 
   @Prop({
     default: null,
@@ -36,4 +36,4 @@ export class ComicResource implements IComicResource {
   public errorType: ResourceError;
 }
 
-export const ComicResourceSchema = SchemaFactory.createForClass(ComicResource);
+export const ResourceSchema = SchemaFactory.createForClass(Resource);
