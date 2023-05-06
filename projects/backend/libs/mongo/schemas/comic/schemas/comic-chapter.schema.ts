@@ -32,7 +32,7 @@ export class Chapter implements IChapter {
 
   @Prop({
     default: null,
-    type: String,
+    type: Number,
   })
   public errorType: ChapterError;
 
