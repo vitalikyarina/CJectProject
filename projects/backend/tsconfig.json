@@ -1,13 +1,14 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "importHelpers": true,
-    "baseUrl": "./",
+    "strict": false,
     "paths": {
-      "@cjp/configuration": ["libs/configuration/src"],
-      "@cjp/shared": ["libs/shared/src"],
-      "@cjp/static-files": ["libs/static-files/src"],
-      "@cjp/mongo": ["libs/mongo/src"]
+      "@cjp-back/configuration": ["projects/backend/libs/configuration/src"],
+      "@cjp-back/shared": ["projects/backend/libs/shared/src"],
+      "@cjp-back/static-files": ["projects/backend/libs/static-files/src"],
+      "@cjp-back/mongo": ["projects/backend/libs/mongo/src"],
+      "@cjp/shared": ["projects/shared"],
+      "@cjp/shared/*": ["projects/shared/*"]
     }
   }
 }
