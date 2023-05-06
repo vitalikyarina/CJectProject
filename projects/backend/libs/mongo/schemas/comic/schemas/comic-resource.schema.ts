@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { IResource, ResourceError, ResourceType } from "@cjp/shared/comic";
 import { SiteEntity } from "../models";
-import { ComicSchema } from "../enums";
+import { ComicSchemaName } from "../enums";
 
 export type ResourceDocument = HydratedDocument<Resource>;
 
@@ -23,7 +23,7 @@ export class Resource implements IResource {
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: ComicSchema.COMICS_SITE,
+    ref: ComicSchemaName.COMICS_SITE,
     required: true,
     autopopulate: { select: "-__v" },
   })

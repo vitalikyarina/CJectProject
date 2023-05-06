@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { ComicSchema } from "../enums";
+import { ComicSchemaName } from "../enums";
 import {
   ResourceCreateDTO,
   ResourceEntity,
@@ -17,7 +17,7 @@ export class ResourceAPIService extends BaseMongoAPIService<
   ResourceUpdateDTO
 > {
   constructor(
-    @InjectModel(ComicSchema.COMICS_RESOURCE)
+    @InjectModel(ComicSchemaName.COMICS_RESOURCE)
     protected readonly model: Model<ResourceDocument>,
   ) {
     super(model);
