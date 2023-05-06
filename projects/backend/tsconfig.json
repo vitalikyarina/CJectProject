@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "strict": false,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "types": ["node"],
+    "paths": {
+      "@cjp-back/configuration": ["projects/backend/libs/configuration/src"],
+      "@cjp-back/shared": ["projects/backend/libs/shared/src"],
+      "@cjp-back/static-files": ["projects/backend/libs/static-files/src"],
+      "@cjp-back/mongo": ["projects/backend/libs/mongo/src"],
+      "@cjp-back/mongo/comic": ["projects/backend/libs/mongo/schemas/comic"],
+      "@cjp/shared": ["projects/shared"],
+      "@cjp/shared/comic": ["projects/shared/comic"]
+    }
+  }
+}

@@ -30,6 +30,42 @@
       "compilerOptions": {
         "tsConfigPath": "projects/backend/parsing/tsconfig.app.json"
       }
+    },
+    "libs/configuration": {
+      "type": "library",
+      "root": "backend/libs/configuration",
+      "entryFile": "index",
+      "sourceRoot": "projects/backend/libs/configuration/src",
+      "compilerOptions": {
+        "tsConfigPath": "projects/backend/libs/configuration/tsconfig.lib.json"
+      }
+    },
+    "libs/mongo": {
+      "type": "library",
+      "root": "backend/libs/mongo",
+      "entryFile": "index",
+      "sourceRoot": "projects/backend/libs/mongo/src",
+      "compilerOptions": {
+        "tsConfigPath": "projects/backend/libs/mongo/tsconfig.lib.json"
+      }
+    },
+    "libs/shared": {
+      "type": "library",
+      "root": "backend/libs/shared",
+      "entryFile": "index",
+      "sourceRoot": "projects/backend/libs/shared/src",
+      "compilerOptions": {
+        "tsConfigPath": "projects/backend/libs/shared/tsconfig.lib.json"
+      }
+    },
+    "libs/static-files": {
+      "type": "library",
+      "root": "backend/libs/static-files",
+      "entryFile": "index",
+      "sourceRoot": "projects/backend/libs/static-files/src",
+      "compilerOptions": {
+        "tsConfigPath": "projects/backend/libs/static-files/tsconfig.lib.json"
+      }
     }
   }
 }
