@@ -1,4 +1,4 @@
-import { IBaseDatabaseDAO, IFindOptions } from "@cjp/shared";
+import { IBaseDatabaseDAO, IFindOptions } from "@cjp-back/shared";
 import { FilterQuery, Model } from "mongoose";
 import {
   defer,
