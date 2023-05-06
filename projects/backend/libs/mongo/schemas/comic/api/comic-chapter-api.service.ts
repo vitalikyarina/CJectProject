@@ -4,7 +4,7 @@ import { Model } from "mongoose";
 import { ChapterDocument } from "../schemas";
 import { BaseMongoAPIService } from "@cjp-back/mongo";
 import { ChapterCreateDTO, ChapterEntity, ChapterUpdateDTO } from "../models";
-import { ComicSchema } from "../enums";
+import { ComicSchemaName } from "../enums";
 
 @Injectable()
 export class ChapterAPIService extends BaseMongoAPIService<
@@ -13,7 +13,7 @@ export class ChapterAPIService extends BaseMongoAPIService<
   ChapterUpdateDTO
 > {
   constructor(
-    @InjectModel(ComicSchema.COMICS_CHAPTER)
+    @InjectModel(ComicSchemaName.COMICS_CHAPTER)
     protected readonly model: Model<ChapterDocument>,
   ) {
     super(model);

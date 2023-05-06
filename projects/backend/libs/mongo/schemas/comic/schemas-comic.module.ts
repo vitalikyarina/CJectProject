@@ -1,24 +1,47 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { ComicSchema } from "./enums";
-import { ChapterSchema, ResourceSchema, SiteSchema } from "./schemas";
-import { ChapterAPIService, ResourceAPIService, SiteAPIService } from "./api";
-import { ChapterService, ResourceService, SiteService } from "./services";
+import { ComicSchemaName } from "./enums";
+import {
+  ChapterSchema,
+  ComicSchema,
+  ResourceSchema,
+  SiteSchema,
+} from "./schemas";
+import {
+  ChapterAPIService,
+  ComicAPIService,
+  ResourceAPIService,
+  SiteAPIService,
+} from "./api";
+import {
+  ChapterService,
+  ComicService,
+  ResourceService,
+  SiteService,
+} from "./services";
+import { SharedModule } from "@cjp-back/shared";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
+    ConfigModule,
+    SharedModule,
     MongooseModule.forFeature([
       {
-        name: ComicSchema.COMICS_SITE,
+        name: ComicSchemaName.COMICS_SITE,
         schema: SiteSchema,
       },
       {
-        name: ComicSchema.COMICS_RESOURCE,
+        name: ComicSchemaName.COMICS_RESOURCE,
         schema: ResourceSchema,
       },
       {
-        name: ComicSchema.COMICS_CHAPTER,
+        name: ComicSchemaName.COMICS_CHAPTER,
         schema: ChapterSchema,
+      },
+      {
+        name: ComicSchemaName.COMIC,
+        schema: ComicSchema,
       },
     ]),
   ],
@@ -29,7 +52,9 @@ import { ChapterService, ResourceService, SiteService } from "./services";
     ResourceService,
     ChapterAPIService,
     ChapterService,
+    ComicAPIService,
+    ComicService,
   ],
-  exports: [SiteService, ResourceService, ChapterService],
+  exports: [SiteService, ResourceService, ChapterService, ComicService],
 })
 export class SchemasComicModule {}
