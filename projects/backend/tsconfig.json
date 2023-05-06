@@ -12,7 +12,7 @@
       "@cjp-back/mongo": ["projects/backend/libs/mongo/src"],
       "@cjp-back/mongo/comic": ["projects/backend/libs/mongo/schemas/comic"],
       "@cjp/shared": ["projects/shared"],
-      "@cjp/shared/*": ["projects/shared/*"]
+      "@cjp/shared/comic": ["projects/shared/comic"]
     }
   }
 }
