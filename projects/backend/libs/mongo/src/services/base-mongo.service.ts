@@ -1,7 +1,7 @@
 import { FilterQuery } from "mongoose";
 import { Observable } from "rxjs";
 import { BaseMongoAPIService } from "../api";
-import { IBaseDatabaseDAO, IFindOptions } from "@cjp/shared";
+import { IBaseDatabaseDAO, IFindOptions } from "@cjp-back/shared";
 
 export class BaseMongoService<TDocument, TCreate, TUpdate>
   implements IBaseDatabaseDAO<TDocument, TCreate, TUpdate>
