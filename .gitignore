@@ -45,3 +45,5 @@ Thumbs.db
 .env.dev
 .env.prod
 .env.local
+
+yarn.lock
