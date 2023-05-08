@@ -10,19 +10,19 @@
     "@jridgewell/gen-mapping" "^0.3.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@angular-architects/module-federation-runtime@16.0.1":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@angular-architects/module-federation-runtime/-/module-federation-runtime-16.0.1.tgz#a11f8e4ded849aeb3abd5d9ea762906add16f414"
-  integrity sha512-fW5YebKbGN+lcNwGxhnfu6Glnj7JsEC9CoHyFNdwr0VJV/yoobdbVDBKBR5evVvmsVI6BskgEDh2K40jgNO5sQ==
+"@angular-architects/module-federation-runtime@16.0.3":
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/@angular-architects/module-federation-runtime/-/module-federation-runtime-16.0.3.tgz#d69b762f038e265fe1081d979a3e3376e9876ce0"
+  integrity sha512-XfW96mzwaA9uBctfov/IKuVBiLyRlVkzLSk54OoyCOj0uXJ5ZNdd/gmFBaXYrsnGocRh0+lmDy0rDBZt/FZUfg==
   dependencies:
     tslib "^2.0.0"
 
-"@angular-architects/module-federation@^16.0.1":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@angular-architects/module-federation/-/module-federation-16.0.1.tgz#bd471904cbf481775df5250da7d9bb563250ab90"
-  integrity sha512-v2tLzT/eoDZWMRt35AOLQHR4BszjQ+KqwSjRSGBgqcWlRk9O6NoyMJRRSjtQwQrXiiEp9kP+o6KgiHXNZhFSPA==
+"@angular-architects/module-federation@^16.0.3":
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/@angular-architects/module-federation/-/module-federation-16.0.3.tgz#2469032e2e67ce8ac4492be413c2fa7e7bdcdaa0"
+  integrity sha512-zP4E0VebkQ0Bg6eWpoa7iPC/4DVCBM3Zalj8/9DaOFl+nwjWPeFO2vBo2SMRZkhDXi/0uJOwDo183Eaj7Aeu6A==
   dependencies:
-    "@angular-architects/module-federation-runtime" "16.0.1"
+    "@angular-architects/module-federation-runtime" "16.0.3"
     callsite "^1.0.0"
     node-fetch "^2.6.7"
     semver "^7.3.5"
@@ -1708,6 +1708,30 @@
   version "8.40.0"
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.40.0.tgz#3ba73359e11f5a7bd3e407f70b3528abfae69cec"
   integrity sha512-ElyB54bJIhXQYVKjDSvCkPO1iU1tSAeVQJbllWJq1XQSmmA4dgFk8CbiBGpiOPxleE48vDogxCtmMYku4HSVLA==
+
+"@fastify/send@^2.0.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@fastify/send/-/send-2.1.0.tgz#1aa269ccb4b0940a2dadd1f844443b15d8224ea0"
+  integrity sha512-yNYiY6sDkexoJR0D8IDy3aRP3+L4wdqCpvx5WP+VtEU58sn7USmKynBzDQex5X42Zzvw2gNzzYgP90UfWShLFA==
+  dependencies:
+    "@lukeed/ms" "^2.0.1"
+    escape-html "~1.0.3"
+    fast-decode-uri-component "^1.0.1"
+    http-errors "2.0.0"
+    mime "^3.0.0"
+
+"@fastify/static@^6.10.1":
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/@fastify/static/-/static-6.10.1.tgz#605e6758b7536089581bb59dbb096d80997327b6"
+  integrity sha512-DNnG+5QenQcTQw37qk0/191STThnN6SbU+2XMpWtpYR3gQUfUvMax14jTT/jqNINNbCkQJaKMnPtpFPKo4/68g==
+  dependencies:
+    "@fastify/accept-negotiator" "^1.0.0"
+    "@fastify/send" "^2.0.0"
+    content-disposition "^0.5.3"
+    fastify-plugin "^4.0.0"
+    glob "^8.0.1"
+    p-limit "^3.1.0"
+    readable-stream "^4.0.0"
 
 "@gar/promisify@^1.1.3":
   version "1.1.3"
@@ -6746,6 +6770,55 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
+
+mongodb-connection-string-url@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/mongodb-connection-string-url/-/mongodb-connection-string-url-2.6.0.tgz#57901bf352372abdde812c81be47b75c6b2ec5cf"
+  integrity sha512-WvTZlI9ab0QYtTYnuMLgobULWhokRjtC7db9LtcVfJ+Hsnyr5eo6ZtNAt3Ly24XZScGMelOcGtm7lSn0332tPQ==
+  dependencies:
+    "@types/whatwg-url" "^8.2.1"
+    whatwg-url "^11.0.0"
+
+mongodb@5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-5.3.0.tgz#9bef3ff35511a66fb7d9aafb7b06112787138db1"
+  integrity sha512-Wy/sbahguL8c3TXQWXmuBabiLD+iVmz+tOgQf+FwkCjhUIorqbAxRbbz00g4ZoN4sXIPwpAlTANMaGRjGGTikQ==
+  dependencies:
+    bson "^5.2.0"
+    mongodb-connection-string-url "^2.6.0"
+    socks "^2.7.1"
+  optionalDependencies:
+    saslprep "^1.0.3"
+
+mongoose-autopopulate@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/mongoose-autopopulate/-/mongoose-autopopulate-1.0.1.tgz#05092e05d61c08ee868bcd0b8b05334ea36a046b"
+  integrity sha512-39rN0QQinA1iz/8JNVKM3MNq/zZrjStiWi8jA15diUC2nnJsvEgRXEir4L4D1azYxY+gBTuqEzLqd7Y+MC6pHQ==
+
+mongoose@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-7.1.0.tgz#ad7f23184a0c19eb8efbbad4f1ff2113ede1515d"
+  integrity sha512-shoo9z/7o96Ojx69wpJn65+EC+Mt3q1SWTducW+F2Y4ieCXo0lZwpCZedgC841MIvJ7V8o6gmzoN1NfcnOTOuw==
+  dependencies:
+    bson "^5.2.0"
+    kareem "2.5.1"
+    mongodb "5.3.0"
+    mpath "0.9.0"
+    mquery "5.0.0"
+    ms "2.1.3"
+    sift "16.0.1"
+
+mpath@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.9.0.tgz#0c122fe107846e31fc58c75b09c35514b3871904"
+  integrity sha512-ikJRQTk8hw5DEoFVxHG1Gn9T/xcjtdnOKIU1JTmGjZZlg9LST2mBLmcX3/ICIbgJydT2GOc15RnNy5mHmzfSew==
+
+mquery@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/mquery/-/mquery-5.0.0.tgz#a95be5dfc610b23862df34a47d3e5d60e110695d"
+  integrity sha512-iQMncpmEK8R8ncT8HJGsGc9Dsp8xcgYMVSbs5jgnm1lFHTZqMJTUWTDx1LBO8+mK3tPNZWFLBghQEIOULSTHZg==
+  dependencies:
+    debug "4.x"
 
 mongodb-connection-string-url@^2.6.0:
   version "2.6.0"
