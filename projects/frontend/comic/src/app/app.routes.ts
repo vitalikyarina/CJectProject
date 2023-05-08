@@ -1,8 +1,16 @@
-import { Routes } from "@angular/router";
+import { Route } from "@angular/router";
+import { RemoteEntryComponent } from "./entry.component";
 
-export const routes: Routes = [
+export const appRoutes: Route[] = [
   {
     path: "",
-    loadChildren: () => import("./comic/routes").then((m) => m.ROUTES),
+    component: RemoteEntryComponent,
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./remote-entry/entry.routes").then((m) => m.remoteRoutes),
+      },
+    ],
   },
 ];

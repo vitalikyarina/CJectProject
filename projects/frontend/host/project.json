@@ -1,0 +1,87 @@
+{
+  "name": "host",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "cjp",
+  "sourceRoot": "projects/frontend/host/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/projects/frontend/host",
+        "index": "projects/frontend/host/src/index.html",
+        "main": "projects/frontend/host/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "projects/frontend/host/tsconfig.app.json",
+        "assets": [
+          "projects/frontend/host/src/favicon.ico",
+          "projects/frontend/host/src/assets"
+        ],
+        "styles": [
+          "@angular/material/prebuilt-themes/indigo-pink.css",
+          "projects/frontend/host/src/styles.scss",
+          "projects/frontend/assets/styles/reset.scss",
+          "projects/frontend/assets/styles/elements.scss"
+        ],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "projects/frontend/host/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "projects/frontend/host/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nx/angular:module-federation-dev-server",
+      "options": {
+        "port": 4200,
+        "publicHost": "http://localhost:4200"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "host:build:production"
+        },
+        "development": {
+          "browserTarget": "host:build:development",
+          "devRemotes": ["comic"]
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "host:build"
+      }
+    }
+  }
+}
