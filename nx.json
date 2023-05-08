@@ -1,0 +1,93 @@
+{
+  "npmScope": "cjp",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx-cloud",
+      "options": {
+        "cacheableOperations": ["build", "lint"],
+        "accessToken": "ODVhNDZkYWItNjFmYy00ZDZhLWFiYmYtMDBjMDJiMDEyMzdjfHJlYWQtd3JpdGU="
+      }
+    }
+  },
+  "defaultBase": "dev",
+  "namedInputs": {
+    "sharedGlobals": [],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": ["default"]
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    }
+  },
+  "generators": {
+    "@nx/angular:host": {
+      "style": "scss",
+      "linter": "none",
+      "unitTestRunner": "none",
+      "e2eTestRunner": "none",
+      "skipTests": true,
+      "standalone": true
+    },
+    "@nx/angular:remote": {
+      "style": "scss",
+      "linter": "none",
+      "unitTestRunner": "none",
+      "e2eTestRunner": "none",
+      "skipTests": true,
+      "standalone": true
+    },
+    "@nx/angular:library": {
+      "linter": "none",
+      "unitTestRunner": "none",
+      "style": "scss",
+      "skipTests": true,
+      "standalone": true
+    },
+    "@schematics/angular:service": {
+      "skipTests": true
+    },
+    "@nx/angular:application": {
+      "style": "scss",
+      "linter": "none",
+      "unitTestRunner": "none",
+      "e2eTestRunner": "none",
+      "skipTests": true,
+      "standalone": true
+    },
+    "@nx/angular:component": {
+      "style": "scss",
+      "skipTests": true,
+      "standalone": true
+    },
+    "@schematics/angular:component": {
+      "style": "scss",
+      "skipTests": true,
+      "standalone": true
+    },
+    "@schematics/angular:class": {
+      "skipTests": true
+    },
+    "@schematics/angular:directive": {
+      "skipTests": true,
+      "standalone": true
+    },
+    "@schematics/angular:guard": {
+      "skipTests": true
+    },
+    "@schematics/angular:interceptor": {
+      "skipTests": true
+    },
+    "@schematics/angular:pipe": {
+      "skipTests": true,
+      "standalone": true
+    },
+    "@schematics/angular:resolver": {
+      "skipTests": true
+    }
+  }
+}
