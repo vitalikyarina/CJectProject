@@ -1,5 +1,5 @@
 {
-  "name": "host",
+  "name": "frontend-host",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "cjp",
@@ -64,15 +64,16 @@
       "executor": "@nx/angular:module-federation-dev-server",
       "options": {
         "port": 4200,
-        "publicHost": "http://localhost:4200"
+        "publicHost": "http://localhost:4200",
+        "proxyConfig": "projects/frontend/host/proxy.conf.json"
       },
       "configurations": {
         "production": {
-          "browserTarget": "host:build:production"
+          "browserTarget": "frontend-host:build:production"
         },
         "development": {
-          "browserTarget": "host:build:development",
-          "devRemotes": ["comic"]
+          "browserTarget": "frontend-host:build:development",
+          "devRemotes": ["frontend-comic"]
         }
       },
       "defaultConfiguration": "development"
@@ -80,7 +81,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "host:build"
+        "browserTarget": "frontend-host:build"
       }
     }
   }

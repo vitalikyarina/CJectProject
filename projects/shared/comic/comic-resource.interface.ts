@@ -5,5 +5,5 @@ export interface IResource {
   type: ResourceType;
   siteData: unknown;
   priority: number;
-  errorType: ResourceError;
+  errorType: ResourceError | undefined | null;
 }

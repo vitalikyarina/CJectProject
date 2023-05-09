@@ -1,1 +1,1 @@
-declare module "comic/Routes";
+declare module "frontend-comic/Routes";

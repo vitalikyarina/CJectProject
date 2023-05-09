@@ -88,6 +88,17 @@
     },
     "@schematics/angular:resolver": {
       "skipTests": true
+    },
+    "@nx/nest:application": {
+      "e2eTestRunner": "none",
+      "linter": "none",
+      "unitTestRunner": "none"
+    },
+    "@nx/nest:library": {
+      "linter": "none",
+      "unitTestRunner": "none",
+      "simpleName": true,
+      "strict": false
     }
   }
 }
