@@ -4,27 +4,27 @@ import { IsNotEmpty } from "class-validator";
 
 export class SiteEntity implements ISite {
   @ApiProperty({ nullable: false })
-  public _id: string;
+  public _id!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public mainImagePath: string;
+  public mainImagePath!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public chaptersPath: string;
+  public chaptersPath!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public chapterNamePath: string;
+  public chapterNamePath!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public chapterDatePath: string;
+  public chapterDatePath!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public chapterImagesPath: string;
+  public chapterImagesPath!: string;
 
   @ApiProperty({ required: false })
   public chapterLazyLoadPath: string | undefined | null;
@@ -34,15 +34,15 @@ export class SiteEntity implements ISite {
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public name: string;
+  public name!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public baseLink: string;
+  public baseLink!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public dateFormat: string;
+  public dateFormat!: string;
 
   constructor(partial: Partial<SiteEntity>) {
     Object.assign(this, partial);

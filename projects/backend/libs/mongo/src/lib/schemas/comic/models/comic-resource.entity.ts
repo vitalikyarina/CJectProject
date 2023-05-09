@@ -5,22 +5,22 @@ import { IsNotEmpty } from "class-validator";
 
 export class ResourceEntity implements IResource {
   @ApiProperty({ nullable: false })
-  public _id: string;
+  public _id!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public link: string;
+  public link!: string;
 
   @ApiProperty({ nullable: false, type: String })
   @IsNotEmpty()
-  public type: ResourceType;
+  public type!: ResourceType;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public priority: number;
+  public priority!: number;
 
   @ApiProperty({ nullable: false })
-  public siteData: SiteEntity;
+  public siteData!: SiteEntity;
 
   @ApiProperty({ nullable: true })
   public errorType: ResourceError | undefined | null;
@@ -32,7 +32,7 @@ export class ResourceCreateDTO extends OmitType(ResourceEntity, [
 ]) {
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public siteData: string;
+  public siteData!: string;
 }
 
 export class ResourceUpdateDTO extends PartialType(ResourceCreateDTO) {}

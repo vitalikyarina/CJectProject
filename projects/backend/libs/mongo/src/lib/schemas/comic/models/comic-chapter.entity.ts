@@ -6,23 +6,23 @@ import { IsNotEmpty } from "class-validator";
 
 export class ChapterEntity implements IChapter {
   @ApiProperty({ nullable: false })
-  public _id: string;
+  public _id!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public number: number;
+  public number!: number;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public link: string;
+  public link!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public countPage: number;
+  public countPage!: number;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public isLoaded: boolean;
+  public isLoaded!: boolean;
 
   @ApiProperty({ nullable: false })
   @Expose()
@@ -35,22 +35,22 @@ export class ChapterEntity implements IChapter {
 
   @ApiProperty({ nullable: true })
   @IsNotEmpty()
-  public errorPages: Record<number, boolean>;
+  public errorPages!: Record<number, boolean>;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public date: number;
+  public date!: number;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public resource: ResourceEntity;
+  public resource!: ResourceEntity;
 
   @ApiProperty({ nullable: true })
   @IsNotEmpty()
-  public errorType: ChapterError;
+  public errorType!: ChapterError;
 
   @ApiProperty({ nullable: false })
-  public images: string[];
+  public images!: string[];
 }
 
 export class ChapterCreateDTO extends PickType(ChapterEntity, [
@@ -60,7 +60,7 @@ export class ChapterCreateDTO extends PickType(ChapterEntity, [
 ]) {
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public resource: string;
+  public resource!: string;
 }
 export class ChapterWithResourceCreateDTO extends PickType(ChapterEntity, [
   "number",
@@ -79,7 +79,7 @@ class ChapterUpdate extends PickType(ChapterEntity, [
 ]) {
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public resource: string;
+  public resource!: string;
 }
 
 export class ChapterUpdateDTO extends PartialType(ChapterUpdate) {}
