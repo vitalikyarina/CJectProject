@@ -9,4 +9,4 @@ import { StaticFilesModule } from "@cjp-back/static-files";
   controllers: [],
   providers: [],
 })
-export class HostModule {}
+export class AppModule {}

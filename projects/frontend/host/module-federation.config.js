@@ -1,4 +1,4 @@
 module.exports = {
-  name: "host",
-  remotes: ["comic"],
+  name: "frontend-host",
+  remotes: ["frontend-comic"],
 };

@@ -6,36 +6,36 @@ import { IsNotEmpty } from "class-validator";
 
 export class ComicEntity implements IComic {
   @ApiProperty({ nullable: false })
-  public _id: string;
+  public _id!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public name: string;
+  public name!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public altNames: string[];
+  public altNames!: string[];
 
   @ApiProperty({ nullable: false })
-  public resources: ResourceEntity[];
+  public resources!: ResourceEntity[];
 
   @ApiProperty({ nullable: false })
-  public chapters: ChapterEntity[];
-
-  @ApiProperty({ nullable: false })
-  @IsNotEmpty()
-  public latestUpdate: number;
+  public chapters!: ChapterEntity[];
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public tags: ComicTag[];
+  public latestUpdate!: number;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public status: ComicStatus;
+  public tags!: ComicTag[];
 
   @ApiProperty({ nullable: false })
-  public mainImages: string[];
+  @IsNotEmpty()
+  public status!: ComicStatus;
+
+  @ApiProperty({ nullable: false })
+  public mainImages!: string[];
 }
 
 export class ComicCreateDTO extends PickType(ComicEntity, [
@@ -79,11 +79,11 @@ class ComicUpdate extends PickType(ComicEntity, [
 ]) {
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public resources: string[];
+  public resources!: string[];
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public chapters: string[];
+  public chapters!: string[];
 }
 
 export class ComicUpdateDTO extends PartialType(ComicUpdate) {}
