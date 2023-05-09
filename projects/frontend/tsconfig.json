@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@cjp/shared": ["projects/shared"],
+      "@cjp/shared/comic": ["projects/shared/comic"]
+    }
+  }
+}

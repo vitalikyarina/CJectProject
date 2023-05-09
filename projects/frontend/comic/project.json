@@ -1,0 +1,98 @@
+{
+  "name": "frontend-comic",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "cjp",
+  "sourceRoot": "projects/frontend/comic/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/projects/frontend/comic",
+        "index": "projects/frontend/comic/src/index.html",
+        "main": "projects/frontend/comic/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "projects/frontend/comic/tsconfig.app.json",
+        "assets": [
+          "projects/frontend/comic/src/favicon.ico",
+          "projects/frontend/comic/src/assets"
+        ],
+        "styles": ["projects/frontend/comic/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "projects/frontend/comic/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "projects/frontend/comic/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nx/angular:webpack-dev-server",
+      "options": {
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "frontend-comic:build:production"
+        },
+        "development": {
+          "browserTarget": "frontend-comic:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "frontend-comic:build"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "frontend-comic:build",
+        "port": 4201,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "frontend-comic:build:development"
+        },
+        "production": {
+          "buildTarget": "frontend-comic:build:production"
+        }
+      }
+    }
+  }
+}

@@ -27,6 +27,14 @@
             "allowExpressions": true
           }
         ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "interface",
+            "format": ["PascalCase"],
+            "prefix": ["I"]
+          }
+        ],
         "no-empty-function": "off",
         "@typescript-eslint/no-empty-function": [
           "error",

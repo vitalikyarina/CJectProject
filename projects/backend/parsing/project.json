@@ -1,0 +1,43 @@
+{
+  "name": "backend-parsing",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "projects/backend/parsing/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/projects/backend/parsing",
+        "main": "projects/backend/parsing/src/main.ts",
+        "tsConfig": "projects/backend/parsing/tsconfig.app.json",
+        "assets": ["projects/backend/parsing/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "projects/backend/parsing/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "backend-parsing:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "backend-parsing:build:development"
+        },
+        "production": {
+          "buildTarget": "backend-parsing:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}

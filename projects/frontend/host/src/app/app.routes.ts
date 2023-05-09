@@ -1,8 +1,14 @@
 import { Routes } from "@angular/router";
+import { AppRoute } from "./core";
 
 export const routes: Routes = [
   {
-    path: "comic",
-    loadChildren: () => import("comic/Routes").then((m) => m.ROUTES),
+    path: AppRoute.COMICS,
+    loadChildren: () =>
+      import("frontend-comic/Routes").then((m) => m.remoteRoutes),
+  },
+  {
+    path: "**",
+    redirectTo: AppRoute.DEFAULT,
   },
 ];
