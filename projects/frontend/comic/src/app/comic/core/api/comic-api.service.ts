@@ -1,17 +1,17 @@
 import { Injectable, Injector } from "@angular/core";
 import { BaseApiService } from "@cjp-front/shared";
-import { SiteCreateDTO, SiteEntity, SiteUpdateDTO } from "../models";
+import { ComicCreateDTO, ComicEntity, ComicUpdateDTO } from "../models";
 import { ComicsApi } from "../enums";
 
 @Injectable({
   providedIn: "root",
 })
-export class ApiComicSiteService extends BaseApiService<
-  SiteEntity,
-  SiteCreateDTO,
-  SiteUpdateDTO
+export class ApiComicService extends BaseApiService<
+  ComicEntity,
+  ComicCreateDTO,
+  ComicUpdateDTO
 > {
   constructor(private readonly injector: Injector) {
-    super(injector, ComicsApi.COMIC_SITE);
+    super(injector, ComicsApi.COMICS);
   }
 }
