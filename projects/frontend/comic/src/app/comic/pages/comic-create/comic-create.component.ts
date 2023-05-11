@@ -1,4 +1,4 @@
-import { Component, Input, inject } from "@angular/core";
+import { Component, Input, Signal, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ComicCreateForm } from "./forms";
 import {
@@ -30,7 +30,7 @@ import { SiteStore } from "../../store";
   providers: [ComicCreateForm],
 })
 export class ComicCreateComponent {
-  @Input() public sites: SiteEntity[] = inject(SiteStore).data();
+  public sites: Signal<SiteEntity[]> = inject(SiteStore).data;
 
   private readonly formGroup: ComicCreateForm = inject(ComicCreateForm);
   private readonly router: Router = inject(Router);
