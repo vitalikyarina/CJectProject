@@ -46,7 +46,8 @@
       "unitTestRunner": "none",
       "style": "scss",
       "skipTests": true,
-      "standalone": true
+      "standalone": true,
+      "simpleName": true
     },
     "@schematics/angular:service": {
       "skipTests": true
@@ -62,7 +63,8 @@
     "@nx/angular:component": {
       "style": "scss",
       "skipTests": true,
-      "standalone": true
+      "standalone": true,
+      "skipImport": true
     },
     "@schematics/angular:component": {
       "style": "scss",
