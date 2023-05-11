@@ -4,7 +4,10 @@
     "paths": {
       "@cjp/shared": ["projects/shared"],
       "@cjp/shared/comic": ["projects/shared/comic"],
-      "@cjp-front/shared": ["projects/frontend/libs/shared/src/index.ts"]
+      "@cjp-front/shared": ["projects/frontend/libs/shared/src/index.ts"],
+      "@cjp-front/content-section": [
+        "projects/frontend/libs/content-section/src/index.ts"
+      ]
     }
   }
 }
