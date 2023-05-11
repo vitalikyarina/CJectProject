@@ -45,7 +45,7 @@ export class ChapterEntity implements IChapter {
   @IsNotEmpty()
   public resource!: ResourceEntity;
 
-  @ApiProperty({ nullable: true })
+  @ApiProperty({ nullable: true, type: Number })
   @IsNotEmpty()
   public errorType!: ChapterError;
 
