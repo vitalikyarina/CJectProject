@@ -3,9 +3,16 @@ import { Cron, CronExpression } from "@nestjs/schedule";
 import { take, tap, toArray } from "rxjs";
 import { ComicQueuesService } from "../services";
 import { ComicService } from "@cjp-back/mongo/comic";
+import { IFindOptions } from "@cjp-back/shared";
 
 @Injectable()
-export class ComicCronService implements OnModuleInit {
+export class ComicCron implements OnModuleInit {
+  private readonly options: IFindOptions = {
+    sort: {
+      name: "asc",
+    },
+  };
+
   constructor(
     private readonly comicService: ComicService,
     private readonly comicQueues: ComicQueuesService,
@@ -20,14 +27,7 @@ export class ComicCronService implements OnModuleInit {
   @Cron(CronExpression.EVERY_12_HOURS)
   public checkComics(): void {
     this.comicService
-      .find(
-        {},
-        {
-          sort: {
-            name: "asc",
-          },
-        },
-      )
+      .find({}, this.options)
       .pipe(
         toArray(),
         take(1),
