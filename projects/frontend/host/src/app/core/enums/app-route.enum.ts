@@ -1,6 +1,4 @@
-export const AppRoute = {
-  DEFAULT: "",
-  COMICS: "comics",
-} as const;
-
-export type AppRoute = (typeof AppRoute)[keyof typeof AppRoute];
+export enum AppRoute {
+  DEFAULT = "",
+  COMICS = "comics",
+}
