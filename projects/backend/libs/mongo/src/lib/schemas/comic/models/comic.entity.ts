@@ -30,7 +30,7 @@ export class ComicEntity implements IComic {
   @IsNotEmpty()
   public tags!: ComicTag[];
 
-  @ApiProperty({ nullable: false })
+  @ApiProperty({ nullable: false, type: Number })
   @IsNotEmpty()
   public status!: ComicStatus;
 
