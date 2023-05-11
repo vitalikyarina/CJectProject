@@ -11,7 +11,7 @@ export class ResourceEntity implements IResource {
   @IsNotEmpty()
   public link!: string;
 
-  @ApiProperty({ nullable: false, type: String })
+  @ApiProperty({ nullable: false, type: Number })
   @IsNotEmpty()
   public type!: ResourceType;
 
@@ -22,7 +22,7 @@ export class ResourceEntity implements IResource {
   @ApiProperty({ nullable: false })
   public siteData!: SiteEntity;
 
-  @ApiProperty({ nullable: true })
+  @ApiProperty({ nullable: true, type: Number })
   public errorType: ResourceError | undefined | null;
 }
 
