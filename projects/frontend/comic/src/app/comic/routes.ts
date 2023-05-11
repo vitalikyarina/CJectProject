@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { ComicLayoutComponent } from "./layout";
 import { ComicsComponent } from "./pages";
-import { ComicRoute } from "./core";
+import { ComicRoute } from "./core/enums";
 
 export const ROUTES: Routes = [
   {
