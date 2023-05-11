@@ -1,0 +1,47 @@
+<div class="card">
+  <div class="card__header">
+    <a
+      routerLink="/comics/{{ comic._id }}"
+      class="card__title"
+      [title]="comic.name">
+      {{ comic.name }}
+    </a>
+  </div>
+  <div class="card__img-container">
+    <cjp-image
+      *ngIf="comic.mainImages && comic.mainImages[0]"
+      [link]="comic.mainImages[0]"
+      [alt]="comic.name">
+    </cjp-image>
+  </div>
+  <div class="card__chapters">
+    <ng-container *ngFor="let chp of last2chapters">
+      <div class="card__chapter" fxLayoutAlign="space-between center">
+        <div class="card__chapter-title" fxLayoutAlign="flex-start center">
+          <p class="card__chapter-name">Chapter {{ chp.number }}</p>
+          <div class="card__chapter-raw" *ngIf="isRaw(chp)">RAW</div>
+        </div>
+        <div class="card__chapter-info">
+          <div
+            *ngIf="isLoading(chp); else newRef"
+            class="card__chapter-loading">
+            LOADING
+          </div>
+          <ng-template #newRef>
+            <div *ngIf="isNew(chp); else dateRef" class="card__chapter-new">
+              NEW
+            </div>
+          </ng-template>
+          <ng-template #dateRef>
+            <p class="card__chapter-date">
+              {{ chp.date | date : "dd MMM yyyy" }}
+            </p>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div>
+    <a mat-button [routerLink]="['edit', comic._id]">edit</a>
+  </div>
+</div>

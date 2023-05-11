@@ -1,0 +1,9 @@
+{
+  "name": "frontend-libs-image",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "projects/frontend/libs/image/src",
+  "prefix": "cjp",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

@@ -1,0 +1,80 @@
+@use "@angular/material" as mat;
+
+$my-palette: mat.define-palette(mat.$deep-purple-palette);
+
+.card {
+  max-width: 218px;
+  width: 218px;
+
+  &__header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    //font-weight: $fontTitleWight;
+    //font-size: $fontTitleSize;
+    cursor: pointer;
+    //margin-bottom: $marginElement;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 4px;
+    line-height: 1.25;
+    //color: mat.get-color-from-palette($my-palette, foreground);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__img-container {
+    // margin-bottom: $marginElement;
+    width: 218px;
+    height: 300px;
+    margin-bottom: 4px;
+  }
+
+  &__chapter {
+    margin-bottom: 4px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-name {
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    &-raw {
+      font-size: 0.75rem;
+      background-color: green;
+      color: white;
+      padding: 2px;
+    }
+
+    &-loading {
+      font-size: 0.75rem;
+      background-color: palevioletred;
+      color: white;
+      padding: 2px;
+    }
+
+    &-new {
+      font-size: 0.75rem;
+      background-color: brown;
+      color: white;
+      padding: 2px;
+    }
+
+    &-date {
+      font-size: 0.75rem;
+    }
+  }
+}
