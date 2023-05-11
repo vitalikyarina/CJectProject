@@ -1,0 +1,8 @@
+<cjp-content-section>
+  <cjp-content-section-title>MANGA</cjp-content-section-title>
+  <cjp-content-section-content class="comic__content">
+    <ng-container *ngFor="let comic of comics()">
+      <cjp-comic-card class="comic__card" [comic]="comic"> </cjp-comic-card>
+    </ng-container>
+  </cjp-content-section-content>
+</cjp-content-section>

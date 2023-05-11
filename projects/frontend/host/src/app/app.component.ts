@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterOutlet } from "@angular/router";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { HeaderComponent, SidenavComponent } from "./components";
+import { HeaderComponent, SidenavComponent } from "./core";
 
 @Component({
   selector: "cjp-root",

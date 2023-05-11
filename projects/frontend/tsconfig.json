@@ -1,9 +1,17 @@
 {
-  "extends": "../../tsconfig.json",
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@cjp/shared": ["projects/shared"],
+      "@cjp/shared/comic": ["projects/shared/comic"],
+      "@cjp-front/shared": ["projects/frontend/libs/shared/src/index.ts"],
+      "@cjp-front/content-section": [
+        "projects/frontend/libs/content-section/src/index.ts"
+      ],
+      "@cjp-front/image": ["projects/frontend/libs/image/src/index.ts"],
+      "@cjp-front/form-content": [
+        "projects/frontend/libs/form-content/src/index.ts"
+      ]
+    }
   }
 }

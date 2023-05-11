@@ -1,15 +1,20 @@
-import { Routes } from '@angular/router';
-import { ComicLayoutComponent } from './layout';
-import { ComicComponent } from './pages';
+import { Routes } from "@angular/router";
+import { ComicLayoutComponent } from "./layout";
+import { ComicsComponent, ComicCreateComponent } from "./pages";
+import { ComicRoute } from "./core/enums";
 
 export const ROUTES: Routes = [
   {
     component: ComicLayoutComponent,
-    path: '',
+    path: "",
     children: [
       {
-        path: '',
-        component: ComicComponent,
+        path: ComicRoute.DEFAULT,
+        component: ComicsComponent,
+      },
+      {
+        path: ComicRoute.CREATE,
+        component: ComicCreateComponent,
       },
     ],
   },

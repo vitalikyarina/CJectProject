@@ -1,1 +1,1 @@
-export * from "./static-files.module";
+export * from "./lib/static-files.module";

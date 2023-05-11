@@ -1,0 +1,13 @@
+.cjp-form-group {
+  padding: 10px 0;
+}
+
+::ng-deep {
+  & .mat-form-field-appearance-outline div.mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  & div.mat-mdc-form-field-subscript-wrapper {
+    height: 0;
+  }
+}

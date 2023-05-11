@@ -1,0 +1,9 @@
+{
+  "name": "frontend-libs-shared",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "projects/frontend/libs/shared/src",
+  "prefix": "cjp",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

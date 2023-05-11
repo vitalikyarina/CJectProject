@@ -1,0 +1,8 @@
+{
+  "name": "backend-libs-static-files",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "projects/backend/libs/static-files/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": []
+}

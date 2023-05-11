@@ -1,0 +1,25 @@
+<mat-drawer-container class="sidenav">
+  <mat-drawer class="sidenav__drawer" mode="side" opened>
+    <div class="sidenav__list" fxLayout="column">
+      <a
+        mat-button
+        fxLayoutAlign="flex-start center"
+        [routerLink]="routing.COMICS"
+        >Comics</a
+      >
+      <a
+        mat-button
+        fxLayoutAlign="flex-start center"
+        [routerLink]="routing.COMICS + '/create'"
+        >Comic Create</a
+      >
+      <a
+        mat-button
+        fxLayoutAlign="flex-start center"
+        [routerLink]="routing.COMICS + '/site/create'"
+        >Comic Site Create</a
+      >
+    </div>
+  </mat-drawer>
+  <mat-drawer-content><ng-content /></mat-drawer-content>
+</mat-drawer-container>
