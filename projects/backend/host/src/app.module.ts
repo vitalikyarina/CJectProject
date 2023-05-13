@@ -6,7 +6,5 @@ import { StaticFilesModule } from "@cjp-back/static-files";
 
 @Module({
   imports: [ConfigurationModule, MongoModule, ComicModule, StaticFilesModule],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

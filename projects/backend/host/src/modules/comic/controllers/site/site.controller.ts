@@ -11,8 +11,8 @@ import {
 
 @ApiTags("Comic Sites")
 @Controller(ComicControllerName.COMIC_SITES)
-export class ComicSiteController {
-  constructor(private readonly comicSiteService: SiteService) {}
+export class SiteController {
+  constructor(private readonly siteService: SiteService) {}
 
   @ApiOkResponse({
     type: SiteEntity,
@@ -20,7 +20,7 @@ export class ComicSiteController {
   })
   @Get("")
   public getEntities(): Observable<SiteEntity[]> {
-    return this.comicSiteService.find({}).pipe(toArray());
+    return this.siteService.find({}).pipe(toArray());
   }
 
   @ApiOkResponse({
@@ -28,7 +28,7 @@ export class ComicSiteController {
   })
   @Get(":id")
   public getEntityById(@Param("id") id: string): Observable<SiteEntity> {
-    return this.comicSiteService.findById(id);
+    return this.siteService.findById(id);
   }
 
   @ApiOkResponse({
@@ -38,7 +38,7 @@ export class ComicSiteController {
   public createEntity(
     @Body() newEntity: SiteCreateDTO,
   ): Observable<SiteEntity> {
-    return this.comicSiteService.createOne(newEntity);
+    return this.siteService.createOne(newEntity);
   }
 
   @ApiOkResponse({
@@ -49,6 +49,6 @@ export class ComicSiteController {
     @Param("id") id: string,
     @Body() updateData: SiteUpdateDTO,
   ): Observable<SiteEntity> {
-    return this.comicSiteService.updateOneById(id, updateData);
+    return this.siteService.updateOneById(id, updateData);
   }
 }

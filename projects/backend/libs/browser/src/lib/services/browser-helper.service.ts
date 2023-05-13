@@ -4,20 +4,25 @@ import { defer, Observable } from "rxjs";
 
 @Injectable()
 export class BrowserHelperService {
-  public getBrowser(type?: string): Observable<Browser> {
-    return defer(() => this._getBrowser(type));
+  public getBrowser$(type?: string): Observable<Browser> {
+    return defer(() => this.getBrowser(type));
   }
 
-  private async _getBrowser(type: string): Promise<Browser> {
+  public async getBrowser(type: string): Promise<Browser> {
     try {
       if (type !== "firefox") {
-        const browser: Browser = await chromium.launch();
+        const browser: Browser = await chromium.launch({
+          args: ["--disable-web-security"],
+          headless: false,
+        });
         return browser;
       }
-      const browser: Browser = await firefox.launch();
+      const browser: Browser = await firefox.launch({
+        args: ["--disable-web-security"],
+      });
       return browser;
     } catch {
-      return this._getBrowser(type);
+      return this.getBrowser(type);
     }
   }
 }

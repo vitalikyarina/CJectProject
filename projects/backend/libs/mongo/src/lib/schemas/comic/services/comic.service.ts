@@ -29,7 +29,7 @@ export class ComicService extends BaseMongoService<
   ) {
     super(api);
 
-    this.comicDir = this.config.get("IMAGE_PATH");
+    this.comicDir = this.config.get("IMAGE_PATH")!;
   }
 
   public createOneWithResources(
@@ -104,10 +104,10 @@ export class ComicService extends BaseMongoService<
   //}
 
   private addMainImages(comic: ComicEntity): ComicEntity {
-    const mainImageDir = `${this.comicDir}\\${comic._id}\\main`;
+    const mainImageDir = `${this.comicDir}\\comics\\${comic._id}\\main`;
     comic.mainImages = this.fsHelper
       .getFilesFromDir(mainImageDir)
-      .map((img) => `assets/${comic._id}/main/${img}`);
+      .map((img) => `assets/comics/${comic._id}/main/${img}`);
     return comic;
   }
 }

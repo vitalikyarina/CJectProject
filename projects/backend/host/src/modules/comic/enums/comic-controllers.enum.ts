@@ -1,4 +1,4 @@
 export enum ComicControllerName {
-  COMIC = "comics",
+  COMICS = "comics",
   COMIC_SITES = "comic-sites",
 }

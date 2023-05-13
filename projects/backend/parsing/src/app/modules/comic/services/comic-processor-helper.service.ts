@@ -28,7 +28,7 @@ export class ComicProcessorHelperService {
       take(1),
       switchMap((foundComic) => {
         const comic = foundComic;
-        const comicDir = `${rootDir}\\${comic._id}`;
+        const comicDir = `${rootDir}\\comics\\${comic._id}`;
         if (this.comicHelper.needStopParsing(comic)) {
           this.logger.debug("Deleting all comic chapters");
           return this.comicHelper.deleteAllComicChapters(comic, comicDir);
