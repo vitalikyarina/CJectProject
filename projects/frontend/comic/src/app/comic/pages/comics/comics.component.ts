@@ -26,4 +26,8 @@ export class ComicsComponent {
   constructor(private comicStore: ComicStore) {
     this.comics = this.comicStore.data;
   }
+
+  public trackByFn(index: number, element: ComicEntity): string {
+    return element._id;
+  }
 }
