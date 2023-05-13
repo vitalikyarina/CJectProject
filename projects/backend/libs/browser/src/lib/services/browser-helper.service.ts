@@ -13,7 +13,6 @@ export class BrowserHelperService {
       if (type !== "firefox") {
         const browser: Browser = await chromium.launch({
           args: ["--disable-web-security"],
-          headless: false,
         });
         return browser;
       }

@@ -165,6 +165,10 @@ export class ComicProcessorChapterHelperService {
         if (!updateChapterData.errorPages || !updateChapterData.errorPages[i]) {
           const imsPath = `${chapterPath}/${i}.jpg`;
           if (!fs.existsSync(imsPath)) {
+            if (comicSite.browserType === "firefox") {
+              await element.screenshot({ path: imsPath });
+              continue;
+            }
             await element.evaluate((elem: HTMLImageElement) => {
               const link = elem.src;
 

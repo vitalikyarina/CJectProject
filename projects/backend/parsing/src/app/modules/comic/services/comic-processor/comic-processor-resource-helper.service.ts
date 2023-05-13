@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Browser, ElementHandle, Page } from "playwright";
+import { Browser, ElementHandle, Page, firefox } from "playwright";
 import {
   catchError,
   concat,
@@ -177,7 +177,12 @@ export class ComicProcessorResourceHelperService {
         const mainImageDir = `${comicDir}\\main\\${comicResource._id}.jpg`;
         const comicSite = comicResource.siteData;
         return from(
-          this.tempDownload(page, comicSite.mainImagePath, mainImageDir),
+          this.tempDownload(
+            page,
+            comicSite.mainImagePath,
+            mainImageDir,
+            comicSite.browserType,
+          ),
         ).pipe(
           switchMap(() => {
             return this.parseComicResourceChapters(page, comicResource);
@@ -191,8 +196,14 @@ export class ComicProcessorResourceHelperService {
     page: Page,
     elementPath: string,
     fileDir: string,
+    browserType: string,
   ): Promise<void> {
     if (!fs.existsSync(fileDir)) {
+      if (browserType === "firefox") {
+        const elem = await page.$(elementPath);
+        await elem.screenshot({ path: fileDir });
+        return;
+      }
       const a = page.$eval(elementPath, (elem: HTMLImageElement) => {
         const link = elem.src;
         fetch(link)
