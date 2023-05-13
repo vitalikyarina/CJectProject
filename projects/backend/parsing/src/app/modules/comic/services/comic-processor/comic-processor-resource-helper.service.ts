@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Browser, ElementHandle, Page } from "playwright";
+import { Browser, ElementHandle, Page, firefox } from "playwright";
 import {
   catchError,
   concat,
@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { FSHelperService, VOID } from "@cjp-back/shared";
-import { BrowserHelperService, final } from "@cjp-back/browser";
+import { BrowserHelperService, downloadImage, final } from "@cjp-back/browser";
 import {
   ChapterCreateDTO,
   ChapterService,
@@ -31,6 +31,7 @@ import {
   SiteEntity,
 } from "@cjp-back/mongo/comic";
 import { ResourceError } from "@cjp/shared/comic";
+import fs from "fs";
 
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
@@ -108,7 +109,7 @@ export class ComicProcessorResourceHelperService {
       `Parsing type - ${siteData.name} ${comicResource.type || "normal"}`,
     );
 
-    const browser$ = this.browserHelper.getBrowser(siteData.browserType);
+    const browser$ = this.browserHelper.getBrowser$(siteData.browserType);
 
     return browser$.pipe(
       final(),
@@ -173,10 +174,15 @@ export class ComicProcessorResourceHelperService {
             )
             .pipe(toArray());
         }
-        return this.parseComicResourceMainImage(
-          page,
-          comicResource,
-          comicDir,
+        const mainImageDir = `${comicDir}\\main\\${comicResource._id}.jpg`;
+        const comicSite = comicResource.siteData;
+        return from(
+          this.tempDownload(
+            page,
+            comicSite.mainImagePath,
+            mainImageDir,
+            comicSite.browserType,
+          ),
         ).pipe(
           switchMap(() => {
             return this.parseComicResourceChapters(page, comicResource);
@@ -186,24 +192,38 @@ export class ComicProcessorResourceHelperService {
     );
   }
 
-  protected parseComicResourceMainImage(
+  protected async tempDownload(
     page: Page,
-    comicResource: ResourceEntity,
-    comicDir: string,
-  ): Observable<void> {
-    const comicSite = comicResource.siteData;
+    elementPath: string,
+    fileDir: string,
+    browserType: string,
+  ): Promise<void> {
+    if (!fs.existsSync(fileDir)) {
+      if (browserType === "firefox") {
+        const elem = await page.$(elementPath);
+        await elem.screenshot({ path: fileDir });
+        return;
+      }
+      const a = page.$eval(elementPath, (elem: HTMLImageElement) => {
+        const link = elem.src;
+        fetch(link)
+          .then((res) => res.blob())
+          .then((blob) => {
+            const a = document.createElement("a");
 
-    const mainImageDir = `${comicDir}\\main\\${comicResource._id}.jpg`;
-
-    return from(page.$(comicSite.mainImagePath)).pipe(
-      switchMap((imgElem) => {
-        if (!this.fsHelper.existsFile(mainImageDir)) {
-          return imgElem.screenshot({ path: mainImageDir });
-        }
-        return VOID;
-      }),
-      switchMap(() => VOID),
-    );
+            a.href = URL.createObjectURL(blob);
+            a.download = "image.jpg";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+      });
+      const [download] = await Promise.all([
+        page.waitForEvent("download"), // wait for download to start
+        a,
+      ]);
+      await download.saveAs(fileDir);
+    }
   }
 
   protected parseComicResourceChapters(

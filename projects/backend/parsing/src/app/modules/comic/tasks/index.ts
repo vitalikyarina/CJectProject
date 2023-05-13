@@ -1,1 +1,1 @@
-export * from "./comic-cron.service";
+export * from "./comic.cron";

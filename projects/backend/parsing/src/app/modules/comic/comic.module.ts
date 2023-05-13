@@ -11,7 +11,7 @@ import {
   ComicProcessorHelperService,
   ComicQueuesService,
 } from "./services";
-import { ComicCronService } from "./tasks";
+import { ComicCron } from "./tasks";
 import {
   ComicProcessorChapterHelperService,
   ComicProcessorComicHelperService,
@@ -33,7 +33,7 @@ import { ComicProcessor } from "./jobs";
   providers: [
     ComicLoggerService,
     ComicQueuesService,
-    ComicCronService,
+    ComicCron,
     ComicProcessorComicHelperService,
     ComicProcessorChapterHelperService,
     ComicProcessorResourceHelperService,
