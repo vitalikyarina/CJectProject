@@ -8,10 +8,17 @@ import {
   ComicEntity,
   ComicService,
 } from "@cjp-back/mongo/comic";
+import { IFindOptions } from "@cjp-back/shared";
 
 @ApiTags("Comics")
-@Controller(ComicControllerName.COMIC)
+@Controller(ComicControllerName.COMICS)
 export class ComicController {
+  private readonly findOptions: IFindOptions = {
+    sort: {
+      latestUpdate: "desc",
+    },
+  };
+
   constructor(private readonly comicService: ComicService) {}
 
   @ApiOkResponse({
@@ -20,16 +27,7 @@ export class ComicController {
   })
   @Get("")
   public getEntities(): Observable<ComicEntity[]> {
-    return this.comicService
-      .find(
-        {},
-        {
-          sort: {
-            latestUpdate: "desc",
-          },
-        },
-      )
-      .pipe(toArray());
+    return this.comicService.find({}, this.findOptions).pipe(toArray());
   }
 
   @ApiOkResponse({

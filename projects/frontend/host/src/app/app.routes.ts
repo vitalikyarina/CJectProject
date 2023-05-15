@@ -11,8 +11,4 @@ export const routes: Routes = [
     path: "**",
     redirectTo: AppRoute.DEFAULT,
   },
-  {
-    path: "**",
-    redirectTo: AppRoute.DEFAULT,
-  },
 ];
