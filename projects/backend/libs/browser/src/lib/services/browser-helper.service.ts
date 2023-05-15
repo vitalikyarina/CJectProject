@@ -12,12 +12,12 @@ export class BrowserHelperService {
     try {
       if (type !== "firefox") {
         const browser: Browser = await chromium.launch({
-          args: ["--disable-web-security"],
+          args: ["--disable-web-security", "--mute-audio"],
         });
         return browser;
       }
       const browser: Browser = await firefox.launch({
-        args: ["--disable-web-security"],
+        args: ["--disable-web-security", "--mute-audio"],
       });
       return browser;
     } catch {
