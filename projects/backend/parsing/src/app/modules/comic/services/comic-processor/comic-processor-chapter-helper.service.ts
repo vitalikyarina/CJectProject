@@ -1,31 +1,18 @@
 import { Injectable } from "@nestjs/common";
-import { Browser, ElementHandle, Page } from "playwright";
-import {
-  catchError,
-  concat,
-  defer,
-  forkJoin,
-  from,
-  map,
-  Observable,
-  of,
-  switchMap,
-  take,
-  toArray,
-} from "rxjs";
+import { ElementHandle } from "playwright";
+import { concat, defer, Observable, of, switchMap, toArray } from "rxjs";
 import { ComicLoggerService } from "../comic-logger.service";
-import { BrowserHelperService } from "@cjp-back/browser";
 import {
   ChapterEntity,
   ChapterService,
   ChapterUpdateDTO,
   ComicEntity,
   ComicService,
-  SiteEntity,
 } from "@cjp-back/mongo/comic";
 import { FSHelperService, VOID } from "@cjp-back/shared";
 import fs from "fs";
 import { ResourceType } from "@cjp/shared/comic";
+import { launchPlaywright } from "crawlee";
 
 interface IChapterImageData {
   complete: boolean;
@@ -40,7 +27,6 @@ export class ComicProcessorChapterHelperService {
     private readonly comicChapterService: ChapterService,
     private readonly fsHelper: FSHelperService,
     private readonly logger: ComicLoggerService,
-    private readonly browserHelper: BrowserHelperService,
   ) {}
 
   public startParsingChapters(id: string, comicDir: string): Observable<void> {
@@ -86,10 +72,11 @@ export class ComicProcessorChapterHelperService {
 
     const comicSite = chapter.resource.siteData;
 
-    const browser = await this.browserHelper.getBrowser(comicSite.browserType);
+    const browser = await launchPlaywright({
+      launchOptions: { args: ["--disable-web-security"] },
+    });
 
     try {
-      console.log("parseComicChapterCreatePage");
       const page = await browser.newPage();
       const chapterPath = `${comicDir}/${chapter.number}`;
       this.fsHelper.createDirIfNot(chapterPath);
@@ -98,7 +85,6 @@ export class ComicProcessorChapterHelperService {
         timeout: 60000,
         waitUntil: "networkidle",
       });
-      console.log("parseComicChapterLoadPage");
 
       if (comicSite.chapterLazyLoadPath) {
         await page.waitForSelector(comicSite.chapterLazyLoadPath);
@@ -114,7 +100,6 @@ export class ComicProcessorChapterHelperService {
       await page.mouse.wheel(0, 15000);
       await page.waitForTimeout(5000);
       await page.waitForSelector(comicSite.chapterImagesPath);
-      console.log("getComicChaptersImageStatus");
       const elements = (await page.$$(
         comicSite.chapterImagesPath,
       )) as ElementHandle<HTMLImageElement>[];
@@ -165,10 +150,6 @@ export class ComicProcessorChapterHelperService {
         if (!updateChapterData.errorPages || !updateChapterData.errorPages[i]) {
           const imsPath = `${chapterPath}/${i}.jpg`;
           if (!fs.existsSync(imsPath)) {
-            if (comicSite.browserType === "firefox") {
-              await element.screenshot({ path: imsPath });
-              continue;
-            }
             await element.evaluate((elem: HTMLImageElement) => {
               const link = elem.src;
 
