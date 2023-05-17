@@ -3,3 +3,4 @@ export * from "./types";
 export * from "./observables";
 export * from "./services";
 export * from "./shared.module";
+export * from "./classes";

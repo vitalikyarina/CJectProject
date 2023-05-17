@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ElementHandle } from "playwright";
-import { concat, defer, Observable, of, switchMap, toArray } from "rxjs";
+import { from, Observable, switchMap } from "rxjs";
 import { ComicLoggerService } from "../comic-logger.service";
 import {
   ChapterEntity,
@@ -9,7 +9,7 @@ import {
   ComicEntity,
   ComicService,
 } from "@cjp-back/mongo/comic";
-import { FSHelperService, VOID } from "@cjp-back/shared";
+import { CJPQueue, FPromise, FSHelperService, VOID } from "@cjp-back/shared";
 import fs from "fs";
 import { ResourceType } from "@cjp/shared/comic";
 import { launchPlaywright } from "crawlee";
@@ -34,29 +34,41 @@ export class ComicProcessorChapterHelperService {
       switchMap((comic: ComicEntity) => {
         const chapters = comic.chapters;
 
-        const loadChapters$ = chapters
-          .filter((chp) => {
-            return (
-              !chp.isLoaded ||
-              chp.isError ||
-              !this.chapterHasAllImages(chp, `${comicDir}/${chp.number}`)
-            );
-          })
-          .map((chp) => defer(() => this.parseComicChapter(chp, comicDir)));
-
-        const returnLoadChapters$ = loadChapters$.length
-          ? concat(...loadChapters$)
-          : of(null);
-
-        return returnLoadChapters$.pipe(toArray());
+        return from(this.load(chapters, comicDir));
       }),
       switchMap(() => VOID),
     );
   }
 
+  protected async load(
+    chapters: ChapterEntity[],
+    comicDir: string,
+  ): Promise<void> {
+    const queue = new CJPQueue(5);
+    chapters
+      .filter((chp) => {
+        return (
+          !chp.isLoaded ||
+          chp.isError ||
+          !this.chapterHasAllImages(chp, `${comicDir}/${chp.number}`)
+        );
+      })
+      .map((chp) => {
+        queue.add(this.parseComicChapterFabric(chp, comicDir));
+      });
+    await queue.start();
+  }
+
   protected chapterHasAllImages(chapter: ChapterEntity, path: string): boolean {
     const files: string[] = this.fsHelper.getFilesFromDir(path);
     return chapter.countPage === files.length;
+  }
+
+  protected parseComicChapterFabric(
+    chapter: ChapterEntity,
+    comicDir: string,
+  ): FPromise<void> {
+    return () => this.parseComicChapter(chapter, comicDir);
   }
 
   protected async parseComicChapter(
