@@ -4,9 +4,7 @@ import { SiteCreateDTO, SiteEntity, SiteUpdateDTO } from "../core/models";
 import { IBaseApiService } from "@cjp-front/shared";
 import { ApiComicSiteService } from "../core/api";
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable()
 export class ComicSiteService
   implements IBaseApiService<SiteEntity, SiteCreateDTO, SiteUpdateDTO>
 {

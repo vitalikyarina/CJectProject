@@ -1,4 +1,4 @@
-import { Component, Input, Signal, inject } from "@angular/core";
+import { Component, Signal, inject, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ComicCreateForm } from "./forms";
 import {
@@ -12,7 +12,6 @@ import { Router } from "@angular/router";
 import { ComicService } from "../../services";
 import { ComicCreateDTO, SiteEntity } from "../../core/models";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { SiteStore } from "../../store";
 
 @UntilDestroy()
 @Component({
@@ -30,7 +29,7 @@ import { SiteStore } from "../../store";
   providers: [ComicCreateForm],
 })
 export class ComicCreateComponent {
-  public sites: Signal<SiteEntity[]> = inject(SiteStore).data;
+  public sites: Signal<SiteEntity[]> = signal([]);
 
   private readonly formGroup: ComicCreateForm = inject(ComicCreateForm);
   private readonly router: Router = inject(Router);
@@ -38,14 +37,15 @@ export class ComicCreateComponent {
 
   protected onClick(): void {
     if (this.formGroup.valid) {
-      this.comicService
-        .createOne(this.formGroup.getRawValue() as ComicCreateDTO)
-        .pipe(untilDestroyed(this))
-        .subscribe((createdComic) => {
-          console.log(createdComic);
+      console.log(this.formGroup.getRawValue());
+      // this.comicService
+      //   .createOne(this.formGroup.getRawValue() as ComicCreateDTO)
+      //   .pipe(untilDestroyed(this))
+      //   .subscribe((createdComic) => {
+      //     console.log(createdComic);
 
-          this.router.navigateByUrl("/comics");
-        });
+      //     this.router.navigateByUrl("/comics");
+      //   });
     }
   }
 }

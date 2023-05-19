@@ -1,7 +1,6 @@
-import { Component, Signal } from "@angular/core";
+import { Component, Signal, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ComicEntity } from "../../core/models";
-import { ComicStore } from "../../store";
 import {
   ContentSectionComponent,
   ContentSectionContentComponent,
@@ -21,11 +20,9 @@ import { ComicCardComponent } from "../../components";
   styleUrls: ["./comics.component.scss"],
 })
 export class ComicsComponent {
-  public comics: Signal<ComicEntity[]>;
+  public comics: Signal<ComicEntity[]> = signal([]);
 
-  constructor(private comicStore: ComicStore) {
-    this.comics = this.comicStore.data;
-  }
+  constructor() {}
 
   public trackByFn(index: number, element: ComicEntity): string {
     return element._id;

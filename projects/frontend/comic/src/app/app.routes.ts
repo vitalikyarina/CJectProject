@@ -2,6 +2,7 @@ import { Route } from "@angular/router";
 import { RemoteEntryComponent } from "./comic-layout.component";
 import { ComicRoute } from "./core/enums";
 import { ComicCreateComponent, ComicsComponent } from "./pages";
+import { ROUTE_PROVIDERS } from "./core";
 
 export const remoteRoutes: Route[] = [
   {
@@ -17,5 +18,6 @@ export const remoteRoutes: Route[] = [
         component: ComicCreateComponent,
       },
     ],
+    providers: ROUTE_PROVIDERS,
   },
 ];

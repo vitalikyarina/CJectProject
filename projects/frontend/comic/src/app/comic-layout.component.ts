@@ -1,23 +1,12 @@
-import { Component, OnInit, inject } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
-import { ComicStore, SiteStore } from "./store";
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { UntilDestroy } from "@ngneat/until-destroy";
 
 @UntilDestroy()
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [RouterOutlet],
   selector: "cjp-comic-layout",
   template: `<router-outlet />`,
-  providers: [ComicStore, SiteStore],
 })
-export class RemoteEntryComponent implements OnInit {
-  private comicStore: ComicStore = inject(ComicStore);
-  private comicSiteStore: SiteStore = inject(SiteStore);
-
-  public ngOnInit(): void {
-    this.comicStore.loadEntities().pipe(untilDestroyed(this)).subscribe();
-    this.comicSiteStore.loadEntities().pipe(untilDestroyed(this)).subscribe();
-  }
-}
+export class RemoteEntryComponent {}
