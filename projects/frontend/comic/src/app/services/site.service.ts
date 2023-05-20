@@ -2,13 +2,13 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { SiteCreateDTO, SiteEntity, SiteUpdateDTO } from "../core/models";
 import { IBaseApiService } from "@cjp-front/shared";
-import { ApiComicSiteService } from "../core/api";
+import { ApiSiteService } from "../core/api";
 
 @Injectable()
 export class SiteService
   implements IBaseApiService<SiteEntity, SiteCreateDTO, SiteUpdateDTO>
 {
-  constructor(private readonly comicSiteApiService: ApiComicSiteService) {}
+  constructor(private readonly comicSiteApiService: ApiSiteService) {}
 
   public getAll(): Observable<SiteEntity[]> {
     return this.comicSiteApiService.getAll();

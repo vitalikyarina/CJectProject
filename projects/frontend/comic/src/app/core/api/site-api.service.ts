@@ -4,7 +4,7 @@ import { SiteCreateDTO, SiteEntity, SiteUpdateDTO } from "../models";
 import { ComicsApi } from "../enums";
 
 @Injectable()
-export class ApiComicSiteService extends BaseApiService<
+export class ApiSiteService extends BaseApiService<
   SiteEntity,
   SiteCreateDTO,
   SiteUpdateDTO
