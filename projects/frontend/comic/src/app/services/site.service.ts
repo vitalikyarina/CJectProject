@@ -5,7 +5,7 @@ import { IBaseApiService } from "@cjp-front/shared";
 import { ApiComicSiteService } from "../core/api";
 
 @Injectable()
-export class ComicSiteService
+export class SiteService
   implements IBaseApiService<SiteEntity, SiteCreateDTO, SiteUpdateDTO>
 {
   constructor(private readonly comicSiteApiService: ApiComicSiteService) {}
