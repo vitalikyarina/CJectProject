@@ -6,11 +6,11 @@ import {
   ContentSectionContentComponent,
   ContentSectionTitleComponent,
 } from "@cjp-front/content-section";
-import { ComicCardComponent } from "../../components";
 import { Select } from "@ngxs/store";
 import { ComicState } from "../../core";
 import { Observable } from "rxjs";
 import { toSignal } from "@angular/core/rxjs-interop";
+import { ComicCardComponent } from "./components";
 
 @Component({
   standalone: true,

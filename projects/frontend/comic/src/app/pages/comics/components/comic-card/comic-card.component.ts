@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ChapterEntity, ComicEntity } from "../../core/models";
 import { ResourceType } from "@cjp/shared/comic";
 import { RouterLink } from "@angular/router";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ImageComponent } from "@cjp-front/image";
+import { ChapterEntity, ComicEntity } from "../../../../core";
 
 @Component({
   selector: "cjp-comic-card",
@@ -19,9 +19,7 @@ export class ComicCardComponent implements OnInit {
   public last2chapters: ChapterEntity[] = [];
 
   public ngOnInit(): void {
-    this.last2chapters = this.comic.chapters
-      .slice(this.comic.chapters.length - 2, this.comic.chapters.length)
-      .reverse();
+    this.initLast2Chapters();
   }
 
   public isRaw(chapter: ChapterEntity): boolean {
@@ -35,5 +33,12 @@ export class ComicCardComponent implements OnInit {
   public isNew(chapter: ChapterEntity): boolean {
     const dayBefore = Date.now() - 24 * 60 * 60 * 1000;
     return dayBefore < chapter.date;
+  }
+
+  private initLast2Chapters(): void {
+    this.last2chapters = this.comic.chapters
+      .sort((a, b) => a.date - b.date)
+      .slice(this.comic.chapters.length - 2, this.comic.chapters.length)
+      .reverse();
   }
 }
