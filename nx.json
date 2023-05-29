@@ -64,12 +64,15 @@
       "style": "scss",
       "skipTests": true,
       "standalone": true,
-      "skipImport": true
+      "skipImport": true,
+      "changeDetection": "OnPush"
     },
     "@schematics/angular:component": {
       "style": "scss",
       "skipTests": true,
-      "standalone": true
+      "standalone": true,
+      "skipImport": true,
+      "changeDetection": "OnPush"
     },
     "@schematics/angular:class": {
       "skipTests": true
