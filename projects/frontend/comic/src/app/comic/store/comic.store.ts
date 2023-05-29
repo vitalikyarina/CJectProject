@@ -12,7 +12,7 @@ export class ComicStore extends BaseArrayStore<
   ComicUpdateDTO,
   "_id"
 > {
-  constructor(private service: ComicService) {
+  constructor(protected service: ComicService) {
     super({
       idKey: "_id",
       apiService: service,

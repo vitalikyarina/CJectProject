@@ -4,9 +4,7 @@ import { Observable } from "rxjs";
 import { ComicCreateDTO, ComicEntity, ComicUpdateDTO } from "../core/models";
 import { ApiComicService } from "../core/api";
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable()
 export class ComicService
   implements IBaseApiService<ComicEntity, ComicCreateDTO, ComicUpdateDTO>
 {

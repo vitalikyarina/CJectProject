@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { RouterOutlet } from "@angular/router";
 import { ComicStore, SiteStore } from "../../store";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { ComicService } from "../../services";
 
 @UntilDestroy()
 @Component({
@@ -10,7 +11,7 @@ import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
   imports: [CommonModule, RouterOutlet],
   templateUrl: "./comic-layout.component.html",
   styleUrls: ["./comic-layout.component.scss"],
-  providers: [ComicStore, SiteStore],
+  providers: [ComicService, ComicStore, SiteStore],
 })
 export class ComicLayoutComponent implements OnInit {
   private comicStore: ComicStore = inject(ComicStore);

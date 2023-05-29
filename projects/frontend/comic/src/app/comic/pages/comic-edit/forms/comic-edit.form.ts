@@ -1,17 +1,19 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { BaseFormAbstractor } from "@cjp-front/shared";
 import {
-  ComicCreateDTO,
   ComicEntity,
-  ResourceCreateDTO,
+  ComicUpdateDTO,
+  ResourceUpdateDTO,
 } from "../../../core/models";
 import { ResourceType } from "@cjp/shared/comic";
+import { FORM_EDIT_DATA } from "../tokens";
 
 @Injectable()
 export class ComicEditForm extends FormGroup<
-  BaseFormAbstractor<ComicCreateDTO>
+  BaseFormAbstractor<ComicUpdateDTO>
 > {
+  private readonly comic = inject(FORM_EDIT_DATA);
   constructor() {
     super({
       name: new FormControl<string>("", {
@@ -20,27 +22,28 @@ export class ComicEditForm extends FormGroup<
       }),
       altNames: new FormArray<FormControl>([]),
       resources: new FormArray<
-        FormGroup<BaseFormAbstractor<ResourceCreateDTO>>
+        FormGroup<BaseFormAbstractor<ResourceUpdateDTO>>
       >([]),
     });
-
-    this.addResourceFormGroup();
+    const upd = ComicEditForm.ComicCreateFormConvector(this.comic);
+    this.setValue(upd);
   }
 
-  public static ComicCreateFormConvector(comic: ComicEntity): ComicCreateDTO {
-    const resources: ResourceCreateDTO[] = comic.resources.map((res) => {
+  public static ComicCreateFormConvector(comic: ComicEntity): ComicUpdateDTO {
+    const resources: ResourceUpdateDTO[] = comic.resources.map((res) => {
       const comicResource = res;
       const siteDataId = comicResource.siteData._id;
-      const returnRes: ResourceCreateDTO = {
+      const returnRes: ResourceUpdateDTO = {
         link: comicResource.link,
         type: comicResource.type,
         siteData: siteDataId,
         priority: comicResource.priority,
+        _id: comicResource._id,
       };
       return returnRes;
     });
 
-    const comicCreateForm: ComicCreateDTO = {
+    const comicCreateForm: ComicUpdateDTO = {
       name: comic.name,
       altNames: comic.altNames,
       resources: resources,
@@ -50,7 +53,7 @@ export class ComicEditForm extends FormGroup<
   }
 
   public override setValue(
-    value: ComicCreateDTO,
+    value: ComicUpdateDTO,
     options?:
       | { onlySelf?: boolean | undefined; emitEvent?: boolean | undefined }
       | undefined,
@@ -76,7 +79,7 @@ export class ComicEditForm extends FormGroup<
     );
   }
 
-  public addResourceFormGroup(value?: ResourceCreateDTO): void {
+  public addResourceFormGroup(value?: ResourceUpdateDTO): void {
     const length = this.controls.resources.length;
     this.controls.resources.push(
       new FormGroup({
@@ -93,6 +96,16 @@ export class ComicEditForm extends FormGroup<
         }),
         priority: new FormControl(
           { value: value?.priority || length, disabled: true },
+          {
+            validators: [Validators.required],
+            nonNullable: true,
+          },
+        ),
+        _id: new FormControl(
+          {
+            value: value?._id || "",
+            disabled: true,
+          },
           {
             validators: [Validators.required],
             nonNullable: true,

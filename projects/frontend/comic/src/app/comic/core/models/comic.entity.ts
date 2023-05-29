@@ -22,8 +22,6 @@ export type ComicCreateDTO = Pick<ComicEntity, "name" | "altNames"> & {
   resources: ResourceCreateDTO[];
 };
 
-export type ComicUpdateDTO = Partial<
-  Pick<ComicEntity, "name" | "altNames"> & {
-    resources: ResourceUpdateDTO[];
-  }
->;
+export type ComicUpdateDTO = Pick<ComicEntity, "name" | "altNames"> & {
+  resources: ResourceUpdateDTO[];
+};
