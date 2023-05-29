@@ -13,7 +13,7 @@ import { FORM_EDIT_DATA } from "../tokens";
 export class ComicEditForm extends FormGroup<
   BaseFormAbstractor<ComicUpdateDTO>
 > {
-  private readonly comic = inject(FORM_EDIT_DATA);
+  //private readonly comic = inject(FORM_EDIT_DATA);
   constructor() {
     super({
       name: new FormControl<string>("", {
@@ -25,8 +25,6 @@ export class ComicEditForm extends FormGroup<
         FormGroup<BaseFormAbstractor<ResourceUpdateDTO>>
       >([]),
     });
-    const upd = ComicEditForm.ComicCreateFormConvector(this.comic);
-    this.setValue(upd);
   }
 
   public static ComicCreateFormConvector(comic: ComicEntity): ComicUpdateDTO {
