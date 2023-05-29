@@ -1,19 +1,18 @@
-import { Injector } from "@angular/core";
+import { inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { IBaseApiService } from "../interfaces";
 
-export class BaseApiService<
+export abstract class BaseApiService<
   Entity,
   CreateEntity = Entity,
   UpdateEntity = Entity,
 > implements IBaseApiService<Entity, CreateEntity, UpdateEntity>
 {
   protected apiPath: string;
-  protected http: HttpClient;
+  protected http: HttpClient = inject(HttpClient);
 
-  constructor(injector: Injector, apiPath: string) {
-    this.http = injector.get(HttpClient);
+  constructor(apiPath: string) {
     this.apiPath = apiPath;
   }
 
