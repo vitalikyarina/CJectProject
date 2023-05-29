@@ -6,9 +6,6 @@
         "projects/backend/libs/configuration/src/index.ts"
       ],
       "@cjp-back/shared": ["projects/backend/libs/shared/src/index.ts"],
-      "@cjp-back/static-files": [
-        "projects/backend/libs/static-files/src/index.ts"
-      ],
       "@cjp-back/mongo": ["projects/backend/libs/mongo/src/index.ts"],
       "@cjp-back/mongo/comic": [
         "projects/backend/libs/mongo/src/lib/schemas/comic/index.ts"
