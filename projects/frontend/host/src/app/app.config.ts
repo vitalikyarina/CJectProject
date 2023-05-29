@@ -4,7 +4,8 @@ import {
   withEnabledBlockingInitialNavigation,
 } from "@angular/router";
 import { provideHttpClient } from "@angular/common/http";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { NgxsModule } from "@ngxs/store";
 
 import { routes } from "./app.routes";
 
@@ -12,6 +13,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
     provideRouter(routes, withEnabledBlockingInitialNavigation()),
-    importProvidersFrom(BrowserAnimationsModule),
+    provideAnimations(),
+    importProvidersFrom(NgxsModule.forRoot([])),
   ],
 };
