@@ -1,14 +1,10 @@
-import { Route } from "@angular/router";
+import { Routes } from "@angular/router";
 import { RemoteEntryComponent } from "./comic-layout.component";
 import { ComicRoute } from "./core/enums";
-import {
-  ComicCreateComponent,
-  ComicsComponent,
-  ComicEditComponent,
-} from "./pages";
+import { ComicCreateComponent, ComicsComponent } from "./pages";
 import { ROUTE_PROVIDERS } from "./core";
 
-export const remoteRoutes: Route[] = [
+export const remoteRoutes: Routes = [
   {
     path: "",
     component: RemoteEntryComponent,
@@ -23,7 +19,7 @@ export const remoteRoutes: Route[] = [
       },
       {
         path: ComicRoute.EDIT,
-        component: ComicEditComponent,
+        loadChildren: () => import("./pages").then((r) => r.ComicEditRoutes),
       },
     ],
     providers: ROUTE_PROVIDERS,

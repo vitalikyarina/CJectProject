@@ -1,7 +1,9 @@
 <cjp-content-section>
   <cjp-content-section-title>Edit new comic</cjp-content-section-title>
-  <cjp-content-section-content class="comic__content">
-    <cjp-comic-edit-form [sites]="sites()"></cjp-comic-edit-form>
+  <cjp-content-section-content
+    class="comic__content"
+    *ngIf="sites$ | async as sites">
+    <cjp-comic-edit-form [sites]="sites"></cjp-comic-edit-form>
   </cjp-content-section-content>
   <cjp-content-section-action>
     <div>

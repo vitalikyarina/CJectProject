@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Signal,
-  inject,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
   ContentSectionActionComponent,
@@ -20,7 +15,6 @@ import { ComicService } from "../../services";
 import { Select } from "@ngxs/store";
 import { ComicState } from "../../core";
 import { Observable } from "rxjs";
-import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   standalone: true,
@@ -40,9 +34,6 @@ import { toSignal } from "@angular/core/rxjs-interop";
 })
 export class ComicEditComponent {
   @Select(ComicState.sites) public sites$!: Observable<SiteEntity[]>;
-  public sites: Signal<SiteEntity[]> = toSignal<SiteEntity[]>(
-    this.sites$,
-  ) as Signal<SiteEntity[]>;
 
   private readonly formGroup: ComicEditForm = inject(ComicEditForm);
   private readonly router: Router = inject(Router);
