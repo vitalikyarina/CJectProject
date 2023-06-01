@@ -4,7 +4,7 @@ import { BaseFormAbstractor } from "@cjp-front/shared";
 import {
   ComicCreateDTO,
   ComicEntity,
-  ResourceCreateDTO,
+  ResourceDTO,
 } from "../../../core/models";
 import { ResourceType } from "@cjp/shared/comic";
 
@@ -20,7 +20,7 @@ export class ComicCreateForm extends FormGroup<
       }),
       altNames: new FormArray<FormControl>([]),
       resources: new FormArray<
-        FormGroup<BaseFormAbstractor<ResourceCreateDTO>>
+        FormGroup<BaseFormAbstractor<ResourceDTO>>
       >([]),
     });
 
@@ -28,10 +28,10 @@ export class ComicCreateForm extends FormGroup<
   }
 
   public static ComicCreateFormConvector(comic: ComicEntity): ComicCreateDTO {
-    const resources: ResourceCreateDTO[] = comic.resources.map((res) => {
+    const resources: ResourceDTO[] = comic.resources.map((res) => {
       const comicResource = res;
       const siteDataId = comicResource.siteData._id;
-      const returnRes: ResourceCreateDTO = {
+      const returnRes: ResourceDTO = {
         link: comicResource.link,
         type: comicResource.type,
         siteData: siteDataId,
@@ -76,7 +76,7 @@ export class ComicCreateForm extends FormGroup<
     );
   }
 
-  public addResourceFormGroup(value?: ResourceCreateDTO): void {
+  public addResourceFormGroup(value?: ResourceDTO): void {
     const length = this.controls.resources.length;
     this.controls.resources.push(
       new FormGroup({
