@@ -1,19 +1,18 @@
 import { Injectable, inject } from "@angular/core";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { BaseFormAbstractor } from "@cjp-front/shared";
+
+import { ResourceType } from "@cjp/shared/comic";
 import {
   ComicEntity,
   ComicUpdateDTO,
+  FORM_EDIT_DATA,
   ResourceUpdateDTO,
-} from "../../../core/models";
-import { ResourceType } from "@cjp/shared/comic";
-import { FORM_EDIT_DATA } from "../tokens";
+} from "@cjp-front/comic/core";
 
 @Injectable()
-export class ComicEditForm extends FormGroup<
-  BaseFormAbstractor<ComicUpdateDTO>
-> {
-  //private readonly comic = inject(FORM_EDIT_DATA);
+export class ComicForm extends FormGroup<BaseFormAbstractor<ComicUpdateDTO>> {
+  private readonly comic = inject(FORM_EDIT_DATA);
   constructor() {
     super({
       name: new FormControl<string>("", {
@@ -25,6 +24,7 @@ export class ComicEditForm extends FormGroup<
         FormGroup<BaseFormAbstractor<ResourceUpdateDTO>>
       >([]),
     });
+    console.log(this.comic);
   }
 
   public static ComicCreateFormConvector(comic: ComicEntity): ComicUpdateDTO {

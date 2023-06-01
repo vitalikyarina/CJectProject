@@ -1,6 +1,6 @@
 import { ComicStatus, ComicTag, IComic } from "@cjp/shared/comic";
 import {
-  ResourceCreateDTO,
+  ResourceDTO,
   ResourceEntity,
   ResourceUpdateDTO,
 } from "./comic-resource.entity";
@@ -19,7 +19,7 @@ export class ComicEntity implements IComic {
 }
 
 export type ComicCreateDTO = Pick<ComicEntity, "name" | "altNames"> & {
-  resources: ResourceCreateDTO[];
+  resources: ResourceDTO[];
 };
 
 export type ComicUpdateDTO = Pick<ComicEntity, "name" | "altNames"> & {

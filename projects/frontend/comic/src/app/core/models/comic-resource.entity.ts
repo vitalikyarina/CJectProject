@@ -10,10 +10,10 @@ export class ResourceEntity implements IResource {
   public errorType!: ResourceError;
 }
 
-export type ResourceCreateDTO = Pick<
-  ResourceEntity,
-  "link" | "type" | "priority"
-> & { siteData: string };
+export type ResourceDTO = Pick<ResourceEntity, "link" | "type" | "priority"> & {
+  siteData: string;
+  _id: string | null;
+};
 
 export type ResourceUpdateDTO = Pick<
   ResourceEntity,
