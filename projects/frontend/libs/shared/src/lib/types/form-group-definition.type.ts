@@ -1,14 +1,14 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { DefaultKey } from "./key.type";
 
-export type FormGroupTransform<T> = {
+export type FormGroupDef<T> = {
   [K in keyof T]: T[K] extends Array<infer R>
     ? FormArray<
         R extends Record<DefaultKey, unknown>
-          ? FormGroup<FormGroupTransform<R>>
+          ? FormGroup<FormGroupDef<R>>
           : FormControl<R>
       >
     : T[K] extends Record<DefaultKey, unknown>
-    ? FormGroup<FormGroupTransform<T[K]>>
+    ? FormGroup<FormGroupDef<T[K]>>
     : FormControl<T[K]>;
 };

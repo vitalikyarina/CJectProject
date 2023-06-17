@@ -1,2 +1,2 @@
-export * from "./form-group-transform.type";
+export * from "./form-group-definition.type";
 export * from "./key.type";
