@@ -55,7 +55,33 @@
           "always",
           { "exceptAfterSingleLine": true }
         ],
-        "eslint-disable-next-line": "off"
+        "eslint-disable-next-line": "off",
+        "@typescript-eslint/member-ordering": [
+          "error",
+          {
+            "default": [
+              "signature",
+              "public-static-field",
+              "protected-static-field",
+              "private-static-field",
+              "public-instance-field",
+              "protected-instance-field",
+              "private-instance-field",
+              "public-abstract-field",
+              "protected-abstract-field",
+              "public-constructor",
+              "protected-constructor",
+              "public-static-method",
+              "protected-static-method",
+              "private-static-method",
+              "public-instance-method",
+              "protected-instance-method",
+              "private-instance-method",
+              "public-abstract-method",
+              "protected-abstract-method"
+            ]
+          }
+        ]
       }
     }
   ]
