@@ -9,7 +9,5 @@ export class ApiSiteService extends BaseApiService<
   SiteCreateDTO,
   SiteUpdateDTO
 > {
-  constructor() {
-    super(ComicsApi.COMIC_SITE);
-  }
+  protected override apiPath: string = ComicsApi.COMIC_SITE;
 }

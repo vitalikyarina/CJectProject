@@ -9,12 +9,8 @@ export abstract class BaseApiService<
   UpdateEntity = Entity,
 > implements IBaseApiService<Entity, CreateEntity, UpdateEntity>
 {
-  protected apiPath: string;
+  protected apiPath!: string;
   protected http: HttpClient = inject(HttpClient);
-
-  constructor(apiPath: string) {
-    this.apiPath = apiPath;
-  }
 
   public getAll(): Observable<Entity[]> {
     return this.http.get<Entity[]>(`/api/${this.apiPath}`);
