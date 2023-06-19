@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { IBaseApiService } from "@cjp-front/shared";
 import { Observable } from "rxjs";
-import { ComicCreateDTO, ComicEntity, ComicUpdateDTO } from "../core/models";
+import { ComicDTO, ComicEntity } from "../core/models";
 import { ApiComicService } from "../core/api";
 
 @Injectable()
 export class ComicService
-  implements IBaseApiService<ComicEntity, ComicCreateDTO, ComicUpdateDTO>
+  implements IBaseApiService<ComicEntity, ComicDTO, ComicDTO>
 {
   constructor(private readonly comicApiService: ApiComicService) {}
 
@@ -18,13 +18,13 @@ export class ComicService
     return this.comicApiService.getById(id);
   }
 
-  public createOne(data: ComicCreateDTO): Observable<ComicEntity> {
+  public createOne(data: ComicDTO): Observable<ComicEntity> {
     return this.comicApiService.createOne(data);
   }
 
   public updateOneById(
     id: string,
-    updateEntity: ComicUpdateDTO,
+    updateEntity: ComicDTO,
   ): Observable<ComicEntity> {
     return this.comicApiService.updateOneById(id, updateEntity);
   }

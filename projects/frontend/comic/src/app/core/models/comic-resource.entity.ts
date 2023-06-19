@@ -14,8 +14,3 @@ export type ResourceDTO = Pick<ResourceEntity, "link" | "type" | "priority"> & {
   siteData: string;
   _id: string | null;
 };
-
-export type ResourceUpdateDTO = Pick<
-  ResourceEntity,
-  "link" | "type" | "_id" | "priority"
-> & { siteData: string };

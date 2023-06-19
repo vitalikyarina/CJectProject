@@ -3,7 +3,7 @@
   <cjp-content-section-content
     class="comic__content"
     *ngIf="sites$ | async as sites">
-    <cjp-comic-edit-form [sites]="sites"></cjp-comic-edit-form>
+    <cjp-comic-form [sites]="sites" />
   </cjp-content-section-content>
   <cjp-content-section-action>
     <div>

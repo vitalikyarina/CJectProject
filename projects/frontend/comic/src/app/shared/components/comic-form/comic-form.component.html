@@ -1,10 +1,11 @@
-<form [formGroup]="formGroup" (ngSubmit)="submit()">
+<form [formGroup]="formGroup">
   <cjp-form-group>
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
       <input matInput [formControl]="formGroup.controls.name" id="comic_name" />
     </mat-form-field>
   </cjp-form-group>
+
   <cjp-form-group formArrayName="altNames">
     <mat-form-field
       appearance="outline"
@@ -22,7 +23,7 @@
       type="button"
       mat-stroked-button
       color="primary"
-      (click)="addAltName()">
+      (click)="addNewAltName()">
       Add alt name
     </button>
   </cjp-form-group>
@@ -34,9 +35,15 @@
     <ng-container
       *ngFor="
         let rscForm of formGroup.controls.resources.controls;
-        let i = index
+        let i = index;
+        trackBy: trackByFn
       ">
-      <cjp-form-group-row cdkDrag [formGroup]="rscForm">
+      <div
+        gdColumns="repeat(4, 1fr)"
+        gdGap="10px"
+        gdColumn="1 / 7"
+        cdkDrag
+        [formGroup]="rscForm">
         <mat-form-field appearance="outline">
           <mat-label>Link {{ i + 1 }}</mat-label>
           <input matInput formControlName="link" id="link_{{ i }}" />
@@ -52,15 +59,6 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" [hidden]="true">
-          <mat-label>Priority {{ i + 1 }}</mat-label>
-          <input
-            type="number"
-            matInput
-            formControlName="priority"
-            id="priority_{{ i }}"
-            min="0" />
-        </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Find site {{ i + 1 }}</mat-label>
           <mat-select formControlName="siteData">
@@ -69,16 +67,26 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div fxLayout="row" fxLayoutAlign="end center" gdColumn="6">
-          <button [disabled]="i === 0" mat-icon-button color="warn">
-            <mat-icon fontIcon="delete"></mat-icon>
-          </button>
-          <mat-icon cdkDragHandle fontIcon="swap_vert"></mat-icon>
+        <div>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button
+              [disabled]="i === 0"
+              mat-icon-button
+              color="warn"
+              (click)="delResource(i)">
+              <mat-icon fontIcon="delete"></mat-icon>
+            </button>
+            <mat-icon cdkDragHandle fontIcon="swap_vert"></mat-icon>
+          </div>
         </div>
-      </cjp-form-group-row>
+      </div>
     </ng-container>
 
-    <button mat-stroked-button type="button" color="primary">
+    <button
+      mat-stroked-button
+      type="button"
+      color="primary"
+      (click)="addNewResource()">
       Add resource
     </button>
   </cjp-form-group>

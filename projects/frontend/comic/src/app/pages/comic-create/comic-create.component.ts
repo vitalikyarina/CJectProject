@@ -1,21 +1,21 @@
-import { Component, Signal, inject, signal } from "@angular/core";
+import { Component, Signal, ViewChild, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ComicCreateForm } from "./forms";
 import {
   ContentSectionActionComponent,
   ContentSectionComponent,
   ContentSectionContentComponent,
   ContentSectionTitleComponent,
 } from "@cjp-front/content-section";
-import { ComicCreateFormComponent } from "./components";
 import { Router } from "@angular/router";
 import { ComicService } from "../../services";
-import { ComicCreateDTO, SiteEntity } from "../../core/models";
+import { ComicDTO, SiteEntity } from "../../core/models";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { Select } from "@ngxs/store";
 import { ComicState } from "../../core";
 import { Observable } from "rxjs";
-import { toSignal } from "@angular/core/rxjs-interop";
+import { ComicFormComponent } from "@cjp-front/comic/shared";
+import { MatButtonModule } from "@angular/material/button";
+import { ComicForm } from "@cjp-front/comic/shared/components/comic-form/forms";
 
 @UntilDestroy()
 @Component({
@@ -26,33 +26,39 @@ import { toSignal } from "@angular/core/rxjs-interop";
     ContentSectionTitleComponent,
     ContentSectionContentComponent,
     ContentSectionActionComponent,
-    ComicCreateFormComponent,
+    ComicFormComponent,
+    MatButtonModule,
   ],
   templateUrl: "./comic-create.component.html",
   styleUrls: ["./comic-create.component.scss"],
-  providers: [ComicCreateForm],
+  providers: [ComicForm],
 })
 export class ComicCreateComponent {
   @Select(ComicState.sites) public sites$!: Observable<SiteEntity[]>;
-  public sites: Signal<SiteEntity[]> = toSignal<SiteEntity[]>(
-    this.sites$,
-  ) as Signal<SiteEntity[]>;
 
-  private readonly formGroup: ComicCreateForm = inject(ComicCreateForm);
+  public readonly form: ComicForm = inject(ComicForm);
+
   private readonly router: Router = inject(Router);
   private readonly comicService: ComicService = inject(ComicService);
 
   protected onClick(): void {
-    if (this.formGroup.valid) {
-      console.log(this.formGroup.getRawValue());
-      this.comicService
-        .createOne(this.formGroup.getRawValue() as ComicCreateDTO)
-        .pipe(untilDestroyed(this))
-        .subscribe((createdComic) => {
-          console.log(createdComic);
+    //this.form.controls.resources.updateValueAndValidity();
+    if (this.form.valid) {
+      console.log(this.form.value);
+    } else {
+      console.log(this.form);
 
-          this.router.navigateByUrl("/comics");
-        });
+      console.log(this.form.getRawValue());
     }
+    // if (this.formGroup.valid) {
+    //   console.log(this.formGroup.getRawValue());
+    //   this.comicService
+    //     .createOne(this.formGroup.getRawValue() as ComicDTO)
+    //     .pipe(untilDestroyed(this))
+    //     .subscribe((createdComic) => {
+    //       console.log(createdComic);
+    //       this.router.navigateByUrl("/comics");
+    //     });
+    // }
   }
 }

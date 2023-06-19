@@ -1,4 +1,10 @@
-import { Component, HostBinding, Input } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Input,
+  inject,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { GridModule } from "@angular/flex-layout";
 
@@ -9,9 +15,8 @@ import { GridModule } from "@angular/flex-layout";
   templateUrl: "./form-group-row.component.html",
 })
 export class FormGroupRowComponent {
-  @HostBinding("style.grid-column-end") public gridColumnEnd = "7";
-  @HostBinding("style.grid-column-start") public gridColumnStart = "1";
   protected columnStyle = "repeat(6, 1fr)";
+  protected gridColumn = "1 / 7";
 
   @Input() public get column(): number {
     return this._column;
@@ -21,9 +26,12 @@ export class FormGroupRowComponent {
     if (!!value && value !== this._column) {
       this._column = value;
       this.columnStyle = "repeat(" + this._column + ", 1fr)";
-      this.gridColumnEnd = (this._column + 1).toString();
+      this.gridColumn = "1 / " + (this._column + 1).toString();
+      this.cd.detectChanges();
     }
   }
+
+  private cd = inject(ChangeDetectorRef);
 
   private _column = 6;
 }
