@@ -1,9 +1,7 @@
-import { FormControl } from "@angular/forms";
-
 export interface IResourceForm {
-  link: FormControl<string>;
-  type: FormControl<number>;
-  siteData: FormControl<string>;
-  priority: FormControl<number>;
-  _id: FormControl<string | null>;
+  link: string;
+  type: number;
+  siteData: string;
+  priority: number;
+  _id: string | null;
 }
