@@ -15,7 +15,6 @@ import { ComicState } from "../../core";
 import { Observable } from "rxjs";
 import { ComicFormComponent } from "@cjp-front/comic/shared";
 import { MatButtonModule } from "@angular/material/button";
-import { ComicForm } from "@cjp-front/comic/shared/components/comic-form/forms";
 
 @UntilDestroy()
 @Component({
@@ -31,25 +30,18 @@ import { ComicForm } from "@cjp-front/comic/shared/components/comic-form/forms";
   ],
   templateUrl: "./comic-create.component.html",
   styleUrls: ["./comic-create.component.scss"],
-  providers: [ComicForm],
 })
 export class ComicCreateComponent {
   @Select(ComicState.sites) public sites$!: Observable<SiteEntity[]>;
 
-  public readonly form: ComicForm = inject(ComicForm);
+  @ViewChild("form") form!: ComicFormComponent;
 
   private readonly router: Router = inject(Router);
   private readonly comicService: ComicService = inject(ComicService);
 
   protected onClick(): void {
     //this.form.controls.resources.updateValueAndValidity();
-    if (this.form.valid) {
-      console.log(this.form.value);
-    } else {
-      console.log(this.form);
-
-      console.log(this.form.getRawValue());
-    }
+    this.form.submit();
     // if (this.formGroup.valid) {
     //   console.log(this.formGroup.getRawValue());
     //   this.comicService
@@ -60,5 +52,9 @@ export class ComicCreateComponent {
     //       this.router.navigateByUrl("/comics");
     //     });
     // }
+  }
+
+  protected onSubmit(event: any): void {
+    console.log(event);
   }
 }

@@ -3,12 +3,12 @@
   <cjp-content-section-content
     class="comic__content"
     *ngIf="sites$ | async as sites">
-    <cjp-comic-form [sites]="sites" />
+    <cjp-comic-form #form [sites]="sites" (submitForm)="onSubmit($event)" />
   </cjp-content-section-content>
   <cjp-content-section-action>
     <div>
       <button mat-raised-button color="primary" (click)="onClick()">
-        Click
+        Submit
       </button>
     </div>
   </cjp-content-section-action>
