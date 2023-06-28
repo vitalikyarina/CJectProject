@@ -1,0 +1,35 @@
+@use "@angular/material" as mat;
+@use "sass:map";
+@use "./components/buttons" as button-variants;
+@import "./palettes/base-palette.scss";
+@include mat.core();
+
+$my-primary: mat.define-palette($app-base);
+$my-accent: mat.define-palette($app-access);
+$my-success: mat.define-palette($app-success);
+$my-info: mat.define-palette($app-info);
+$my-warning: mat.define-palette($app-warning);
+$my-help: mat.define-palette($app-help);
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+$variants-theme: (
+  success: $my-success,
+  info: $my-info,
+  warning: $my-warning,
+  help: $my-help,
+);
+
+@include mat.all-component-themes($my-theme);
+
+@include button-variants.theme($my-theme, $variants-theme);

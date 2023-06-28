@@ -8,19 +8,23 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/projects/frontend/host",
         "index": "projects/frontend/host/src/index.html",
         "main": "projects/frontend/host/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "projects/frontend/host/tsconfig.app.json",
         "assets": [
           "projects/frontend/host/src/favicon.ico",
           "projects/frontend/host/src/assets"
         ],
         "styles": [
-          "@angular/material/prebuilt-themes/indigo-pink.css",
+          "projects/frontend/assets/styles/themes/base.scss",
           "projects/frontend/host/src/styles.scss",
           "projects/frontend/assets/styles/reset.scss",
           "projects/frontend/assets/styles/elements.scss"
@@ -73,7 +77,9 @@
         },
         "development": {
           "browserTarget": "frontend-host:build:development",
-          "devRemotes": ["frontend-comic"]
+          "devRemotes": [
+            "frontend-comic"
+          ]
         }
       },
       "defaultConfiguration": "development"
