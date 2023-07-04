@@ -92,7 +92,8 @@
     },
     "@nx/angular:directive": {
       "skipImport": true,
-      "standalone": true
+      "standalone": true,
+      "skipTests": true
     },
     "@schematics/angular:class": {
       "skipTests": true
