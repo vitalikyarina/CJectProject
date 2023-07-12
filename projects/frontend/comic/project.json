@@ -87,6 +87,22 @@
         "browserTarget": "frontend-comic:build"
       }
     },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "projects/frontend/comic/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "defaultConfiguration": "development",
