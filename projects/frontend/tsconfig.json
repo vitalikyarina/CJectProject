@@ -6,6 +6,9 @@
       "@cjp/shared/comic": ["projects/shared/comic"],
       "@cjp-front/comic/*": ["projects/frontend/comic/src/app/*"],
       "@cjp-front/shared": ["projects/frontend/libs/shared/src/index.ts"],
+      "@cjp-front/state": [
+        "projects/frontend/libs/state/src/index.ts"
+      ],
       "@cjp-front/content-section": [
         "projects/frontend/libs/content-section/src/index.ts"
       ],

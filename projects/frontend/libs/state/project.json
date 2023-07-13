@@ -1,0 +1,9 @@
+{
+  "name": "frontend-libs-state",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "projects/frontend/libs/state/src",
+  "prefix": "cjp",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}
