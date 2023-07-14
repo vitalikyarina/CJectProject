@@ -3,14 +3,28 @@ import { SiteEntity } from "./comic-site.entity";
 
 export class ResourceEntity implements IResource {
   public _id!: string;
-  public link!: string;
+  public path!: string;
   public type!: ResourceType;
   public priority!: number;
   public siteData!: SiteEntity;
   public errorType!: ResourceError;
 }
 
-export type ResourceDTO = Pick<ResourceEntity, "link" | "type" | "priority"> & {
+export type ResourceDTO = Pick<ResourceEntity, "path" | "type" | "priority"> & {
   siteData: string;
   _id: string | null;
 };
+
+export class ResourceAdapter {
+  public static REtoRDTO(value: ResourceEntity): ResourceDTO {
+    const adaptValue: ResourceDTO = {
+      _id: value._id,
+      path: value.path,
+      priority: value.priority,
+      siteData: value.siteData._id,
+      type: value.type,
+    };
+
+    return adaptValue;
+  }
+}
