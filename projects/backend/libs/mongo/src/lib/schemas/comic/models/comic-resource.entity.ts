@@ -9,7 +9,7 @@ export class ResourceEntity implements IResource {
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public link!: string;
+  public path!: string;
 
   @ApiProperty({ nullable: false, type: Number })
   @IsNotEmpty()

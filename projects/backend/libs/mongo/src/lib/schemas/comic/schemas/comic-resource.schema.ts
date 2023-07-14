@@ -9,7 +9,7 @@ export type ResourceDocument = HydratedDocument<Resource>;
 @Schema()
 export class Resource implements IResource {
   @Prop({ required: true })
-  public link: string;
+  public path: string;
 
   @Prop({
     type: Number,
