@@ -1,4 +1,4 @@
 import { FormGroupDef } from "@cjp-front/shared";
-import { IComicForm } from "../interfaces";
+import { ComicDTO } from "@cjp-front/comic/core";
 
-export type ComicFormDef = FormGroupDef<IComicForm>;
+export type ComicFormDef = FormGroupDef<ComicDTO>;

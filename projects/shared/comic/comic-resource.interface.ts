@@ -1,7 +1,7 @@
 import { ResourceError, ResourceType } from "./enums";
 
 export interface IResource {
-  link: string;
+  path: string;
   type: ResourceType;
   siteData: unknown;
   priority: number;

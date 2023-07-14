@@ -1,4 +1,4 @@
+import { ResourceDTO } from "@cjp-front/comic/core";
 import { FormGroupDef } from "@cjp-front/shared";
-import { IResourceForm } from "../interfaces";
 
-export type ResourceFormDef = FormGroupDef<IResourceForm>;
+export type ResourceFormDef = FormGroupDef<ResourceDTO>;
