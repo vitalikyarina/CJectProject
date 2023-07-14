@@ -1,18 +1,13 @@
-import {
-  EnvironmentProviders,
-  Provider,
-  importProvidersFrom,
-} from "@angular/core";
+import { EnvironmentProviders, Provider } from "@angular/core";
 import { ApiComicService, ApiSiteService } from "../api";
-import { ComicService, SiteService } from "../../services";
-import { ComicState } from "../states";
-import { NgxsModule } from "@ngxs/store";
+import { ComicService, SiteService } from "../services";
+import { ComicState, SiteState } from "../states";
 
 export const ROUTE_PROVIDERS: Array<Provider | EnvironmentProviders> = [
-  importProvidersFrom(NgxsModule.forFeature([ComicState])),
   ApiComicService,
   ApiSiteService,
+  ComicState,
+  SiteState,
   SiteService,
   ComicService,
-  ComicState,
 ];
