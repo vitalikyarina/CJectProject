@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { IBaseApiService } from "@cjp-front/shared";
 import { Observable } from "rxjs";
-import { ComicDTO, ComicEntity } from "../core/models";
-import { ApiComicService } from "../core/api";
+import { ComicDTO, ComicEntity } from "../models";
+import { ApiComicService } from "../api";
 
 @Injectable()
 export class ComicService
   implements IBaseApiService<ComicEntity, ComicDTO, ComicDTO>
 {
-  constructor(private readonly comicApiService: ApiComicService) {}
+  private readonly comicApiService = inject(ApiComicService);
 
   public getAll(): Observable<ComicEntity[]> {
     return this.comicApiService.getAll();

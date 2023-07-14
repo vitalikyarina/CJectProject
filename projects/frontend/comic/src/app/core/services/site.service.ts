@@ -1,17 +1,17 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Observable } from "rxjs";
-import { SiteCreateDTO, SiteEntity, SiteUpdateDTO } from "../core/models";
+import { SiteCreateDTO, SiteEntity, SiteUpdateDTO } from "../models";
 import { IBaseApiService } from "@cjp-front/shared";
-import { ApiSiteService } from "../core/api";
+import { ApiSiteService } from "../api";
 
 @Injectable()
 export class SiteService
   implements IBaseApiService<SiteEntity, SiteCreateDTO, SiteUpdateDTO>
 {
-  constructor(private readonly comicSiteApiService: ApiSiteService) {}
+  private readonly comicSiteApiService = inject(ApiSiteService);
 
   public getAll(): Observable<SiteEntity[]> {
-    return this.comicSiteApiService.getAll();
+    return this.comicSiteApiService.getAll().pipe();
   }
 
   public getById(id: string): Observable<SiteEntity> {
@@ -23,7 +23,9 @@ export class SiteService
   }
 
   public updateOneById(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     id: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     updateEntity: SiteUpdateDTO,
   ): Observable<SiteEntity> {
     throw new Error("Method not implemented.");
