@@ -1,0 +1,9 @@
+<ng-container *ngIf="isLoaded(); else loading">
+  <router-outlet />
+</ng-container>
+
+<ng-template #loading>
+  <div class="comic-layout" fxLayoutAlign="center center">
+    <mat-spinner>Loading</mat-spinner>
+  </div>
+</ng-template>
