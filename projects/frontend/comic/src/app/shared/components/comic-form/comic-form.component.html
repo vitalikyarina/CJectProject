@@ -15,15 +15,19 @@
       ">
       <mat-label>Alt Name {{ i + 1 }}</mat-label>
       <input matInput [formControl]="altName" id="alt_name_{{ i }}" />
-      <button mat-icon-button matSuffix color="warn" (click)="delAltName(i)">
-        <mat-icon cdkDragHandle fontIcon="delete"></mat-icon>
+      <button
+        mat-icon-button
+        matSuffix
+        color="warn"
+        (click)="removeAltNameControl(i)">
+        <mat-icon fontIcon="delete"></mat-icon>
       </button>
     </mat-form-field>
     <button
       type="button"
       mat-stroked-button
       color="primary"
-      (click)="addNewAltName()">
+      (click)="addAltNameControl()">
       Add alt name
     </button>
   </cjp-form-group>
@@ -42,11 +46,16 @@
         gdColumns="repeat(6, 1fr)"
         gdGap="10px"
         gdColumn="1 / 7"
+        gdAlignColumns="center center"
         cdkDrag
         [formGroup]="rscForm">
         <mat-form-field appearance="outline">
-          <mat-label>Link {{ i + 1 }}</mat-label>
-          <input matInput formControlName="link" id="link_{{ i }}" />
+          <mat-label>Path {{ i + 1 }}</mat-label>
+          <input
+            matInput
+            [formControl]="rscForm.controls.path"
+            id="path_{{ i }}"
+            (paste)="onPaste($event, i)" />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Type {{ i + 1 }}</mat-label>
@@ -67,16 +76,17 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+
         <div gdColumn="6 / 7">
           <div fxLayout="row" fxLayoutAlign="end center">
             <button
               [disabled]="i === 0"
               mat-icon-button
               color="warn"
-              (click)="delResource(i)">
-              <mat-icon fontIcon="delete"></mat-icon>
+              (click)="removeResourceForm(i)">
+              <mat-icon fontIcon="delete" />
             </button>
-            <mat-icon cdkDragHandle fontIcon="swap_vert"></mat-icon>
+            <mat-icon cdkDragHandle fontIcon="swap_vert" />
           </div>
         </div>
       </div>
@@ -86,7 +96,7 @@
       mat-stroked-button
       type="button"
       color="primary"
-      (click)="addNewResource()">
+      (click)="addResourceForm()">
       Add resource
     </button>
   </cjp-form-group>
