@@ -1,19 +1,14 @@
-import { Injectable, inject } from "@angular/core";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ComicFormDef, ResourceFormDef } from "../types";
-import { COMIC_FORM_VALUE } from "../tokens";
 import { ComicDTO } from "@cjp-front/comic/core";
 import { ResourceType } from "@cjp/shared/comic";
 
-@Injectable()
 export class ComicForm extends FormGroup<ComicFormDef> {
-  private readonly data: ComicDTO = inject(COMIC_FORM_VALUE);
-
   public get resourceForms(): FormArray<FormGroup<ResourceFormDef>> {
     return this.controls.resources;
   }
 
-  constructor() {
+  constructor(readonly data: ComicDTO) {
     super({
       name: new FormControl("", {
         validators: [Validators.required],
