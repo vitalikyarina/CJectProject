@@ -1,4 +1,4 @@
-import { Component, Signal, ViewChild, inject } from "@angular/core";
+import { Component, ViewChild, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
   ContentSectionActionComponent,
@@ -6,15 +6,12 @@ import {
   ContentSectionContentComponent,
   ContentSectionTitleComponent,
 } from "@cjp-front/content-section";
-import { Router } from "@angular/router";
-import { ComicService } from "../../services";
-import { ComicDTO, SiteEntity } from "../../core/models";
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { Select } from "@ngxs/store";
-import { ComicState } from "../../core";
-import { Observable } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
+import { UntilDestroy } from "@ngneat/until-destroy";
 import { ComicFormComponent } from "@cjp-front/comic/shared";
 import { MatButtonModule } from "@angular/material/button";
+import { ComicState, SiteState } from "@cjp-front/comic/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @UntilDestroy()
 @Component({
@@ -32,29 +29,24 @@ import { MatButtonModule } from "@angular/material/button";
   styleUrls: ["./comic-create.component.scss"],
 })
 export class ComicCreateComponent {
-  @Select(ComicState.sites) public sites$!: Observable<SiteEntity[]>;
-
   @ViewChild("form") form!: ComicFormComponent;
 
   private readonly router: Router = inject(Router);
-  private readonly comicService: ComicService = inject(ComicService);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  readonly comicState = inject(ComicState);
+  readonly siteState = inject(SiteState);
 
-  protected onClick(): void {
-    //this.form.controls.resources.updateValueAndValidity();
-    this.form.submit();
-    // if (this.formGroup.valid) {
-    //   console.log(this.formGroup.getRawValue());
-    //   this.comicService
-    //     .createOne(this.formGroup.getRawValue() as ComicDTO)
-    //     .pipe(untilDestroyed(this))
-    //     .subscribe((createdComic) => {
-    //       console.log(createdComic);
-    //       this.router.navigateByUrl("/comics");
-    //     });
-    // }
+  constructor() {
+    this.comicState.createComicSuccess$
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.router.navigate(["../"], {
+          relativeTo: this.route,
+        });
+      });
   }
 
-  protected onSubmit(event: any): void {
-    console.log(event);
+  protected onClick(): void {
+    this.form.submit();
   }
 }
