@@ -2,7 +2,7 @@ import { Injectable, computed, inject, signal } from "@angular/core";
 import { ComicDTO, ComicEntity } from "../models";
 import { ArrayState, StateStatus } from "@cjp-front/state";
 import { ComicService } from "../services";
-import { Subject, retry, switchMap } from "rxjs";
+import { EMPTY, Subject, retry, switchMap } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { IComicState } from "../interfaces";
 
@@ -37,6 +37,8 @@ export class ComicState extends ArrayState<ComicEntity> {
 
   createComic$ = new Subject<ComicDTO>();
   createComicSuccess$ = new Subject<void>();
+  updateComic$ = new Subject<ComicDTO>();
+  updateComicSuccess$ = new Subject<void>();
 
   selectedId$ = new Subject<string | null>();
 
@@ -70,6 +72,30 @@ export class ComicState extends ArrayState<ComicEntity> {
           data: [...state.data, newComic],
         }));
         this.createComicSuccess$.next();
+      });
+
+    this.updateComic$
+      .pipe(
+        switchMap((comic) => {
+          const id = this.state().selectedId;
+          if (id) {
+            return this.comicService.updateOneById(id, comic);
+          }
+          return EMPTY;
+        }),
+        takeUntilDestroyed(),
+      )
+      .subscribe((newComic) => {
+        this.state.mutate((state) => {
+          const index = state.data.findIndex(
+            (comic) => comic._id === newComic._id,
+          );
+          if (index >= 0) {
+            state.data[index] = newComic;
+          }
+          return state;
+        });
+        this.updateComicSuccess$.next();
       });
   }
 }

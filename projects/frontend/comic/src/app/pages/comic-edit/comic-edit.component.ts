@@ -12,14 +12,12 @@ import {
   ContentSectionTitleComponent,
 } from "@cjp-front/content-section";
 import { MatButtonModule } from "@angular/material/button";
-import { SiteEntity } from "../../core/models";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ComicService } from "../../services";
-import { Select } from "@ngxs/store";
-import { ComicState } from "../../core";
-import { Observable } from "rxjs";
 import { ComicFormComponent } from "@cjp-front/comic/shared";
 import { ReactiveFormsModule } from "@angular/forms";
+import { ComicState, SiteState } from "@cjp-front/comic/core";
+import { ComicEditParameter } from "./enums";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   standalone: true,
@@ -38,12 +36,28 @@ import { ReactiveFormsModule } from "@angular/forms";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicEditComponent {
-  @Select(ComicState.sites) public sites$!: Observable<SiteEntity[]>;
+  @ViewChild("form") form!: ComicFormComponent;
 
   private readonly router: Router = inject(Router);
-  private readonly comicService: ComicService = inject(ComicService);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  readonly comicState = inject(ComicState);
+  readonly siteState = inject(SiteState);
+
+  constructor() {
+    this.route.params.pipe(takeUntilDestroyed()).subscribe((params) => {
+      const id = params[ComicEditParameter.COMIC_ID];
+      this.comicState.selectedId$.next(id);
+    });
+    this.comicState.updateComicSuccess$
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.router.navigate(["../../"], {
+          relativeTo: this.route,
+        });
+      });
+  }
 
   protected onClick(): void {
-    console.log("");
+    this.form.submit();
   }
 }
