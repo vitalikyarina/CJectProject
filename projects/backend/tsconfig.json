@@ -12,7 +12,8 @@
       ],
       "@cjp/shared": ["projects/shared"],
       "@cjp/shared/comic": ["projects/shared/comic"],
-      "@cjp-back/browser": ["projects/backend/libs/browser/src/index.ts"]
+      "@cjp-back/browser": ["projects/backend/libs/browser/src/index.ts"],
+      "@cjp-back/comic": ["projects/backend/comic/src/index.ts"]
     }
   }
 }
