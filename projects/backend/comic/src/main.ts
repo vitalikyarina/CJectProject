@@ -9,10 +9,13 @@ import { Transport, MicroserviceOptions } from "@nestjs/microservices";
 
 import { AppModule } from "./app/app.module";
 import { ComicEnvironment } from "./app";
+import { getComicEnv } from "./app/config";
 
 async function bootstrap(): Promise<void> {
-  const PORT: number = +process.env[ComicEnvironment.PORT];
-  const HOST: string = process.env[ComicEnvironment.HOST];
+  const env = getComicEnv();
+
+  const PORT: number = env[ComicEnvironment.PORT];
+  const HOST: string = env[ComicEnvironment.HOST];
 
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
