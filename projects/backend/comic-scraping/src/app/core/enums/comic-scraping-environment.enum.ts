@@ -1,0 +1,4 @@
+export enum ComicScrapingEnvironment {
+  PORT = "COMIC_SCRAPING_MICROSERVICE_PORT",
+  HOST = "COMIC_SCRAPING_MICROSERVICE_HOST",
+}

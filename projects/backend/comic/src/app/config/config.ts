@@ -8,7 +8,7 @@ interface IComicEnvironment {
 }
 
 export const comicValidationSchema = {
-  [ComicEnvironment.PORT]: Joi.number().positive().required(),
+  [ComicEnvironment.PORT]: Joi.number().positive().default(3001),
   [ComicEnvironment.HOST]: Joi.string().required(),
   [ComicEnvironment.MONGO_URL]: Joi.string().required(),
 };
