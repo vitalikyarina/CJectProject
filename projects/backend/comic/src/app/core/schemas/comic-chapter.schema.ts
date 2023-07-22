@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory, raw } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
-import { ResourceEntity } from "../models";
 import { ChapterError, IChapter } from "@cjp/shared/comic";
 import { ComicSchemaName } from "../enums";
+import { ResourceModel } from "../models";
+
 export type ChapterDocument = HydratedDocument<Chapter>;
 
 @Schema()
@@ -42,7 +43,7 @@ export class Chapter implements IChapter {
     required: true,
     autopopulate: { select: "-__v" },
   })
-  public resource: ResourceEntity;
+  public resource: ResourceModel;
 }
 
 export const ChapterSchema = SchemaFactory.createForClass(Chapter);

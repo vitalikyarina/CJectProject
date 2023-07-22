@@ -7,9 +7,6 @@
       ],
       "@cjp-back/shared": ["projects/backend/libs/shared/src/index.ts"],
       "@cjp-back/mongo": ["projects/backend/libs/mongo/src/index.ts"],
-      "@cjp-back/mongo/comic": [
-        "projects/backend/libs/mongo/src/lib/schemas/comic/index.ts"
-      ],
       "@cjp/shared": ["projects/shared"],
       "@cjp/shared/comic": ["projects/shared/comic"],
       "@cjp-back/browser": ["projects/backend/libs/browser/src/index.ts"],

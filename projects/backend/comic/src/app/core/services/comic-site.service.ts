@@ -1,15 +1,15 @@
 import { Injectable } from "@nestjs/common";
-import { SiteAPIService } from "../api";
-import { SiteCreateDTO, SiteEntity, SiteUpdateDTO } from "../models";
+import { SiteCreateDTO, SiteModel, SiteUpdateDTO } from "../models";
 import { BaseMongoService } from "@cjp-back/mongo";
+import { SiteAPI } from "../apis";
 
 @Injectable()
 export class SiteService extends BaseMongoService<
-  SiteEntity,
+  SiteModel,
   SiteCreateDTO,
   SiteUpdateDTO
 > {
-  constructor(private readonly api: SiteAPIService) {
+  constructor(protected readonly api: SiteAPI) {
     super(api);
   }
 }

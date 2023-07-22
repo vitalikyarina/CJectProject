@@ -1,10 +1,10 @@
 import { ComicStatus, ComicTag, IComic } from "@cjp/shared/comic";
 import { ApiProperty, PartialType, PickType } from "@nestjs/swagger";
-import { ResourceCreateDTO, ResourceEntity } from "./comic-resource.entity";
-import { ChapterEntity } from "./comic-chapter.entity";
 import { IsNotEmpty } from "class-validator";
+import { ResourceCreateDTO, ResourceModel } from "./comic-resource.model";
+import { ChapterModel } from "./comic-chapter.model";
 
-export class ComicEntity implements IComic {
+export class ComicModel implements IComic {
   @ApiProperty({ nullable: false })
   public _id!: string;
 
@@ -17,10 +17,10 @@ export class ComicEntity implements IComic {
   public altNames!: string[];
 
   @ApiProperty({ nullable: false })
-  public resources!: ResourceEntity[];
+  public resources!: ResourceModel[];
 
   @ApiProperty({ nullable: false })
-  public chapters!: ChapterEntity[];
+  public chapters!: ChapterModel[];
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
@@ -38,10 +38,7 @@ export class ComicEntity implements IComic {
   public mainImages!: string[];
 }
 
-export class ComicCreateDTO extends PickType(ComicEntity, [
-  "name",
-  "altNames",
-]) {
+export class ComicCreateDTO extends PickType(ComicModel, ["name", "altNames"]) {
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
   public resources: string[];
@@ -54,7 +51,7 @@ export class ComicCreateDTO extends PickType(ComicEntity, [
   }
 }
 
-export class ComicCreateWithResourcesDTO extends PickType(ComicEntity, [
+export class ComicCreateWithResourcesDTO extends PickType(ComicModel, [
   "name",
   "altNames",
 ]) {
@@ -70,7 +67,7 @@ export class ComicCreateWithResourcesDTO extends PickType(ComicEntity, [
   }
 }
 
-class ComicUpdate extends PickType(ComicEntity, [
+class ComicUpdate extends PickType(ComicModel, [
   "name",
   "altNames",
   "latestUpdate",

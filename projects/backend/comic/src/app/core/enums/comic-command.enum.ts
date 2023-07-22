@@ -1,3 +1,4 @@
 export enum ComicCommand {
-  GET_ALL = "get_all",
+  GET_ALL = "comic_get_all",
+  CREATE = "comic_create",
 }

@@ -7,9 +7,8 @@ import * as Joi from "joi";
     ConfigModule.forRoot({
       envFilePath: process.env["MODE"] === "dev" ? ".env.dev" : ".env.prod",
       validationSchema: Joi.object({
-        MONGO_URL: Joi.string().required(),
         IMAGE_PATH: Joi.string().required(),
-      }),
+      }).unknown(),
     }),
   ],
   exports: [ConfigModule],

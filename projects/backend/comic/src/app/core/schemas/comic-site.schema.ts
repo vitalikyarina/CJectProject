@@ -34,8 +34,6 @@ export class Site implements ISite {
 
   @Prop({ required: true })
   public dateFormat: string;
-
-  constructor() {}
 }
 
 export const SiteSchema = SchemaFactory.createForClass(Site);

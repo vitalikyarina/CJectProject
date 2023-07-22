@@ -1,10 +1,10 @@
 import { ChapterError, IChapter } from "@cjp/shared/comic";
 import { ApiProperty, PartialType, PickType } from "@nestjs/swagger";
 import { Expose } from "class-transformer";
-import { ResourceEntity } from "./comic-resource.entity";
 import { IsNotEmpty } from "class-validator";
+import { ResourceModel } from "./comic-resource.model";
 
-export class ChapterEntity implements IChapter {
+export class ChapterModel implements IChapter {
   @ApiProperty({ nullable: false })
   public _id!: string;
 
@@ -43,7 +43,7 @@ export class ChapterEntity implements IChapter {
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public resource!: ResourceEntity;
+  public resource!: ResourceModel;
 
   @ApiProperty({ nullable: true, type: Number })
   @IsNotEmpty()
@@ -53,7 +53,7 @@ export class ChapterEntity implements IChapter {
   public images!: string[];
 }
 
-export class ChapterCreateDTO extends PickType(ChapterEntity, [
+export class ChapterCreateDTO extends PickType(ChapterModel, [
   "number",
   "link",
   "date",
@@ -62,14 +62,14 @@ export class ChapterCreateDTO extends PickType(ChapterEntity, [
   @IsNotEmpty()
   public resource!: string;
 }
-export class ChapterWithResourceCreateDTO extends PickType(ChapterEntity, [
+export class ChapterWithResourceCreateDTO extends PickType(ChapterModel, [
   "number",
   "link",
   "date",
   "resource",
 ]) {}
 
-class ChapterUpdate extends PickType(ChapterEntity, [
+class ChapterUpdate extends PickType(ChapterModel, [
   "link",
   "date",
   "countPage",

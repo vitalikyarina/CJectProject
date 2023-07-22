@@ -3,12 +3,12 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { ChapterDocument } from "../schemas";
 import { BaseMongoAPIService } from "@cjp-back/mongo";
-import { ChapterCreateDTO, ChapterEntity, ChapterUpdateDTO } from "../models";
+import { ChapterCreateDTO, ChapterModel, ChapterUpdateDTO } from "../models";
 import { ComicSchemaName } from "../enums";
 
 @Injectable()
-export class ChapterAPIService extends BaseMongoAPIService<
-  ChapterEntity,
+export class ChapterAPI extends BaseMongoAPIService<
+  ChapterModel,
   ChapterCreateDTO,
   ChapterUpdateDTO
 > {

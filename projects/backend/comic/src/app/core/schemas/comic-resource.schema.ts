@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { IResource, ResourceError, ResourceType } from "@cjp/shared/comic";
-import { SiteEntity } from "../models";
 import { ComicSchemaName } from "../enums";
+import { SiteModel } from "../models";
 
 export type ResourceDocument = HydratedDocument<Resource>;
 
@@ -27,7 +27,7 @@ export class Resource implements IResource {
     required: true,
     autopopulate: { select: "-__v" },
   })
-  public siteData: SiteEntity;
+  public siteData: SiteModel;
 
   @Prop({
     default: null,

@@ -2,7 +2,7 @@ import { ISite } from "@cjp/shared/comic";
 import { ApiProperty, OmitType, PartialType } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 
-export class SiteEntity implements ISite {
+export class SiteModel implements ISite {
   @ApiProperty({ nullable: false })
   public _id!: string;
 
@@ -44,11 +44,11 @@ export class SiteEntity implements ISite {
   @IsNotEmpty()
   public dateFormat!: string;
 
-  constructor(partial: Partial<SiteEntity>) {
+  constructor(partial: Partial<SiteModel>) {
     Object.assign(this, partial);
   }
 }
 
-export class SiteCreateDTO extends OmitType(SiteEntity, ["_id"]) {}
+export class SiteCreateDTO extends OmitType(SiteModel, ["_id"]) {}
 
 export class SiteUpdateDTO extends PartialType(SiteCreateDTO) {}

@@ -1,9 +1,9 @@
 import { IResource, ResourceError, ResourceType } from "@cjp/shared/comic";
 import { ApiProperty, OmitType, PartialType } from "@nestjs/swagger";
-import { SiteEntity } from "./comic-site.entity";
+import { SiteModel } from "./comic-site.model";
 import { IsNotEmpty } from "class-validator";
 
-export class ResourceEntity implements IResource {
+export class ResourceModel implements IResource {
   @ApiProperty({ nullable: false })
   public _id!: string;
 
@@ -20,13 +20,13 @@ export class ResourceEntity implements IResource {
   public priority!: number;
 
   @ApiProperty({ nullable: false })
-  public siteData!: SiteEntity;
+  public siteData!: SiteModel;
 
   @ApiProperty({ nullable: true, type: Number })
   public errorType: ResourceError | undefined | null;
 }
 
-export class ResourceCreateDTO extends OmitType(ResourceEntity, [
+export class ResourceCreateDTO extends OmitType(ResourceModel, [
   "_id",
   "siteData",
 ]) {

@@ -2,7 +2,7 @@ import { ComicStatus, ComicTag, IComic } from "@cjp/shared/comic";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { ComicSchemaName } from "../enums";
-import { ChapterEntity, ResourceEntity } from "../models";
+import { ChapterModel, ResourceModel } from "../models";
 
 export type ComicDocument = HydratedDocument<Comic>;
 
@@ -17,7 +17,7 @@ export class Comic implements IComic {
     default: [],
     autopopulate: { select: "-__v" },
   })
-  public resources: ResourceEntity[];
+  public resources: ResourceModel[];
 
   @Prop({
     type: [mongoose.Schema.Types.ObjectId],
@@ -25,7 +25,7 @@ export class Comic implements IComic {
     default: [],
     autopopulate: { select: "-__v" },
   })
-  public chapters: ChapterEntity[];
+  public chapters: ChapterModel[];
 
   @Prop()
   public latestUpdate: number;

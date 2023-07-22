@@ -1,14 +1,14 @@
 import { Injectable } from "@nestjs/common";
-import { ChapterAPIService } from "../api";
+import { ChapterAPI } from "../apis";
 import { BaseMongoService } from "@cjp-back/mongo";
-import { ChapterCreateDTO, ChapterEntity, ChapterUpdateDTO } from "../models";
+import { ChapterCreateDTO, ChapterModel, ChapterUpdateDTO } from "../models";
 @Injectable()
 export class ChapterService extends BaseMongoService<
-  ChapterEntity,
+  ChapterModel,
   ChapterCreateDTO,
   ChapterUpdateDTO
 > {
-  constructor(private readonly api: ChapterAPIService) {
+  constructor(private readonly api: ChapterAPI) {
     super(api);
   }
 }

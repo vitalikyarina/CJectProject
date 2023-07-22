@@ -1,8 +1,14 @@
 import { Module } from "@nestjs/common";
-import { COMIC_MICROSERVICE_PROVIDER, ComicClientProxy } from "../core";
+import {
+  COMIC_MICROSERVICE_PROVIDER,
+  ComicClientProxy,
+  SiteClientProxy,
+} from "../core";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
-  providers: [COMIC_MICROSERVICE_PROVIDER, ComicClientProxy],
-  exports: [ComicClientProxy],
+  imports: [ConfigModule],
+  providers: [COMIC_MICROSERVICE_PROVIDER, ComicClientProxy, SiteClientProxy],
+  exports: [ComicClientProxy, SiteClientProxy],
 })
 export class ComicMicroservice {}
