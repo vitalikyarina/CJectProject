@@ -9,8 +9,8 @@
   </div>
   <div class="card__img-container">
     <cjp-image
-      *ngIf="comic.mainImages && comic.mainImages[0]"
-      [link]="comic.mainImages[0]"
+      *ngIf="comic.mainImage"
+      [link]="comic.mainImage"
       [alt]="comic.name">
     </cjp-image>
   </div>
@@ -34,7 +34,7 @@
           </ng-template>
           <ng-template #dateRef>
             <p class="card__chapter-date">
-              {{ chp.date | date : "dd MMM yyyy" }}
+              {{ chp.date | date: "dd MMM yyyy" }}
             </p>
           </ng-template>
         </div>

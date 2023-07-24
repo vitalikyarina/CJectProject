@@ -77,6 +77,11 @@ export class ComicFormComponent implements OnInit {
     this.cd.markForCheck();
     if (this.formGroup.valid) {
       const value = this.formGroup.value as ComicDTO;
+      value.resources.map((resource) => {
+        if (!resource._id) {
+          delete resource._id;
+        }
+      });
       this.submitForm.next(value);
     }
   }

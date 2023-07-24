@@ -32,7 +32,7 @@ export class ComicForm extends FormGroup<ComicFormDef> {
       priority: new FormControl(priority, {
         nonNullable: true,
       }),
-      _id: new FormControl<string | null>(null),
+      _id: new FormControl<string | undefined>(undefined),
       siteData: new FormControl("", {
         validators: [Validators.required],
         nonNullable: true,

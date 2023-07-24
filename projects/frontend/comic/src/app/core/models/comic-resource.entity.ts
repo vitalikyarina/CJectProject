@@ -12,7 +12,7 @@ export class ResourceEntity implements IResource {
 
 export type ResourceDTO = Pick<ResourceEntity, "path" | "type" | "priority"> & {
   siteData: string;
-  _id: string | null;
+  _id: string | null | undefined;
 };
 
 export class ResourceAdapter {

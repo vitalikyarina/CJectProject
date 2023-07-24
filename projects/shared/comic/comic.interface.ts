@@ -8,4 +8,5 @@ export interface IComic {
   latestUpdate: number;
   tags: ComicTag[];
   status: ComicStatus;
+  mainImage: string;
 }
