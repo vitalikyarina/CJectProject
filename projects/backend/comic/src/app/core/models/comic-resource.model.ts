@@ -33,6 +33,8 @@ export class ResourceCreateDTO extends OmitType(ResourceModel, [
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
   public siteData!: string;
+
+  public _id!: string | undefined;
 }
 
 export class ResourceUpdateDTO extends PartialType(ResourceCreateDTO) {}

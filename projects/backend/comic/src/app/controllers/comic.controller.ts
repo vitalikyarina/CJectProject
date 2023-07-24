@@ -1,6 +1,5 @@
 import { Body, Controller, Param } from "@nestjs/common";
 
-import { Observable, toArray } from "rxjs";
 import { IFindOptions } from "@cjp-back/shared";
 import { MessagePattern } from "@nestjs/microservices";
 import {
@@ -22,21 +21,21 @@ export class ComicController {
   constructor(private readonly comicService: ComicService) {}
 
   @MessagePattern(ComicCommand.GET_ALL)
-  getEntities(): Observable<ComicModel[]> {
-    return this.comicService.find({}, this.findOptions).pipe(toArray());
+  getEntities(): Promise<ComicModel[]> {
+    return this.comicService.find({}, this.findOptions);
   }
 
   @MessagePattern(ComicCommand.CREATE)
   createEntity(
     @Body() createData: ComicCreateWithResourcesDTO,
-  ): Observable<ComicModel> {
+  ): Promise<ComicModel> {
     return this.comicService.createOneWithResources(createData);
   }
 
-  updateEntity(
-    @Param("id") id: string,
-    @Body() updateData: ComicUpdateDTO,
-  ): Observable<ComicModel> {
-    return this.comicService.updateOneById(id, updateData);
-  }
+  // updateEntity(
+  //   @Param("id") id: string,
+  //   @Body() updateData: ComicUpdateDTO,
+  // ): Observable<ComicModel> {
+  //   return this.comicService.updateOneById(id, updateData);
+  // }
 }

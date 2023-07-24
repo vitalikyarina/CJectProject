@@ -47,6 +47,9 @@ export class Comic implements IComic {
     type: [String],
   })
   public altNames: string[];
+
+  @Prop()
+  mainImage: string;
 }
 
 export const ComicSchema = SchemaFactory.createForClass(Comic);

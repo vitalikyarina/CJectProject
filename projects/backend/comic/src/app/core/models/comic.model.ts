@@ -35,7 +35,7 @@ export class ComicModel implements IComic {
   public status!: ComicStatus;
 
   @ApiProperty({ nullable: false })
-  public mainImages!: string[];
+  public mainImage!: string;
 }
 
 export class ComicCreateDTO extends PickType(ComicModel, ["name", "altNames"]) {

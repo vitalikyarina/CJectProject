@@ -7,14 +7,14 @@ interface IComicEnvironment {
   [ComicEnvironment.MONGO_URL]: string;
 }
 
-export const comicValidationSchema = {
+export const EnvValidationSchema = {
   [ComicEnvironment.PORT]: Joi.number().positive().default(3001),
   [ComicEnvironment.HOST]: Joi.string().required(),
   [ComicEnvironment.MONGO_URL]: Joi.string().required(),
 };
 
-export function getComicEnv(): IComicEnvironment {
-  const envVarsSchema = Joi.object().keys(comicValidationSchema).unknown();
+export function getEnv(): IComicEnvironment {
+  const envVarsSchema = Joi.object().keys(EnvValidationSchema).unknown();
 
   const { value: envVars, error } = envVarsSchema
     .prefs({ errors: { label: "key" } })

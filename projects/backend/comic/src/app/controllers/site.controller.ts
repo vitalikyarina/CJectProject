@@ -1,15 +1,14 @@
 import { Controller } from "@nestjs/common";
 import { SiteCommand, SiteModel, SiteService } from "../core";
 import { MessagePattern } from "@nestjs/microservices";
-import { Observable, toArray } from "rxjs";
 
 @Controller()
 export class SiteController {
   constructor(private readonly siteService: SiteService) {}
 
   @MessagePattern(SiteCommand.GET_ALL)
-  public getEntities(): Observable<SiteModel[]> {
-    return this.siteService.find({}).pipe(toArray());
+  public getEntities(): Promise<SiteModel[]> {
+    return this.siteService.find({});
   }
 
   //   public getEntityById(@Param("id") id: string): Observable<SiteEntity> {
