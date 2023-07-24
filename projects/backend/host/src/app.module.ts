@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ComicModule } from "./modules";
-import { ConfigurationModule } from "@cjp-back/configuration";
+import { ConfigurationModule } from "./config";
 
 @Module({
   imports: [ConfigurationModule, ComicModule],
