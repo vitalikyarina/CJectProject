@@ -9,7 +9,7 @@ export type ChapterDocument = HydratedDocument<Chapter>;
 @Schema()
 export class Chapter implements IChapter {
   @Prop({ required: true })
-  public link: string;
+  public path: string;
 
   @Prop({ required: true })
   public number: number;

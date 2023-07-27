@@ -14,7 +14,7 @@ export class ChapterModel implements IChapter {
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
-  public link!: string;
+  public path!: string;
 
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
@@ -55,7 +55,7 @@ export class ChapterModel implements IChapter {
 
 export class ChapterCreateDTO extends PickType(ChapterModel, [
   "number",
-  "link",
+  "path",
   "date",
 ]) {
   @ApiProperty({ nullable: false })
@@ -64,13 +64,13 @@ export class ChapterCreateDTO extends PickType(ChapterModel, [
 }
 export class ChapterWithResourceCreateDTO extends PickType(ChapterModel, [
   "number",
-  "link",
+  "path",
   "date",
   "resource",
 ]) {}
 
 class ChapterUpdate extends PickType(ChapterModel, [
-  "link",
+  "path",
   "date",
   "countPage",
   "isLoaded",

@@ -73,6 +73,7 @@ class ComicUpdate extends PickType(ComicModel, [
   "latestUpdate",
   "tags",
   "status",
+  "mainImage",
 ]) {
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
