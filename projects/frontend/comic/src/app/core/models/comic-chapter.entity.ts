@@ -4,7 +4,7 @@ import { ResourceEntity } from "./comic-resource.entity";
 export class ChapterEntity implements IChapter {
   public _id!: string;
   public number!: number;
-  public link!: string;
+  public path!: string;
   public countPage!: number;
   public isLoaded!: boolean;
   public isError!: boolean;
