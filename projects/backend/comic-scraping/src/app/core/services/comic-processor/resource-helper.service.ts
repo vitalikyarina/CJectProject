@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { Browser, ElementHandle, Page } from "playwright";
 import { Logger } from "../logger.service";
 import dayjs from "dayjs";
@@ -36,10 +36,12 @@ interface IScrapingChapters {
 
 @Injectable()
 export class ProcessorResourceHelperService {
+  @Inject(Logger)
+  private readonly logger: Logger;
+
   IMAGE_FOLDER: string;
 
   constructor(
-    private readonly logger: Logger,
     private readonly browser: BrowserHelperService,
     private readonly resourceService: ResourceService,
     private readonly comicChapterService: ChapterService,
@@ -239,11 +241,13 @@ export class ProcessorResourceHelperService {
 
   async getComicAndCheckChapters(
     id: string,
-    chaptersData: ChapterScrapingDTO[],
-    comicDir: string,
+    chaptersData: IScrapingData,
   ): Promise<void> {
     const comic = await this.comicService.findById(id);
-    const chaptersCheckedData = this.checkChapters(comic, chaptersData);
+    const chaptersCheckedData = this.checkChapters(
+      comic,
+      chaptersData.chapters,
+    );
     const chapters = comic.chapters;
     const lastUpdateDate = this.getMaxLastUpdateDateFromChapters(
       chaptersCheckedData.newChapters,
@@ -254,7 +258,9 @@ export class ProcessorResourceHelperService {
     for (let i = 0; i < chaptersCheckedData.oldChapters.length; i++) {
       const oldChp = chaptersCheckedData.oldChapters[i];
       await this.comicChapterService.deleteOne(oldChp.id);
-      this.fsHelper.deleteFolder(`${comicDir}\\${oldChp.number}`);
+      this.fsHelper.deleteFolder(
+        `${this.IMAGE_FOLDER}\\comics\\${id}\\${oldChp.number}`,
+      );
       const dltIndex = updateChaptersIds.findIndex(
         (delChpId) => delChpId === oldChp.id,
       );
@@ -269,18 +275,19 @@ export class ProcessorResourceHelperService {
 
     const comicUpdateDate: ComicUpdateDTO = {
       chapters: updateChaptersIds,
-      postImage: `assets/comics/${comic._id}/main.webp`,
     };
 
     if (!comic.latestUpdate || lastUpdateDate > comic.latestUpdate) {
       comicUpdateDate.latestUpdate = lastUpdateDate;
     }
 
+    if (chaptersData.postImage) {
+      comicUpdateDate.postImage = chaptersData.postImage;
+    }
+
     await this.comicService.updateOne({ _id: comic._id }, comicUpdateDate);
 
     await this.sortComicChapters(comic._id);
-
-    console.log(chaptersCheckedData, lastUpdateDate);
   }
 
   protected checkChapters(

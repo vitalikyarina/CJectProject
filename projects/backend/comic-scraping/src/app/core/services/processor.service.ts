@@ -26,20 +26,18 @@ export class ProcessorService {
     const comic = await this.comicService.findById(comicId);
 
     this.logger.debug("Start parsing - " + comic.name);
-    const COMIC_DIR = `${IMAGE_FOLDER}\\comics\\${comic._id}`;
+    const COMIC_FOLDER = `${IMAGE_FOLDER}\\comics\\${comic._id}`;
     if (this.comicHelper.checkScrapingStatus(comic)) {
       if (comic.status === ComicStatus.DROPPED) {
         this.logger.debug("Deleting all comic chapters");
-        await this.comicHelper.clearComicData(comic, COMIC_DIR);
+        await this.comicHelper.clearComicData(comic, COMIC_FOLDER);
       }
 
       return;
     }
     await this.startResourcesScraping(comic);
-    // this.comicChapterHelper.startParsingChapters(
-    //   comic._id,
-    //   comicDir,
-    // );
+
+    await this.comicChapterHelper.startParsingChapters(comic._id, COMIC_FOLDER);
 
     this.logger.debug("End parsing - " + comic.name);
   }
@@ -55,13 +53,11 @@ export class ProcessorService {
 
       const chaptersByResource =
         await this.resourceHelper.getResourceScrapingData(resource, comic._id);
-      console.log(chaptersByResource);
 
-      // await this.resourceHelper.getComicAndCheckChapters(
-      //   comic._id,
-      //   chaptersByResource,
-      //   COMIC_DIR,
-      // );
+      await this.resourceHelper.getComicAndCheckChapters(
+        comic._id,
+        chaptersByResource,
+      );
     }
   }
 }
