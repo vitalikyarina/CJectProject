@@ -6,7 +6,7 @@ export class ResourceEntity implements IResource {
   public path!: string;
   public type!: ResourceType;
   public priority!: number;
-  public siteData!: SiteEntity;
+  public site!: SiteEntity;
   public errorType!: ResourceError;
 }
 
@@ -21,7 +21,7 @@ export class ResourceAdapter {
       _id: value._id,
       path: value.path,
       priority: value.priority,
-      siteData: value.siteData._id,
+      siteData: value.site._id,
       type: value.type,
     };
 

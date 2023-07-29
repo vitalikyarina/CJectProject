@@ -11,7 +11,7 @@ export class ComicEntity implements IComic {
   public latestUpdate!: number;
   public tags!: ComicTag[];
   public status!: ComicStatus;
-  public mainImage!: string;
+  public postImage!: string;
 }
 
 export type ComicDTO = Pick<ComicEntity, "name" | "altNames"> & {
