@@ -3,12 +3,12 @@ import { HostEnvironment } from "../core";
 
 interface ICScrapingEnvironment {
   [HostEnvironment.PORT]: number;
-  [HostEnvironment.IMAGE_URL]: string;
+  [HostEnvironment.IMAGE_FOLDER]: string;
 }
 
 export const EnvValidationSchema = {
   [HostEnvironment.PORT]: Joi.number().positive().default(3000),
-  [HostEnvironment.IMAGE_URL]: Joi.string().required(),
+  [HostEnvironment.IMAGE_FOLDER]: Joi.string().required(),
 };
 
 export function getEnv(): ICScrapingEnvironment {
@@ -24,7 +24,7 @@ export function getEnv(): ICScrapingEnvironment {
 
   const env: ICScrapingEnvironment = {
     [HostEnvironment.PORT]: envVars[HostEnvironment.PORT],
-    [HostEnvironment.IMAGE_URL]: envVars[HostEnvironment.IMAGE_URL],
+    [HostEnvironment.IMAGE_FOLDER]: envVars[HostEnvironment.IMAGE_FOLDER],
   };
 
   return env;

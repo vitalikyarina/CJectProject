@@ -1,4 +1,4 @@
 export enum HostEnvironment {
   PORT = "HOST_PORT",
-  IMAGE_URL = "COMIC_IMAGE_URL",
+  IMAGE_FOLDER = "COMIC_IMAGE_FOLDER",
 }
