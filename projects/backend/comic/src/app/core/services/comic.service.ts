@@ -8,7 +8,7 @@ import {
 } from "../models";
 import { BaseMongoService } from "@cjp-back/mongo";
 import { ResourceService } from "./comic-resource.service";
-import { IFindOptions } from "@cjp-back/shared";
+import { HostStaticPath, IFindOptions } from "@cjp-back/shared";
 import { FilterQuery } from "mongoose";
 
 @Injectable()
@@ -52,7 +52,7 @@ export class ComicService extends BaseMongoService<
 
     comics.map((comic) => {
       if (comic.postImage) {
-        comic.postImage = `/assets` + comic.postImage;
+        comic.postImage = `/${HostStaticPath.IMAGES}` + comic.postImage;
       }
     });
 

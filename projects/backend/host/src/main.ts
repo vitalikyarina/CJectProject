@@ -13,6 +13,7 @@ import { AppModule } from "./app.module";
 import { setupSwagger } from "./swagger";
 import { getEnv } from "./config";
 import { HostEnvironment } from "./core";
+import { HostStaticPath } from "@cjp-back/shared";
 
 async function bootstrap(): Promise<void> {
   const env = getEnv();
@@ -29,7 +30,7 @@ async function bootstrap(): Promise<void> {
 
   app.useStaticAssets({
     root: IMAGE_URL,
-    prefix: "/assets",
+    prefix: `/${HostStaticPath.IMAGES}`,
   });
 
   setupSwagger(app);
