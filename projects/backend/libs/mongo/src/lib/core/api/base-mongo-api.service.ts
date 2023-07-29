@@ -45,8 +45,6 @@ export class BaseMongoAPIService<T, TCreate, TUpdate>
     queryConditions: FilterQuery<T>,
     updateData: TUpdate,
   ): Promise<T> {
-    console.log(updateData);
-
     const updatedEntity = await this.documentModel.findOneAndUpdate(
       queryConditions,
       updateData!,
