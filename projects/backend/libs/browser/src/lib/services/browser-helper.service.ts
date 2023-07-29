@@ -1,27 +1,47 @@
 import { Injectable } from "@nestjs/common";
-import { Browser, chromium, firefox } from "playwright";
+import { Browser, Page, firefox } from "playwright";
 import { defer, Observable } from "rxjs";
 
 @Injectable()
 export class BrowserHelperService {
-  public getBrowser$(type?: string): Observable<Browser> {
-    return defer(() => this.getBrowser(type));
+  public getBrowser$(): Observable<Browser> {
+    return defer(() => this.getBrowser());
   }
 
-  public async getBrowser(type: string): Promise<Browser> {
+  public async getBrowser(): Promise<Browser> {
     try {
-      if (type !== "firefox") {
-        const browser: Browser = await chromium.launch({
-          args: ["--disable-web-security", "--mute-audio"],
-        });
-        return browser;
-      }
       const browser: Browser = await firefox.launch({
         args: ["--disable-web-security", "--mute-audio"],
       });
       return browser;
     } catch {
-      return this.getBrowser(type);
+      return this.getBrowser();
     }
+  }
+
+  public async downloadImgFromPage(
+    page: Page,
+    elementPath: string,
+    filePath: string,
+  ): Promise<void> {
+    const a = page.$eval(elementPath, (elem: HTMLImageElement) => {
+      const link = elem.src;
+      fetch(link)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const a = document.createElement("a");
+
+          a.href = URL.createObjectURL(blob);
+          a.download = "image.jpg";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        });
+    });
+    const [download] = await Promise.all([
+      page.waitForEvent("download"), // wait for download to start
+      a,
+    ]);
+    await download.saveAs(filePath);
   }
 }
