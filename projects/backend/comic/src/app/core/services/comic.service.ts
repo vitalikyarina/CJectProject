@@ -8,6 +8,8 @@ import {
 } from "../models";
 import { BaseMongoService } from "@cjp-back/mongo";
 import { ResourceService } from "./comic-resource.service";
+import { IFindOptions } from "@cjp-back/shared";
+import { FilterQuery } from "mongoose";
 
 @Injectable()
 export class ComicService extends BaseMongoService<
@@ -40,6 +42,21 @@ export class ComicService extends BaseMongoService<
     newComic.resources = resources;
 
     return this.api.createOne(newComic);
+  }
+
+  public override async find(
+    queryConditions?: FilterQuery<ComicModel>,
+    options?: IFindOptions,
+  ): Promise<ComicModel[]> {
+    const comics = await super.find(queryConditions, options);
+
+    comics.map((comic) => {
+      if (comic.postImage) {
+        comic.postImage = `/assets` + comic.postImage;
+      }
+    });
+
+    return comics;
   }
 
   // public override updateOneById(

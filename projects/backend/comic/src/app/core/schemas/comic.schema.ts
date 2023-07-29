@@ -49,7 +49,7 @@ export class Comic implements IComic {
   public altNames: string[];
 
   @Prop()
-  mainImage: string;
+  postImage: string;
 }
 
 export const ComicSchema = SchemaFactory.createForClass(Comic);

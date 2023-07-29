@@ -27,7 +27,7 @@ export class Resource implements IResource {
     required: true,
     autopopulate: { select: "-__v" },
   })
-  public siteData: SiteModel;
+  public site: SiteModel;
 
   @Prop({
     default: null,

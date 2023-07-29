@@ -62,7 +62,7 @@ export class ChapterCreateDTO extends PickType(ChapterModel, [
   @IsNotEmpty()
   public resource!: string;
 }
-export class ChapterWithResourceCreateDTO extends PickType(ChapterModel, [
+export class ChapterScrapingDTO extends PickType(ChapterModel, [
   "number",
   "path",
   "date",

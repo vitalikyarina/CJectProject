@@ -35,7 +35,7 @@ export class ComicModel implements IComic {
   public status!: ComicStatus;
 
   @ApiProperty({ nullable: false })
-  public mainImage!: string;
+  public postImage!: string;
 }
 
 export class ComicCreateDTO extends PickType(ComicModel, ["name", "altNames"]) {
@@ -73,7 +73,7 @@ class ComicUpdate extends PickType(ComicModel, [
   "latestUpdate",
   "tags",
   "status",
-  "mainImage",
+  "postImage",
 ]) {
   @ApiProperty({ nullable: false })
   @IsNotEmpty()

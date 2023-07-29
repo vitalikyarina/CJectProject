@@ -20,7 +20,7 @@ export class ResourceModel implements IResource {
   public priority!: number;
 
   @ApiProperty({ nullable: false })
-  public siteData!: SiteModel;
+  public site!: SiteModel;
 
   @ApiProperty({ nullable: true, type: Number })
   public errorType: ResourceError | undefined | null;
@@ -28,7 +28,7 @@ export class ResourceModel implements IResource {
 
 export class ResourceCreateDTO extends OmitType(ResourceModel, [
   "_id",
-  "siteData",
+  "site",
 ]) {
   @ApiProperty({ nullable: false })
   @IsNotEmpty()
