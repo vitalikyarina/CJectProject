@@ -1,20 +1,20 @@
 import Joi from "joi";
-import { ComicScrapingEnvironment } from "../core";
+import { CScrapingEnvironment } from "../core";
 
-interface IComicScrapingEnvironment {
-  [ComicScrapingEnvironment.PORT]: number;
-  [ComicScrapingEnvironment.HOST]: string;
+interface ICScrapingEnvironment {
+  [CScrapingEnvironment.PORT]: number;
+  [CScrapingEnvironment.HOST]: string;
+  [CScrapingEnvironment.IMAGE_FOLDER]: string;
 }
 
-export const comicScrapingValidationSchema = {
-  [ComicScrapingEnvironment.PORT]: Joi.number().positive().default(3002),
-  [ComicScrapingEnvironment.HOST]: Joi.string().required(),
+export const EnvValidationSchema = {
+  [CScrapingEnvironment.PORT]: Joi.number().positive().default(3002),
+  [CScrapingEnvironment.HOST]: Joi.string().required(),
+  [CScrapingEnvironment.IMAGE_FOLDER]: Joi.string().required(),
 };
 
-export function getComicScrapingEnv(): IComicScrapingEnvironment {
-  const envVarsSchema = Joi.object()
-    .keys(comicScrapingValidationSchema)
-    .unknown();
+export function getEnv(): ICScrapingEnvironment {
+  const envVarsSchema = Joi.object().keys(EnvValidationSchema).unknown();
 
   const { value: envVars, error } = envVarsSchema
     .prefs({ errors: { label: "key" } })
@@ -24,9 +24,10 @@ export function getComicScrapingEnv(): IComicScrapingEnvironment {
     throw new Error(`Config validation error: ${error.message}`);
   }
 
-  const env: IComicScrapingEnvironment = {
-    [ComicScrapingEnvironment.PORT]: envVars[ComicScrapingEnvironment.PORT],
-    [ComicScrapingEnvironment.HOST]: envVars[ComicScrapingEnvironment.HOST],
+  const env: ICScrapingEnvironment = {
+    [CScrapingEnvironment.PORT]: envVars[CScrapingEnvironment.PORT],
+    [CScrapingEnvironment.HOST]: envVars[CScrapingEnvironment.HOST],
+    [CScrapingEnvironment.IMAGE_FOLDER]: envVars[CScrapingEnvironment.IMAGE_FOLDER],
   };
 
   return env;

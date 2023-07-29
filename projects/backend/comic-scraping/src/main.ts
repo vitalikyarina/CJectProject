@@ -8,14 +8,14 @@ import { NestFactory } from "@nestjs/core";
 import { Transport, MicroserviceOptions } from "@nestjs/microservices";
 
 import { AppModule } from "./app/app.module";
-import { getComicScrapingEnv } from "./app/config";
-import { ComicScrapingEnvironment } from "./app";
+import { getEnv } from "./app/config";
+import { CScrapingEnvironment } from "./app";
 
 async function bootstrap(): Promise<void> {
-  const env = getComicScrapingEnv();
+  const env = getEnv();
 
-  const PORT: number = env[ComicScrapingEnvironment.PORT];
-  const HOST: string = env[ComicScrapingEnvironment.HOST];
+  const PORT: number = env[CScrapingEnvironment.PORT];
+  const HOST: string = env[CScrapingEnvironment.HOST];
 
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,

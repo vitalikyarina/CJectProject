@@ -1,4 +1,5 @@
-export enum ComicScrapingEnvironment {
+export enum CScrapingEnvironment {
   PORT = "COMIC_SCRAPING_MICROSERVICE_PORT",
   HOST = "COMIC_SCRAPING_MICROSERVICE_HOST",
+  IMAGE_FOLDER = "COMIC_IMAGE_URL",
 }
