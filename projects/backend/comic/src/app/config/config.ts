@@ -5,12 +5,14 @@ interface IComicEnvironment {
   [ComicEnvironment.PORT]: number;
   [ComicEnvironment.HOST]: string;
   [ComicEnvironment.MONGO_URL]: string;
+  [ComicEnvironment.IMAGE_FOLDER]: string;
 }
 
 export const EnvValidationSchema = {
   [ComicEnvironment.PORT]: Joi.number().positive().default(3001),
   [ComicEnvironment.HOST]: Joi.string().required(),
   [ComicEnvironment.MONGO_URL]: Joi.string().required(),
+  [ComicEnvironment.IMAGE_FOLDER]: Joi.string().required(),
 };
 
 export function getEnv(): IComicEnvironment {
@@ -28,6 +30,7 @@ export function getEnv(): IComicEnvironment {
     [ComicEnvironment.PORT]: envVars[ComicEnvironment.PORT],
     [ComicEnvironment.HOST]: envVars[ComicEnvironment.HOST],
     [ComicEnvironment.MONGO_URL]: envVars[ComicEnvironment.MONGO_URL],
+    [ComicEnvironment.IMAGE_FOLDER]: envVars[ComicEnvironment.IMAGE_FOLDER],
   };
 
   return env;
