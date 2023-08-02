@@ -70,7 +70,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Find site {{ i + 1 }}</mat-label>
-          <mat-select formControlName="siteData">
+          <mat-select formControlName="site">
             <mat-option *ngFor="let site of sites" [value]="site._id">
               {{ site.name }}
             </mat-option>
@@ -80,7 +80,7 @@
         <div gdColumn="6 / 7">
           <div fxLayout="row" fxLayoutAlign="end center">
             <button
-              [disabled]="i === 0"
+              [disabled]="formGroup.controls.resources.controls.length < 2"
               mat-icon-button
               color="warn"
               (click)="removeResourceForm(i)">

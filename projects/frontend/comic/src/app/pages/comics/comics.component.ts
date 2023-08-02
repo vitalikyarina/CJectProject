@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ComicEntity } from "../../core/models";
+import { ComicModel } from "../../core/models";
 import {
   ContentSectionComponent,
   ContentSectionContentComponent,
@@ -25,7 +25,7 @@ import { ComicState } from "@cjp-front/comic/core";
 export class ComicsComponent {
   readonly comicState: ComicState = inject(ComicState);
 
-  public trackByFn(index: number, element: ComicEntity): string {
+  public trackByFn(index: number, element: ComicModel): string {
     return element._id;
   }
 }

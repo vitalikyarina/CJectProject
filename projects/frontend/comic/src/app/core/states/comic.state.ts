@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from "@angular/core";
-import { ComicDTO, ComicEntity } from "../models";
+import { ComicDTO, ComicModel } from "../models";
 import { ArrayState, StateStatus } from "@cjp-front/state";
 import { ComicService } from "../services";
 import { EMPTY, Subject, retry, switchMap } from "rxjs";
@@ -7,7 +7,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { IComicState } from "../interfaces";
 
 @Injectable()
-export class ComicState extends ArrayState<ComicEntity> {
+export class ComicState extends ArrayState<ComicModel> {
   private readonly comicService = inject(ComicService);
 
   protected override state = signal<IComicState>({

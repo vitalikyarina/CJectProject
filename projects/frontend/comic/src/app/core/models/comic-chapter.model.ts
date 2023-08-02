@@ -1,7 +1,7 @@
 import { ChapterError, IChapter } from "@cjp/shared/comic";
-import { ResourceEntity } from "./comic-resource.entity";
+import { ResourceModel } from "./comic-resource.model";
 
-export class ChapterEntity implements IChapter {
+export class ChapterModel implements IChapter {
   public _id!: string;
   public number!: number;
   public path!: string;
@@ -10,7 +10,7 @@ export class ChapterEntity implements IChapter {
   public isError!: boolean;
   public errorPages!: Record<number, boolean>;
   public date!: number;
-  public resource!: ResourceEntity;
+  public resource!: ResourceModel;
   public errorType!: ChapterError;
   public images!: string[];
 }

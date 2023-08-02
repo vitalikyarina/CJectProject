@@ -4,7 +4,7 @@ import { ResourceType } from "@cjp/shared/comic";
 import { RouterLink } from "@angular/router";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ImageComponent } from "@cjp-front/image";
-import { ChapterEntity, ComicEntity } from "../../../../core";
+import { ChapterModel, ComicModel } from "../../../../core";
 
 @Component({
   selector: "cjp-comic-card",
@@ -14,23 +14,23 @@ import { ChapterEntity, ComicEntity } from "../../../../core";
   styleUrls: ["./comic-card.component.scss"],
 })
 export class ComicCardComponent implements OnInit {
-  @Input({ required: true }) public comic!: ComicEntity;
+  @Input({ required: true }) public comic!: ComicModel;
 
-  public last2chapters: ChapterEntity[] = [];
+  public last2chapters: ChapterModel[] = [];
 
   public ngOnInit(): void {
     this.initLast2Chapters();
   }
 
-  public isRaw(chapter: ChapterEntity): boolean {
+  public isRaw(chapter: ChapterModel): boolean {
     return chapter.resource.type === ResourceType.RAW;
   }
 
-  public isLoading(chapter: ChapterEntity): boolean {
+  public isLoading(chapter: ChapterModel): boolean {
     return !chapter.isLoaded;
   }
 
-  public isNew(chapter: ChapterEntity): boolean {
+  public isNew(chapter: ChapterModel): boolean {
     const dayBefore = Date.now() - 24 * 60 * 60 * 1000;
     return dayBefore < chapter.date;
   }

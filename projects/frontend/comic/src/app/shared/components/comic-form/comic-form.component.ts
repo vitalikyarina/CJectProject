@@ -26,7 +26,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { ComicDTO, SiteEntity } from "@cjp-front/comic/core";
+import { ComicDTO, SiteModel } from "@cjp-front/comic/core";
 import { ResourceFormDef } from "./types";
 import { ComicFormHelperService } from "./services";
 import { ComicForm } from "./forms";
@@ -56,7 +56,7 @@ import { ComicFactory as CF } from "@cjp-front/comic/core/services";
   providers: [ComicFormHelperService],
 })
 export class ComicFormComponent implements OnInit {
-  @Input({ required: true }) sites!: SiteEntity[];
+  @Input({ required: true }) sites!: SiteModel[];
   @Input({ transform: CEtoCDTO }) comic: ComicDTO = CF.createComicDTO();
 
   @Output() submitForm = new EventEmitter<ComicDTO>();
@@ -92,6 +92,7 @@ export class ComicFormComponent implements OnInit {
 
   public removeResourceForm(index: number): void {
     this.formGroup.removeResourceByIndex(index);
+    this.updatePriority();
   }
 
   public addAltNameControl(): void {
@@ -116,6 +117,11 @@ export class ComicFormComponent implements OnInit {
   public drop(event: CdkDragDrop<string[]>): void {
     const controls = this.formGroup.controls.resources.controls;
     moveItemInArray(controls, event.previousIndex, event.currentIndex);
+    this.updatePriority();
+  }
+
+  protected updatePriority(): void {
+    const controls = this.formGroup.controls.resources.controls;
     controls.map((res, index) => res.controls.priority.setValue(index));
   }
 
@@ -125,8 +131,11 @@ export class ComicFormComponent implements OnInit {
   ): void {
     const site = this.helper.getSiteByLink(this.sites, pasteLink);
     if (site) {
-      resourceForm.controls.siteData.setValue(site._id);
-      const link = pasteLink.replace(site.baseLink, "");
+      resourceForm.controls.site.setValue(site._id);
+      let link = pasteLink.replace(site.baseLink, "");
+      if (link[link.length - 1] === "/") {
+        link = link.slice(0, -1);
+      }
       resourceForm.controls.path.setValue(link);
     }
 

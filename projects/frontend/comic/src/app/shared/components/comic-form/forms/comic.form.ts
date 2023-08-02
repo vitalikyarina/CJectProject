@@ -33,7 +33,7 @@ export class ComicForm extends FormGroup<ComicFormDef> {
         nonNullable: true,
       }),
       _id: new FormControl<string | undefined>(undefined),
-      siteData: new FormControl("", {
+      site: new FormControl("", {
         validators: [Validators.required],
         nonNullable: true,
       }),

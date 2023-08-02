@@ -1,12 +1,12 @@
 import { Injectable, computed, inject } from "@angular/core";
 import { ArrayState, StateStatus } from "@cjp-front/state";
-import { SiteEntity } from "../models";
+import { SiteModel } from "../models";
 import { SiteService } from "../services";
 import { retry } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Injectable()
-export class SiteState extends ArrayState<SiteEntity> {
+export class SiteState extends ArrayState<SiteModel> {
   private readonly siteService = inject(SiteService);
 
   sites = computed(() => this.state().data);

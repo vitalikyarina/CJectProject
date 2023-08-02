@@ -17,7 +17,7 @@ export class ComicFactory {
       _id: null,
       path: "",
       priority: 0,
-      siteData: "",
+      site: "",
       type: ResourceType.DEFAULT,
     };
   }

@@ -28,8 +28,6 @@ export abstract class BaseApiService<
     id: string,
     updateEntity: UpdateEntity,
   ): Observable<Entity> {
-    return this.http.patch<Entity>(`/api/${this.apiPath}/${id}`, {
-      data: updateEntity,
-    });
+    return this.http.patch<Entity>(`/api/${this.apiPath}/${id}`, updateEntity);
   }
 }

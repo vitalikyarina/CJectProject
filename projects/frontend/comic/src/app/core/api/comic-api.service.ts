@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { BaseApiService } from "@cjp-front/shared";
-import { ComicDTO, ComicEntity } from "../models";
+import { ComicDTO, ComicModel } from "../models";
 import { ComicsApi } from "../enums";
 
 @Injectable()
 export class ApiComicService extends BaseApiService<
-  ComicEntity,
+  ComicModel,
   ComicDTO,
   ComicDTO
 > {

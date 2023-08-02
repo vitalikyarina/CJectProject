@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { SiteEntity } from "@cjp-front/comic/core";
+import { SiteModel } from "@cjp-front/comic/core";
 
 @Injectable()
 export class ComicFormHelperService {
@@ -10,9 +10,9 @@ export class ComicFormHelperService {
   }
 
   public getSiteByLink(
-    sites: SiteEntity[],
+    sites: SiteModel[],
     link: string,
-  ): SiteEntity | undefined {
+  ): SiteModel | undefined {
     const https = "https://";
 
     if (link.indexOf(https) === 0) {

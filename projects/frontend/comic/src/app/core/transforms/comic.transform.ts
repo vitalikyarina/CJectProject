@@ -1,7 +1,7 @@
-import { ComicDTO, ComicEntity, ResourceAdapter } from "../models";
+import { ComicDTO, ComicModel, ResourceAdapter } from "../models";
 import { ComicFactory } from "../services";
 
-export function CEtoCDTO(value: ComicEntity | null): ComicDTO {
+export function CEtoCDTO(value: ComicModel | null): ComicDTO {
   if (!value) {
     return ComicFactory.createComicDTO();
   }
