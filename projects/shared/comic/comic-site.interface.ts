@@ -1,11 +1,11 @@
 export interface ISite {
-  mainImagePath: string;
+  postImagePath: string;
   chaptersPath: string;
   chapterNamePath: string;
   chapterDatePath: string;
   chapterImagesPath: string;
-  chapterLazyLoadPath: string | undefined | null;
-  browserType: string | undefined | null;
+  chapterLazyLoadPath?: string;
+  browserType?: string;
   name: string;
   baseLink: string;
   dateFormat: string;
