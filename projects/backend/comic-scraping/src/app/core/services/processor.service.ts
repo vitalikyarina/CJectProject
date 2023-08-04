@@ -6,7 +6,7 @@ import {
   ProcessorHelperService,
   ProcessorResourceHelperService,
 } from "./comic-processor";
-import { ComicModel, ComicService } from "@cjp-back/comic";
+import { Comic, ComicService } from "@cjp-back/comic";
 import { CScrapingEnvironment } from "../enums";
 import { ComicStatus } from "@cjp/shared/comic";
 
@@ -42,7 +42,7 @@ export class ProcessorService {
     this.logger.debug("End parsing - " + comic.name);
   }
 
-  async startResourcesScraping(comic: ComicModel): Promise<void> {
+  async startResourcesScraping(comic: Comic): Promise<void> {
     const resources = comic.resources;
     for (let i = 0; i < resources.length; i++) {
       const resource = resources[i];

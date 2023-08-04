@@ -1,4 +1,4 @@
-import { ChapterService, ComicModel, ComicService } from "@cjp-back/comic";
+import { ChapterService, Comic, ComicService } from "@cjp-back/comic";
 import { FSHelperService } from "@cjp-back/shared";
 import { ComicStatus } from "@cjp/shared/comic";
 import { Injectable } from "@nestjs/common";
@@ -11,7 +11,7 @@ export class ProcessorHelperService {
     private readonly fsHelper: FSHelperService,
   ) {}
 
-  public checkScrapingStatus(comic: ComicModel): boolean {
+  public checkScrapingStatus(comic: Comic): boolean {
     if (!comic) {
       return true;
     }
@@ -25,9 +25,9 @@ export class ProcessorHelperService {
   }
 
   public async clearComicData(
-    comic: ComicModel,
+    comic: Comic,
     comicFolder: string,
-  ): Promise<ComicModel> {
+  ): Promise<Comic> {
     const chapters = comic.chapters;
     chapters.map(
       async (chapter) =>

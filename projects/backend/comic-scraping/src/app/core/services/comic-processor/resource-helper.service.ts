@@ -12,10 +12,10 @@ import {
   ChapterCreateDTO,
   ChapterService,
   ChapterScrapingDTO,
-  ComicModel,
+  Comic,
   ComicService,
   ComicUpdateDTO,
-  ResourceModel,
+  Resource,
   ResourceService,
 } from "@cjp-back/comic";
 import { ConfigService } from "@nestjs/config";
@@ -53,7 +53,7 @@ export class ProcessorResourceHelperService {
   }
 
   async getResourceScrapingData(
-    resource: ResourceModel,
+    resource: Resource,
     comicId: string,
     step = 0,
   ): Promise<IScrapingData> {
@@ -80,7 +80,7 @@ export class ProcessorResourceHelperService {
 
   protected async startResourceScraping(
     browser: Browser,
-    resource: ResourceModel,
+    resource: Resource,
     comicId: string,
   ): Promise<IScrapingData> {
     const scrapingData: IScrapingData = {
@@ -115,7 +115,7 @@ export class ProcessorResourceHelperService {
 
   protected async getResourceImage(
     page: Page,
-    resource: ResourceModel,
+    resource: Resource,
     comicId: string,
   ): Promise<string | undefined> {
     const mainImagePath = `${this.IMAGE_FOLDER}\\comics\\${comicId}\\post.jpg`;
@@ -138,7 +138,7 @@ export class ProcessorResourceHelperService {
 
   protected async getResourceChapters(
     page: Page,
-    resource: ResourceModel,
+    resource: Resource,
   ): Promise<Array<ChapterScrapingDTO>> {
     const comicSite = resource.site;
     const chapterElems = (await page.$$(comicSite.chaptersPath)).reverse();
@@ -201,7 +201,7 @@ export class ProcessorResourceHelperService {
 
   protected async getChapterLink(
     element: ElementHandle<HTMLElement | SVGElement>,
-    resource: ResourceModel,
+    resource: Resource,
   ): Promise<string> {
     let link = await element.getAttribute("href");
 
@@ -291,7 +291,7 @@ export class ProcessorResourceHelperService {
   }
 
   protected checkChapters(
-    comic: ComicModel,
+    comic: Comic,
     chaptersData: ChapterScrapingDTO[],
   ): IScrapingChapters {
     const chapters = comic.chapters;
@@ -358,7 +358,7 @@ export class ProcessorResourceHelperService {
       : null;
   }
 
-  protected async sortComicChapters(id: string): Promise<ComicModel> {
+  protected async sortComicChapters(id: string): Promise<Comic> {
     const finedComic = await this.comicService.findById(id);
     const chapters = finedComic.chapters;
     const sortChapters: string[] = chapters

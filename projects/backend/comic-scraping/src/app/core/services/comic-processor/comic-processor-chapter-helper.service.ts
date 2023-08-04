@@ -5,7 +5,7 @@ import { CJPQueue, FPromise, FSHelperService } from "@cjp-back/shared";
 import fs from "fs";
 import { ResourceType } from "@cjp/shared/comic";
 import {
-  ChapterModel,
+  Chapter,
   ChapterService,
   ChapterUpdateDTO,
   ComicService,
@@ -43,10 +43,7 @@ export class ComicProcessorChapterHelperService {
     await this.load(chapters, comicDir);
   }
 
-  protected async load(
-    chapters: ChapterModel[],
-    comicDir: string,
-  ): Promise<void> {
+  protected async load(chapters: Chapter[], comicDir: string): Promise<void> {
     const queue = new CJPQueue(5);
     chapters
       .filter((chp) => {
@@ -62,20 +59,20 @@ export class ComicProcessorChapterHelperService {
     await queue.start();
   }
 
-  protected chapterHasAllImages(chapter: ChapterModel, path: string): boolean {
+  protected chapterHasAllImages(chapter: Chapter, path: string): boolean {
     const files: string[] = this.fsHelper.getFilesFromFolder(path);
     return chapter.countPage === files.length;
   }
 
   protected parseComicChapterFabric(
-    chapter: ChapterModel,
+    chapter: Chapter,
     comicDir: string,
   ): FPromise<void> {
     return () => this.parseComicChapter(chapter, comicDir);
   }
 
   protected async parseComicChapter(
-    chapter: ChapterModel,
+    chapter: Chapter,
     comicDir: string,
     step = 0,
   ): Promise<void> {
