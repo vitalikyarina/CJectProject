@@ -124,7 +124,7 @@ export class ProcessorResourceHelperService {
     if (!existsSync(mainImagePathWeb)) {
       await this.browser.downloadImgFromPage(
         page,
-        resource.site.mainImagePath,
+        resource.site.postImagePath,
         mainImagePath,
       );
 
@@ -257,7 +257,7 @@ export class ProcessorResourceHelperService {
 
     for (let i = 0; i < chaptersCheckedData.oldChapters.length; i++) {
       const oldChp = chaptersCheckedData.oldChapters[i];
-      await this.comicChapterService.deleteOne(oldChp.id);
+      await this.comicChapterService.deleteOneById(oldChp.id);
       this.fsHelper.deleteFolder(
         `${this.IMAGE_FOLDER}\\comics\\${id}\\${oldChp.number}`,
       );

@@ -1,14 +1,8 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { Observable, toArray } from "rxjs";
-import { ComicControllerName } from "../../enums";
-import {
-  SiteClientProxy,
-  SiteCreateDTO,
-  SiteModel,
-  SiteService,
-  SiteUpdateDTO,
-} from "@cjp-back/comic";
+import { Observable } from "rxjs";
+import { ComicControllerName } from "../enums";
+import { Site, SiteClientProxy } from "@cjp-back/comic";
 
 @ApiTags("Comic Sites")
 @Controller(ComicControllerName.COMIC_SITES)
@@ -16,11 +10,11 @@ export class SiteController {
   constructor(private client: SiteClientProxy) {}
 
   @ApiOkResponse({
-    type: SiteModel,
+    type: Site,
     isArray: true,
   })
   @Get("")
-  public getEntities(): Observable<SiteModel[]> {
+  public getEntities(): Observable<Site[]> {
     return this.client.getAllSites();
   }
   // @ApiOkResponse({

@@ -4,7 +4,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { COMIC_MICROSERVICE } from "../tokens";
 import { Observable } from "rxjs";
 import { SiteCommand } from "../enums";
-import { SiteModel } from "../models";
+import { Site } from "../schemas";
 
 @Injectable()
 export class SiteClientProxy extends BaseClientProxy {
@@ -14,7 +14,7 @@ export class SiteClientProxy extends BaseClientProxy {
     super(client);
   }
 
-  public getAllSites(): Observable<SiteModel[]> {
+  public getAllSites(): Observable<Site[]> {
     return this.send(SiteCommand.GET_ALL, {});
   }
 }

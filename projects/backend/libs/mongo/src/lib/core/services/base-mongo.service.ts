@@ -20,12 +20,12 @@ export class BaseMongoService<TDocument, TCreate, TUpdate>
     return this.baseApi.find(queryConditions, options);
   }
 
-  public findById(id: string): Promise<TDocument> {
-    return this.baseApi.findById(id);
+  public findById(id: string, options?: IFindOptions): Promise<TDocument> {
+    return this.baseApi.findById(id, options);
   }
 
-  public deleteOne(id: string): Promise<TDocument> {
-    return this.baseApi.deleteOne(id);
+  public async deleteOneById(id: string): Promise<void> {
+    await this.baseApi.deleteOneById(id);
   }
 
   public updateOne(

@@ -7,11 +7,11 @@ export interface IBaseDatabaseDAO<T, TCreate, TUpdate> {
     options?: IFindOptions,
   ): Promise<T[]>;
 
-  findById(id: string): Promise<T>;
+  findById(id: string, options?: IFindOptions): Promise<T>;
 
   createOne(newDocument: TCreate): Promise<T>;
 
-  deleteOne(id: string): Promise<T>;
+  deleteOneById(id: string): Promise<void>;
 
   updateOne(
     queryConditions: FilterDocument<T>,

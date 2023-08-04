@@ -1,5 +1,5 @@
 import { Controller } from "@nestjs/common";
-import { SiteCommand, SiteModel, SiteService } from "../core";
+import { Site, SiteCommand, SiteService } from "../core";
 import { MessagePattern } from "@nestjs/microservices";
 
 @Controller()
@@ -7,7 +7,7 @@ export class SiteController {
   constructor(private readonly siteService: SiteService) {}
 
   @MessagePattern(SiteCommand.GET_ALL)
-  public getEntities(): Promise<SiteModel[]> {
+  public getEntities(): Promise<Site[]> {
     return this.siteService.find({});
   }
 

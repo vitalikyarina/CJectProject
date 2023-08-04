@@ -4,7 +4,7 @@ import { FilterQuery, Model } from "mongoose";
 export class BaseMongoAPIService<T, TCreate, TUpdate>
   implements IBaseDatabaseDAO<T, TCreate, TUpdate>
 {
-  constructor(private readonly documentModel: Model<unknown>) {}
+  constructor(private readonly documentModel: Model<T>) {}
 
   public async find(
     queryConditions: FilterQuery<T> = {},
@@ -19,26 +19,26 @@ export class BaseMongoAPIService<T, TCreate, TUpdate>
       .sort(options?.sort)
       .populate(options?.populate || []);
 
-    return finedEntities as T[];
+    return finedEntities;
   }
 
   public async createOne(newDocument: TCreate): Promise<T> {
     const createdEntity = await this.documentModel.create(newDocument);
-    return createdEntity as T;
+    return createdEntity;
   }
 
-  public async findById(id: string): Promise<T> {
+  public async findById(id: string, options?: IFindOptions): Promise<T> {
     const selectPattern = "-__v";
     const finedEntity = await this.documentModel
       .findById(id)
+      .populate(options?.populate || [])
       .select(selectPattern);
 
     return finedEntity as T;
   }
 
-  public async deleteOne(id: string): Promise<T> {
-    const deletedEntity = await this.documentModel.deleteOne({ _id: id });
-    return deletedEntity as T;
+  public async deleteOneById(id: string): Promise<void> {
+    await this.documentModel.deleteOne({ _id: id });
   }
 
   public async updateOne(

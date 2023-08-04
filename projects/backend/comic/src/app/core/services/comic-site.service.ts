@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { SiteCreateDTO, SiteModel, SiteUpdateDTO } from "../models";
 import { BaseMongoService } from "@cjp-back/mongo";
 import { SiteAPI } from "../apis";
+import { Site, SiteCreateDTO, SiteUpdateDTO } from "../schemas";
 
 @Injectable()
 export class SiteService extends BaseMongoService<
-  SiteModel,
+  Site,
   SiteCreateDTO,
   SiteUpdateDTO
 > {

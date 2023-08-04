@@ -2,48 +2,111 @@ import { Prop, Schema, SchemaFactory, raw } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { ChapterError, IChapter } from "@cjp/shared/comic";
 import { ComicSchemaName } from "../enums";
-import { ResourceModel } from "../models";
+import { Resource } from "./comic-resource.schema";
+import { ApiProperty, PartialType, PickType } from "@nestjs/swagger";
+import { IsNotEmpty } from "class-validator";
+import { Expose } from "class-transformer";
 
 export type ChapterDocument = HydratedDocument<Chapter>;
 
 @Schema()
 export class Chapter implements IChapter {
-  @Prop({ required: true })
-  public path: string;
+  @ApiProperty({ nullable: false })
+  public _id: string;
 
+  @ApiProperty({ nullable: false })
+  @IsNotEmpty()
   @Prop({ required: true })
-  public number: number;
+  path: string;
 
+  @ApiProperty({ nullable: false })
+  @IsNotEmpty()
+  @Prop({ required: true })
+  number: number;
+
+  @ApiProperty({ nullable: false })
+  @IsNotEmpty()
   @Prop()
-  public countPage: number;
+  countPage: number;
 
+  @ApiProperty({ nullable: false })
+  @IsNotEmpty()
   @Prop({
     default: false,
   })
-  public isLoaded: boolean;
+  isLoaded: boolean;
 
+  @ApiProperty({ nullable: false })
+  @Expose()
+  public get isError(): boolean {
+    if (this.errorPages) {
+      return true;
+    }
+    return false;
+  }
+
+  @ApiProperty({ nullable: true })
+  @IsNotEmpty()
   @Prop({
-    default: null,
     type: raw({}),
   })
-  public errorPages: Record<number, boolean>;
+  errorPages: Record<number, boolean>;
 
+  @ApiProperty({ nullable: false })
+  @IsNotEmpty()
   @Prop({ required: true })
-  public date: number;
+  date: number;
 
+  @ApiProperty({ nullable: true, type: Number })
+  @IsNotEmpty()
   @Prop({
-    default: null,
     type: Number,
   })
-  public errorType: ChapterError;
+  errorType: ChapterError;
 
+  @ApiProperty({ nullable: false })
+  @IsNotEmpty()
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: ComicSchemaName.COMICS_RESOURCE,
     required: true,
     autopopulate: { select: "-__v" },
   })
-  public resource: ResourceModel;
+  resource: Resource;
+
+  @ApiProperty({ nullable: false })
+  public images: string[];
 }
 
 export const ChapterSchema = SchemaFactory.createForClass(Chapter);
+
+export class ChapterCreateDTO extends PickType(Chapter, [
+  "number",
+  "path",
+  "date",
+]) {
+  @ApiProperty({ nullable: false })
+  @IsNotEmpty()
+  public resource!: string;
+}
+export class ChapterScrapingDTO extends PickType(Chapter, [
+  "number",
+  "path",
+  "date",
+  "resource",
+]) {}
+
+class ChapterUpdate extends PickType(Chapter, [
+  "path",
+  "date",
+  "countPage",
+  "isLoaded",
+  "errorType",
+  "errorPages",
+]) {
+  @ApiProperty({ nullable: false })
+  @IsNotEmpty()
+  public resource!: string;
+}
+
+export class ChapterUpdateDTO extends PartialType(ChapterUpdate) {}

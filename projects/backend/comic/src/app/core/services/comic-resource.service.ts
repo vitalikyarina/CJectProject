@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { ResourceAPI } from "../apis";
-import { ResourceCreateDTO, ResourceModel, ResourceUpdateDTO } from "../models";
 import { BaseMongoService } from "@cjp-back/mongo";
+import { Resource, ResourceCreateDTO, ResourceUpdateDTO } from "../schemas";
 
 @Injectable()
 export class ResourceService extends BaseMongoService<
-  ResourceModel,
+  Resource,
   ResourceCreateDTO,
   ResourceUpdateDTO
 > {

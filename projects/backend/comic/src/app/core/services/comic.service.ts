@@ -1,32 +1,48 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ComicAPI } from "../apis";
-import {
-  ComicCreateDTO,
-  ComicCreateWithResourcesDTO,
-  ComicModel,
-  ComicUpdateDTO,
-} from "../models";
 import { BaseMongoService } from "@cjp-back/mongo";
 import { ResourceService } from "./comic-resource.service";
-import { HostStaticPath, IFindOptions } from "@cjp-back/shared";
+import { FSHelperService, IFindOptions } from "@cjp-back/shared";
 import { FilterQuery } from "mongoose";
+import { ChapterService } from "./comic-chapter.service";
+import { ConfigService } from "@nestjs/config";
+import { ComicEnvironment } from "../enums";
+import {
+  Chapter,
+  Comic,
+  ComicCreateDTO,
+  ComicCreateWithResourcesDTO,
+  ComicUpdateDTO,
+  ComicUpdateWithResDTO,
+  Resource,
+  ResourceUpdateDTO,
+} from "../schemas";
 
 @Injectable()
 export class ComicService extends BaseMongoService<
-  ComicModel,
+  Comic,
   ComicCreateDTO,
   ComicUpdateDTO
 > {
-  constructor(
-    private readonly api: ComicAPI,
-    private readonly resourceService: ResourceService,
-  ) {
+  @Inject()
+  private readonly resourceService: ResourceService;
+
+  @Inject()
+  private readonly chapterService: ChapterService;
+
+  @Inject()
+  private readonly config: ConfigService;
+
+  @Inject()
+  private readonly fs: FSHelperService;
+
+  constructor(private readonly api: ComicAPI) {
     super(api);
   }
 
-  public async createOneWithResources(
+  async createOneWithResources(
     comic: ComicCreateWithResourcesDTO,
-  ): Promise<ComicModel> {
+  ): Promise<Comic> {
     const resources: string[] = [];
 
     for (let i = 0; i < comic.resources.length; i++) {
@@ -44,68 +60,161 @@ export class ComicService extends BaseMongoService<
     return this.api.createOne(newComic);
   }
 
-  public override async find(
-    queryConditions?: FilterQuery<ComicModel>,
+  override async find(
+    queryConditions?: FilterQuery<Comic>,
     options?: IFindOptions,
-  ): Promise<ComicModel[]> {
+  ): Promise<Comic[]> {
     const comics = await super.find(queryConditions, options);
 
-    comics.map((comic) => {
-      if (comic.postImage) {
-        comic.postImage = `/${HostStaticPath.IMAGES}` + comic.postImage;
-      }
-    });
+    // comics.map((comic) => {
+    //   if (comic.postImage) {
+    //     comic.postImage = `/${HostStaticPath.IMAGES}` + comic.postImage;
+    //   }
+    // });
 
     return comics;
   }
 
-  // public override updateOneById(
-  //   id: string,
-  //   comic: ComicUpdateDTO,
-  // ): Observable<ComicModel> {
-  //   // const resources = comic.resources;
-  //   // console.log(comic);
+  async updateOneByIdWithRes(
+    id: string,
+    updateData: ComicUpdateWithResDTO,
+  ): Promise<Comic> {
+    const comic = await super.findById(id);
 
-  //   // const comicUpdate: ComicUpdateDTO = {
-  //   //   name: comic.name,
-  //   // };
+    const deletingResourceIds = this.getDeletingResourceIds(
+      comic.resources,
+      updateData.resources,
+    );
 
-  //   return this.api
-  //     .updateOneById(id, comic)
-  //     .pipe
-  //     // switchMap(() => {
-  //     //   return this.findById(id);
-  //     // }),
-  //     ();
+    await this.deleteResourceByIds(deletingResourceIds);
 
-  // this.findById(id).pipe(
-  //   switchMap((foundComic) => {
-  //     const newResource = resources.filter((res: IComicResource) => !res._id);
-  //     console.log(newResource);
-  //     return of(foundComic);
-  //   }),
-  // );
-  // return forkJoin(
-  //   comic.resources.map((res) => {
-  //     return this.comicResourceService.createOne(res);
-  //   }),
-  // ).pipe(
-  //   map((resources) => {
-  //     return resources.map((res) => res._id as string);
-  //   }),
-  //   switchMap((resIds) => {
-  //     const newComic = comic;
-  //     newComic.resources = resIds;
-  //     return defer(() => {
-  //       return this.apiComic.updateOneById(id, comic);
-  //     });
-  //   }),
-  // );
-  // map((comic) => {
-  //   const mainImageDir = `${this.comicDir}\\${comic._id}\\main`;
-  //   comic.mainImages = this.fsHelper
-  //     .getFilesFromDir(mainImageDir)
-  //     .map((img) => `assets/${comic._id}/main/${img}`);
-  //   return comic;
-  // }),
+    const deletedChaptersIds = await this.deleteChaptersByResourceIds(
+      comic,
+      deletingResourceIds,
+    );
+
+    const newChapterIds = this.getNewChaptersIds(
+      comic.chapters,
+      deletedChaptersIds,
+    );
+
+    const resourceIds: string[] = await this.getNewResourceIds(
+      updateData.resources,
+    );
+
+    await this.updateOneById(id, {
+      resources: resourceIds,
+      chapters: newChapterIds,
+      altNames: updateData.altNames,
+      name: updateData.name,
+    });
+
+    return super.findById(id);
+  }
+
+  private getDeletingResourceIds(
+    resources: Resource[],
+    newResources: ResourceUpdateDTO[],
+  ): string[] {
+    const foundIds = [];
+    for (let i = 0; i < resources.length; i++) {
+      const resource = resources[i];
+
+      const updatedIndex = newResources.findIndex((res) => {
+        return res._id.toString() === resource._id.toString();
+      });
+      if (updatedIndex === -1) {
+        foundIds.push(resource._id.toString());
+      }
+    }
+    return foundIds;
+  }
+
+  private async getNewResourceIds(
+    resources: ResourceUpdateDTO[],
+  ): Promise<string[]> {
+    const resourceIds = [];
+    for (let i = 0; i < resources.length; i++) {
+      const resource = resources[i];
+      if (!resource._id) {
+        delete resource._id;
+        const createdResource = await this.resourceService.createOne({
+          site: resource.site,
+          path: resource.path,
+          priority: resource.priority,
+          type: resource.type,
+        });
+        resourceIds.push(createdResource._id.toString());
+      } else {
+        await this.resourceService.updateOne(
+          { _id: resource._id },
+          {
+            site: resource.site,
+            path: resource.path,
+            priority: resource.priority,
+            type: resource.type,
+          },
+        );
+        resourceIds.push(resource._id.toString());
+      }
+    }
+
+    return resourceIds;
+  }
+
+  private async deleteResourceByIds(resourceIds: string[]): Promise<void> {
+    for (let i = 0; i < resourceIds.length; i++) {
+      const id = resourceIds[i];
+      await this.resourceService.deleteOneById(id);
+    }
+  }
+
+  private async deleteChaptersByResourceIds(
+    comic: Comic,
+    resourceIds: string[],
+  ): Promise<string[]> {
+    const comicFolder = `${this.config.get(
+      ComicEnvironment.IMAGE_FOLDER,
+    )}/comics/${comic._id}/`;
+
+    const chapterIds = [];
+
+    for (let i = 0; i < resourceIds.length; i++) {
+      const id = resourceIds[i];
+      const chapters = await this.chapterService.deleteChaptersByResourceId(id);
+
+      for (let j = 0; j < chapters.length; j++) {
+        const chapter = chapters[j];
+        const chapterFolder = comicFolder + chapter.number;
+        chapterIds.push(chapter._id.toString());
+
+        if (this.fs.existsFile(chapterFolder)) {
+          this.fs.deleteFolder(chapterFolder);
+        }
+      }
+    }
+
+    return chapterIds;
+  }
+
+  private getNewChaptersIds(
+    chapters: Chapter[],
+    chapterIds: string[],
+  ): string[] {
+    const foundIds = [];
+
+    for (let i = 0; i < chapters.length; i++) {
+      const chapter = chapters[i];
+
+      const foundIndex = chapterIds.findIndex((chp) => {
+        return chp === chapter._id.toString();
+      });
+
+      if (foundIndex === -1) {
+        foundIds.push(chapter._id.toString());
+      }
+    }
+
+    return foundIds;
+  }
 }

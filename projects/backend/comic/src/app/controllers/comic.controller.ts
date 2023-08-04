@@ -1,14 +1,19 @@
-import { Body, Controller, Param } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 
 import { IFindOptions } from "@cjp-back/shared";
 import { MessagePattern } from "@nestjs/microservices";
 import {
+  Comic,
   ComicCommand,
   ComicCreateWithResourcesDTO,
-  ComicModel,
   ComicService,
-  ComicUpdateDTO,
+  ComicUpdateWithResDTO,
 } from "../core";
+
+interface IUpdateData {
+  id: string;
+  data: ComicUpdateWithResDTO;
+}
 
 @Controller()
 export class ComicController {
@@ -21,21 +26,20 @@ export class ComicController {
   constructor(private readonly comicService: ComicService) {}
 
   @MessagePattern(ComicCommand.GET_ALL)
-  getEntities(): Promise<ComicModel[]> {
+  getEntities(): Promise<Comic[]> {
     return this.comicService.find({}, this.findOptions);
   }
 
   @MessagePattern(ComicCommand.CREATE)
-  createEntity(
-    @Body() createData: ComicCreateWithResourcesDTO,
-  ): Promise<ComicModel> {
+  createEntity(createData: ComicCreateWithResourcesDTO): Promise<Comic> {
     return this.comicService.createOneWithResources(createData);
   }
 
-  // updateEntity(
-  //   @Param("id") id: string,
-  //   @Body() updateData: ComicUpdateDTO,
-  // ): Observable<ComicModel> {
-  //   return this.comicService.updateOneById(id, updateData);
-  // }
+  @MessagePattern(ComicCommand.UPDATE)
+  async updateEntity(updateData: IUpdateData): Promise<Comic> {
+    return this.comicService.updateOneByIdWithRes(
+      updateData.id,
+      updateData.data,
+    );
+  }
 }

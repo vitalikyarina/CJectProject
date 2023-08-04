@@ -2,9 +2,9 @@ import { BaseClientProxy } from "@cjp-back/shared";
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { COMIC_MICROSERVICE } from "../tokens";
-import { Observable } from "rxjs";
+import { Observable, lastValueFrom } from "rxjs";
 import { ComicCommand } from "../enums";
-import { ComicCreateWithResourcesDTO, ComicModel } from "../models";
+import { Comic, ComicCreateWithResourcesDTO, ComicUpdateDTO } from "../schemas";
 
 @Injectable()
 export class ComicClientProxy extends BaseClientProxy {
@@ -14,13 +14,22 @@ export class ComicClientProxy extends BaseClientProxy {
     super(client);
   }
 
-  public getAllComics(): Observable<ComicModel[]> {
-    return this.send(ComicCommand.GET_ALL, {});
+  public getAllComics(): Promise<Comic[]> {
+    return lastValueFrom(this.send<Comic[]>(ComicCommand.GET_ALL, {}));
   }
 
   public createComic(
     createData: ComicCreateWithResourcesDTO,
-  ): Observable<ComicModel> {
+  ): Observable<Comic> {
     return this.send(ComicCommand.CREATE, createData);
+  }
+
+  public updateComic(id: string, updateData: ComicUpdateDTO): Promise<Comic> {
+    return lastValueFrom(
+      this.send(ComicCommand.UPDATE, {
+        id,
+        data: updateData,
+      }),
+    );
   }
 }

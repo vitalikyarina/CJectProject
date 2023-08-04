@@ -4,13 +4,13 @@ import { Logger } from "../logger.service";
 import { CJPQueue, FPromise, FSHelperService } from "@cjp-back/shared";
 import fs from "fs";
 import { ResourceType } from "@cjp/shared/comic";
-import { launchPlaywright } from "crawlee";
 import {
   ChapterModel,
   ChapterService,
   ChapterUpdateDTO,
   ComicService,
 } from "@cjp-back/comic";
+import { BrowserHelperService } from "@cjp-back/browser";
 
 interface IChapterImageData {
   complete: boolean;
@@ -25,10 +25,20 @@ export class ComicProcessorChapterHelperService {
     private readonly comicChapterService: ChapterService,
     private readonly fsHelper: FSHelperService,
     private readonly logger: Logger,
+    private readonly browser: BrowserHelperService,
   ) {}
 
   async startParsingChapters(id: string, comicDir: string): Promise<void> {
-    const comic = await this.comicService.findById(id);
+    const comic = await this.comicService.findById(id, {
+      populate: [
+        { path: "resources", populate: ["site"] },
+        {
+          path: "chapters",
+          populate: [{ path: "resource", populate: ["site"] }],
+        },
+      ],
+    });
+
     const chapters = comic.chapters;
     await this.load(chapters, comicDir);
   }
@@ -75,11 +85,14 @@ export class ComicProcessorChapterHelperService {
       }`,
     );
     const comicSite = chapter.resource.site;
-    const browser = await launchPlaywright({
-      launchOptions: { args: ["--disable-web-security"] },
-    });
+    const browser = await this.browser.getBrowser();
+    // await launchPlaywright({
+    //   launchOptions: { args: ["--disable-web-security"] },
+    // });
     try {
-      const page = await browser.newPage();
+      const page = await browser.newPage({
+        screen: { height: 1032, width: 1920 },
+      });
       const chapterPath = `${comicDir}/${chapter.number}`;
       this.fsHelper.createFolder(chapterPath);
       const link = `${chapter.resource.site.baseLink}${chapter.resource.path}${chapter.path}`;
@@ -97,9 +110,14 @@ export class ComicProcessorChapterHelperService {
         );
         await page.waitForLoadState("networkidle");
       }
-      await page.mouse.wheel(0, 15000);
+
+      await page.mouse.wheel(0, 5000);
       await page.waitForTimeout(5000);
+      await page.mouse.wheel(0, 10000);
+      await page.screenshot({ path: `./${chapter.number}.jpg` });
       await page.waitForSelector(comicSite.chapterImagesPath);
+      await page.waitForTimeout(10000);
+      await page.mouse.wheel(0, 5000);
       const elements = (await page.$$(
         comicSite.chapterImagesPath,
       )) as ElementHandle<HTMLImageElement>[];
@@ -119,6 +137,8 @@ export class ComicProcessorChapterHelperService {
         chapter.errorPages,
       );
       if (imagesLoadStatus) {
+        console.log(chaptersData);
+
         this.logger.debug("Can't load images");
         if (step < 10 && !lastErrorEqualCurrent) {
           throw new Error("Error");
@@ -143,7 +163,7 @@ export class ComicProcessorChapterHelperService {
         if (!updateChapterData.errorPages || !updateChapterData.errorPages[i]) {
           const imsPath = `${chapterPath}/${i}.jpg`;
           if (!fs.existsSync(imsPath)) {
-            await element.evaluate((elem: HTMLImageElement) => {
+            const a = element.evaluate((elem: HTMLImageElement) => {
               const link = elem.src;
               fetch(link)
                 .then((res) => res.blob())
@@ -156,7 +176,10 @@ export class ComicProcessorChapterHelperService {
                   document.body.removeChild(a);
                 });
             });
-            const download = await page.waitForEvent("download");
+            const [download] = await Promise.all([
+              page.waitForEvent("download"), // wait for download to start
+              a,
+            ]);
             await download.saveAs(imsPath);
             await this.delay(100);
           }
