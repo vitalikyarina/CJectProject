@@ -1,16 +1,13 @@
-import { Component, Signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ComicEntity } from "../../core/models";
+import { ComicModel } from "../../core/models";
 import {
   ContentSectionComponent,
   ContentSectionContentComponent,
   ContentSectionTitleComponent,
 } from "@cjp-front/content-section";
-import { Select } from "@ngxs/store";
-import { ComicState } from "../../core";
-import { Observable } from "rxjs";
-import { toSignal } from "@angular/core/rxjs-interop";
 import { ComicCardComponent } from "./components";
+import { ComicState } from "@cjp-front/comic/core";
 
 @Component({
   standalone: true,
@@ -23,14 +20,12 @@ import { ComicCardComponent } from "./components";
   ],
   templateUrl: "./comics.component.html",
   styleUrls: ["./comics.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicsComponent {
-  @Select(ComicState.comics) public comics$!: Observable<ComicEntity[]>;
-  public comics: Signal<ComicEntity[] | undefined> = toSignal<ComicEntity[]>(
-    this.comics$,
-  );
+  readonly comicState: ComicState = inject(ComicState);
 
-  public trackByFn(index: number, element: ComicEntity): string {
+  public trackByFn(index: number, element: ComicModel): string {
     return element._id;
   }
 }

@@ -1,2 +1,2 @@
-export * from "./site/site.controller";
-export * from "./comic/comic.controller";
+export * from "./site.controller";
+export * from "./comic.controller";

@@ -1,15 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import * as fs from "fs";
 import * as path from "path";
+import { promisify } from "util";
+import sharp from "sharp";
 
 @Injectable()
 export class FSHelperService {
-  public deleteDir(dirPath: string): void {
+  public deleteFolder(dirPath: string): void {
     if (fs.existsSync(dirPath)) {
       fs.readdirSync(dirPath).forEach((file) => {
         const curPath = path.join(dirPath, file);
         if (fs.lstatSync(curPath).isDirectory()) {
-          this.deleteDir(curPath);
+          this.deleteFolder(curPath);
         } else {
           fs.unlinkSync(curPath);
         }
@@ -22,7 +24,7 @@ export class FSHelperService {
     return fs.existsSync(path);
   }
 
-  public getFilesFromDir(path: string): string[] {
+  public getFilesFromFolder(path: string): string[] {
     let files: string[] = [];
     if (fs.existsSync(path)) {
       files = fs.readdirSync(path);
@@ -30,11 +32,26 @@ export class FSHelperService {
     return files;
   }
 
-  public createDirIfNot(dirPath: string): void {
+  public createFolder(dirPath: string): void {
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, {
         recursive: true,
       });
+    }
+  }
+
+  public async sharpToWebP(
+    inputFile: string,
+    outputFile: string,
+  ): Promise<void> {
+    const sharpToWebP = promisify(
+      sharp(inputFile).toFile.bind(sharp(inputFile)),
+    );
+
+    try {
+      await sharpToWebP(outputFile);
+    } catch (e) {
+      console.log(e);
     }
   }
 }

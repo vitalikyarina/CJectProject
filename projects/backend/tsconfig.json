@@ -2,17 +2,15 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@cjp-back/configuration": [
-        "projects/backend/libs/configuration/src/index.ts"
-      ],
       "@cjp-back/shared": ["projects/backend/libs/shared/src/index.ts"],
       "@cjp-back/mongo": ["projects/backend/libs/mongo/src/index.ts"],
-      "@cjp-back/mongo/comic": [
-        "projects/backend/libs/mongo/src/lib/schemas/comic/index.ts"
-      ],
       "@cjp/shared": ["projects/shared"],
       "@cjp/shared/comic": ["projects/shared/comic"],
-      "@cjp-back/browser": ["projects/backend/libs/browser/src/index.ts"]
+      "@cjp-back/browser": ["projects/backend/libs/browser/src/index.ts"],
+      "@cjp-back/comic": ["projects/backend/comic/src/index.ts"],
+      "@cjp-back/comic-scraping": [
+        "projects/backend/comic-scraping/src/index.ts"
+      ]
     }
   }
 }

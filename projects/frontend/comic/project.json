@@ -8,18 +8,27 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/projects/frontend/comic",
         "index": "projects/frontend/comic/src/index.html",
         "main": "projects/frontend/comic/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "projects/frontend/comic/tsconfig.app.json",
         "assets": [
           "projects/frontend/comic/src/favicon.ico",
           "projects/frontend/comic/src/assets"
         ],
-        "styles": ["projects/frontend/comic/src/styles.scss"],
+        "styles": [
+          "projects/frontend/assets/styles/themes/base.scss",
+          "projects/frontend/assets/styles/reset.scss",
+          "projects/frontend/assets/styles/elements.scss",
+          "projects/frontend/comic/src/styles.scss"
+        ],
         "scripts": [],
         "customWebpackConfig": {
           "path": "projects/frontend/comic/webpack.config.js"
@@ -59,7 +68,8 @@
       "executor": "@nx/angular:webpack-dev-server",
       "options": {
         "port": 4201,
-        "publicHost": "http://localhost:4201"
+        "publicHost": "http://localhost:4201",
+        "proxyConfig": "proxy.conf.json"
       },
       "configurations": {
         "production": {
@@ -75,6 +85,22 @@
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
         "browserTarget": "frontend-comic:build"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "projects/frontend/comic/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     },
     "serve-static": {

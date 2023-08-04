@@ -1,3 +1,3 @@
 export enum ResourceError {
-  LINK = 0,
+  WRONG_LINK = 0,
 }

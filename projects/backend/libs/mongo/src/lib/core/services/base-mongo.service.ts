@@ -1,5 +1,4 @@
 import { FilterQuery } from "mongoose";
-import { Observable } from "rxjs";
 import { BaseMongoAPIService } from "../api";
 import { IBaseDatabaseDAO, IFindOptions } from "@cjp-back/shared";
 
@@ -10,33 +9,33 @@ export class BaseMongoService<TDocument, TCreate, TUpdate>
     private readonly baseApi: BaseMongoAPIService<TDocument, TCreate, TUpdate>,
   ) {}
 
-  public createOne(newDocument: TCreate): Observable<TDocument> {
+  public createOne(newDocument: TCreate): Promise<TDocument> {
     return this.baseApi.createOne(newDocument);
   }
 
   public find(
     queryConditions?: FilterQuery<TDocument>,
     options?: IFindOptions,
-  ): Observable<TDocument> {
+  ): Promise<TDocument[]> {
     return this.baseApi.find(queryConditions, options);
   }
 
-  public findById(id: string): Observable<TDocument> {
-    return this.baseApi.findById(id);
+  public findById(id: string, options?: IFindOptions): Promise<TDocument> {
+    return this.baseApi.findById(id, options);
   }
 
-  public deleteOne(id: string): Observable<TDocument> {
-    return this.baseApi.deleteOne(id);
+  public async deleteOneById(id: string): Promise<void> {
+    await this.baseApi.deleteOneById(id);
   }
 
   public updateOne(
     queryConditions: FilterQuery<TDocument>,
     updateData: TUpdate,
-  ): Observable<TDocument> {
+  ): Promise<TDocument> {
     return this.baseApi.updateOne(queryConditions, updateData);
   }
 
-  public updateOneById(id: string, updateData: TUpdate): Observable<TDocument> {
+  public updateOneById(id: string, updateData: TUpdate): Promise<TDocument> {
     return this.baseApi.updateOneById(id, updateData);
   }
 }

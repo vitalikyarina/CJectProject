@@ -1,23 +1,22 @@
-import { Observable } from "rxjs";
 import { FilterDocument } from "../types";
 import { IFindOptions } from "./find-options.interface";
 
 export interface IBaseDatabaseDAO<T, TCreate, TUpdate> {
-  createOne(newDocument: TCreate): Observable<T>;
-
   find(
     queryConditions?: FilterDocument<T>,
     options?: IFindOptions,
-  ): Observable<T>;
+  ): Promise<T[]>;
 
-  findById(id: string): Observable<T>;
+  findById(id: string, options?: IFindOptions): Promise<T>;
 
-  deleteOne(id: string): Observable<T>;
+  createOne(newDocument: TCreate): Promise<T>;
+
+  deleteOneById(id: string): Promise<void>;
 
   updateOne(
     queryConditions: FilterDocument<T>,
     updateData: Partial<TUpdate>,
-  ): Observable<T>;
+  ): Promise<T>;
 
-  updateOneById(id: string, updateData: Partial<TUpdate>): Observable<T>;
+  updateOneById(id: string, updateData: Partial<TUpdate>): Promise<T>;
 }

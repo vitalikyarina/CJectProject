@@ -1,6 +1,6 @@
-import { ComicEntity, SiteEntity } from "../models";
+import { IArrayState } from "@cjp-front/state";
+import { ComicModel } from "../models";
 
-export interface IComicState {
-  comics: ComicEntity[];
-  sites: SiteEntity[];
+export interface IComicState extends IArrayState<ComicModel> {
+  selectedId: string | null;
 }

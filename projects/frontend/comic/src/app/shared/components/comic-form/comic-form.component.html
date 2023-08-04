@@ -1,0 +1,103 @@
+<form [formGroup]="formGroup">
+  <cjp-form-group>
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput [formControl]="formGroup.controls.name" id="comic_name" />
+    </mat-form-field>
+  </cjp-form-group>
+
+  <cjp-form-group formArrayName="altNames">
+    <mat-form-field
+      appearance="outline"
+      *ngFor="
+        let altName of formGroup.controls.altNames.controls;
+        let i = index
+      ">
+      <mat-label>Alt Name {{ i + 1 }}</mat-label>
+      <input matInput [formControl]="altName" id="alt_name_{{ i }}" />
+      <button
+        mat-icon-button
+        matSuffix
+        color="warn"
+        (click)="removeAltNameControl(i)">
+        <mat-icon fontIcon="delete"></mat-icon>
+      </button>
+    </mat-form-field>
+    <button
+      type="button"
+      mat-stroked-button
+      color="primary"
+      (click)="addAltNameControl()">
+      Add alt name
+    </button>
+  </cjp-form-group>
+
+  <cjp-form-group
+    formArrayName="resources"
+    cdkDropList
+    (cdkDropListDropped)="drop($event)">
+    <ng-container
+      *ngFor="
+        let rscForm of formGroup.controls.resources.controls;
+        let i = index;
+        trackBy: trackByFn
+      ">
+      <div
+        gdColumns="repeat(6, 1fr)"
+        gdGap="10px"
+        gdColumn="1 / 7"
+        gdAlignColumns="center center"
+        cdkDrag
+        [formGroup]="rscForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Path {{ i + 1 }}</mat-label>
+          <input
+            matInput
+            [formControl]="rscForm.controls.path"
+            id="path_{{ i }}"
+            (paste)="onPaste($event, i)" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Type {{ i + 1 }}</mat-label>
+          <mat-select formControlName="type">
+            <mat-option [value]="resourceTypes.DEFAULT">
+              {{ resourceTypes[resourceTypes.DEFAULT] }}
+            </mat-option>
+            <mat-option [value]="resourceTypes.RAW">
+              {{ resourceTypes[resourceTypes.RAW] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Find site {{ i + 1 }}</mat-label>
+          <mat-select formControlName="site">
+            <mat-option *ngFor="let site of sites" [value]="site._id">
+              {{ site.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div gdColumn="6 / 7">
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button
+              [disabled]="formGroup.controls.resources.controls.length < 2"
+              mat-icon-button
+              color="warn"
+              (click)="removeResourceForm(i)">
+              <mat-icon fontIcon="delete" />
+            </button>
+            <mat-icon cdkDragHandle fontIcon="swap_vert" />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <button
+      mat-stroked-button
+      type="button"
+      color="primary"
+      (click)="addResourceForm()">
+      Add resource
+    </button>
+  </cjp-form-group>
+</form>

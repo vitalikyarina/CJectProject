@@ -12,3 +12,7 @@ export interface IFindOptions {
   skip?: number;
   populate?: string[] | IPopulateOptions[];
 }
+
+export interface IFindOptions {
+  populate?: string[] | IPopulateOptions[];
+}

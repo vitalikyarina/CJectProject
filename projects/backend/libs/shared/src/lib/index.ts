@@ -4,3 +4,4 @@ export * from "./observables";
 export * from "./services";
 export * from "./shared.module";
 export * from "./classes";
+export * from "./enums";

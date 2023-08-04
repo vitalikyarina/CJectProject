@@ -1,0 +1,9 @@
+::ng-deep {
+  & .mdc-icon-button {
+    margin-right: 0.15em;
+
+    & .mat-icon {
+      margin-bottom: 2px;
+    }
+  }
+}

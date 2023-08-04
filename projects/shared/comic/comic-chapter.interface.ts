@@ -2,7 +2,7 @@ import { ChapterError } from "./enums";
 
 export interface IChapter {
   number: number;
-  link: string;
+  path: string;
   date: number;
   resource: unknown;
   countPage: number;
