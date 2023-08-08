@@ -19,7 +19,7 @@ export class ComicCron implements OnModuleInit {
 
   public async onModuleInit(): Promise<void> {
     await this.queue.cleanQueue();
-    await this.checkComics();
+    // await this.checkComics();
   }
 
   @Cron(CronExpression.EVERY_12_HOURS)

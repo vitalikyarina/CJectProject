@@ -109,11 +109,15 @@ export class ComicCreateWithResourcesDTO extends PickType(Comic, [
   @IsNotEmpty()
   public resources: ResourceCreateDTO[];
 
-  constructor(comic: ComicCreateDTO) {
+  constructor(comic: Partial<ComicCreateWithResourcesDTO> | ComicCreateDTO) {
     super();
-    this.name = comic.name;
-    this.altNames = comic.altNames;
-    this.resources = [];
+    if (typeof comic === typeof ComicCreateDTO) {
+      this.name = comic.name;
+      this.altNames = comic.altNames;
+      this.resources = [];
+    } else {
+      Object.assign(this, comic);
+    }
   }
 }
 

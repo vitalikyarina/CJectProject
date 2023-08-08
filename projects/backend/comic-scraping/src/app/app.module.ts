@@ -16,6 +16,7 @@ import { ComicMongoModule } from "@cjp-back/comic";
 import { BrowserModule } from "@cjp-back/browser";
 import { SharedModule } from "@cjp-back/shared";
 import { ScheduleModule } from "@nestjs/schedule";
+import { ComicController } from "./controllers";
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { ScheduleModule } from "@nestjs/schedule";
     BrowserModule,
     SharedModule,
   ],
-  controllers: [],
+  controllers: [ComicController],
   providers: [
     Logger,
     QueueService,
