@@ -111,7 +111,6 @@ export class ComicProcessorChapterHelperService {
       await page.mouse.wheel(0, 5000);
       await page.waitForTimeout(5000);
       await page.mouse.wheel(0, 10000);
-      await page.screenshot({ path: `./${chapter.number}.jpg` });
       await page.waitForSelector(comicSite.chapterImagesPath);
       await page.waitForTimeout(10000);
       await page.mouse.wheel(0, 5000);
@@ -134,8 +133,6 @@ export class ComicProcessorChapterHelperService {
         chapter.errorPages,
       );
       if (imagesLoadStatus) {
-        console.log(chaptersData);
-
         this.logger.debug("Can't load images");
         if (step < 10 && !lastErrorEqualCurrent) {
           throw new Error("Error");
@@ -160,7 +157,7 @@ export class ComicProcessorChapterHelperService {
         if (!updateChapterData.errorPages || !updateChapterData.errorPages[i]) {
           const imsPath = `${chapterPath}/${i}.jpg`;
           if (!fs.existsSync(imsPath)) {
-            const a = element.evaluate((elem: HTMLImageElement) => {
+            const a = await element.evaluate((elem: HTMLImageElement) => {
               const link = elem.src;
               fetch(link)
                 .then((res) => res.blob())
@@ -173,6 +170,7 @@ export class ComicProcessorChapterHelperService {
                   document.body.removeChild(a);
                 });
             });
+            // const download = await page.waitForEvent("download");
             const [download] = await Promise.all([
               page.waitForEvent("download"), // wait for download to start
               a,

@@ -51,7 +51,7 @@ export class FSHelperService {
     try {
       await sharpToWebP(outputFile);
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   }
 }

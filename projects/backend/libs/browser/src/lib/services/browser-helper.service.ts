@@ -1,16 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { Browser, Page, firefox } from "playwright";
+import { Browser, Page, chromium } from "playwright";
 import { defer, Observable } from "rxjs";
 
 @Injectable()
 export class BrowserHelperService {
-  public getBrowser$(): Observable<Browser> {
+  getBrowser$(): Observable<Browser> {
     return defer(() => this.getBrowser());
   }
 
-  public async getBrowser(): Promise<Browser> {
+  async getBrowser(): Promise<Browser> {
     try {
-      const browser: Browser = await firefox.launch({
+      const browser: Browser = await chromium.launch({
         args: ["--disable-web-security", "--mute-audio"],
       });
       return browser;
@@ -19,7 +19,7 @@ export class BrowserHelperService {
     }
   }
 
-  public async downloadImgFromPage(
+  async downloadImgFromPage(
     page: Page,
     elementPath: string,
     filePath: string,
@@ -43,5 +43,6 @@ export class BrowserHelperService {
       a,
     ]);
     await download.saveAs(filePath);
+    await download.delete();
   }
 }
