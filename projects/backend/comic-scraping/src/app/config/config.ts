@@ -9,7 +9,7 @@ interface ICScrapingEnvironment {
 
 export const EnvValidationSchema = {
   [Environment.PORT]: Joi.number().positive().default(3002),
-  [Environment.HOST]: Joi.string().required().default("0.0.0.0"),
+  [Environment.HOST]: Joi.string().default("0.0.0.0"),
   [Environment.IMAGE_FOLDER]: Joi.string().required(),
 };
 

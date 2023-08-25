@@ -1,4 +1,4 @@
-export enum ComicEnvironment {
+export enum Environment {
   PORT = "PORT",
   HOST = "HOST",
   MONGO_URL = "MONGO_URL",
