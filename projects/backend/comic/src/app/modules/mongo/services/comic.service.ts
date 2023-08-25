@@ -5,8 +5,6 @@ import { ResourceService } from "./comic-resource.service";
 import { FSHelperService, IFindOptions } from "@cjp-back/shared";
 import { FilterQuery } from "mongoose";
 import { ChapterService } from "./comic-chapter.service";
-import { ConfigService } from "@nestjs/config";
-import { ComicEnvironment } from "../enums";
 import {
   Chapter,
   Comic,
@@ -17,6 +15,7 @@ import {
   Resource,
   ResourceUpdateDTO,
 } from "../schemas";
+import { EnvironmentService } from "./environment.service";
 
 @Injectable()
 export class ComicService extends BaseMongoService<
@@ -24,17 +23,10 @@ export class ComicService extends BaseMongoService<
   ComicCreateDTO,
   ComicUpdateDTO
 > {
-  @Inject()
-  private readonly resourceService: ResourceService;
-
-  @Inject()
-  private readonly chapterService: ChapterService;
-
-  @Inject()
-  private readonly config: ConfigService;
-
-  @Inject()
-  private readonly fs: FSHelperService;
+  @Inject() private readonly resourceService: ResourceService;
+  @Inject() private readonly chapterService: ChapterService;
+  @Inject() private readonly fs: FSHelperService;
+  @Inject() private readonly env: EnvironmentService;
 
   constructor(private readonly api: ComicAPI) {
     super(api);
@@ -173,9 +165,7 @@ export class ComicService extends BaseMongoService<
     comic: Comic,
     resourceIds: string[],
   ): Promise<string[]> {
-    const comicFolder = `${this.config.get(
-      ComicEnvironment.IMAGE_FOLDER,
-    )}/comics/${comic._id}/`;
+    const comicFolder = `${this.env.IMAGE_FOLDER}/comics/${comic._id}/`;
 
     const chapterIds = [];
 

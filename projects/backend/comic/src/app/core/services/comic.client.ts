@@ -4,7 +4,11 @@ import { ClientProxy } from "@nestjs/microservices";
 import { COMIC_MICROSERVICE } from "../tokens";
 import { Observable, lastValueFrom } from "rxjs";
 import { ComicCommand } from "../enums";
-import { Comic, ComicCreateWithResourcesDTO, ComicUpdateDTO } from "../schemas";
+import {
+  Comic,
+  ComicCreateWithResourcesDTO,
+  ComicUpdateDTO,
+} from "../../modules";
 
 @Injectable()
 export class ComicClientProxy extends BaseClientProxy {

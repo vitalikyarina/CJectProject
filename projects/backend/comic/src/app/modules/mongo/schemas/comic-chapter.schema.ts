@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory, raw } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { ChapterError, IChapter } from "@cjp/shared/comic";
-import { ComicSchemaName } from "../enums";
+import { SchemaName } from "../enums";
 import { Resource } from "./comic-resource.schema";
 import { ApiProperty, PartialType, PickType } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
@@ -68,7 +68,7 @@ export class Chapter implements IChapter {
   @IsNotEmpty()
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: ComicSchemaName.COMICS_RESOURCE,
+    ref: SchemaName.COMICS_RESOURCE,
     required: true,
     autopopulate: { select: "-__v" },
   })

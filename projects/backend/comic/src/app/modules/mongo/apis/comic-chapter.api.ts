@@ -8,7 +8,7 @@ import {
   ChapterUpdateDTO,
 } from "../schemas";
 import { BaseMongoAPIService } from "@cjp-back/mongo";
-import { ComicSchemaName } from "../enums";
+import { SchemaName } from "../enums";
 
 @Injectable()
 export class ChapterAPI extends BaseMongoAPIService<
@@ -17,7 +17,7 @@ export class ChapterAPI extends BaseMongoAPIService<
   ChapterUpdateDTO
 > {
   constructor(
-    @InjectModel(ComicSchemaName.COMICS_CHAPTER)
+    @InjectModel(SchemaName.COMICS_CHAPTER)
     protected readonly model: Model<ChapterDocument>,
   ) {
     super(model);

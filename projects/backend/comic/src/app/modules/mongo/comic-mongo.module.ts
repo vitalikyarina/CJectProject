@@ -1,22 +1,25 @@
 import { Module } from "@nestjs/common";
-import {
-  ChapterSchema,
-  ChapterService,
-  ComicEnvironment,
-  ComicSchema,
-  ComicSchemaName,
-  ComicService,
-  ResourceSchema,
-  ResourceService,
-  SiteSchema,
-  SiteService,
-} from "../core";
+import { Environment } from "../../core";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import mongoose from "mongoose";
 import mongooseAutoPopulate from "mongoose-autopopulate";
 import { SharedModule } from "@cjp-back/shared";
-import { ChapterAPI, ComicAPI, ResourceAPI, SiteAPI } from "../core/apis";
+import { SchemaName } from "./enums";
+import {
+  ChapterSchema,
+  ComicSchema,
+  ResourceSchema,
+  SiteSchema,
+} from "./schemas";
+import { ChapterAPI, ComicAPI, ResourceAPI, SiteAPI } from "./apis";
+import {
+  ChapterService,
+  ComicService,
+  EnvironmentService,
+  ResourceService,
+  SiteService,
+} from "./services";
 
 @Module({
   imports: [
@@ -28,7 +31,7 @@ import { ChapterAPI, ComicAPI, ResourceAPI, SiteAPI } from "../core/apis";
       useFactory: (configService: ConfigService) => {
         mongoose.plugin(mongooseAutoPopulate);
         return {
-          uri: configService.get(ComicEnvironment.MONGO_URL),
+          uri: configService.get(Environment.MONGO_URL),
           useNewUrlParser: true,
           useUnifiedTopology: true,
         };
@@ -36,25 +39,25 @@ import { ChapterAPI, ComicAPI, ResourceAPI, SiteAPI } from "../core/apis";
     }),
     MongooseModule.forFeatureAsync([
       {
-        name: ComicSchemaName.COMICS_SITE,
+        name: SchemaName.COMICS_SITE,
         useFactory: () => {
           return SiteSchema;
         },
       },
       {
-        name: ComicSchemaName.COMICS_RESOURCE,
+        name: SchemaName.COMICS_RESOURCE,
         useFactory: () => {
           return ResourceSchema;
         },
       },
       {
-        name: ComicSchemaName.COMICS_CHAPTER,
+        name: SchemaName.COMICS_CHAPTER,
         useFactory: () => {
           return ChapterSchema;
         },
       },
       {
-        name: ComicSchemaName.COMIC,
+        name: SchemaName.COMIC,
         useFactory: () => {
           return ComicSchema;
         },
@@ -70,6 +73,7 @@ import { ChapterAPI, ComicAPI, ResourceAPI, SiteAPI } from "../core/apis";
     ResourceService,
     ChapterService,
     ComicService,
+    EnvironmentService,
   ],
   exports: [
     MongooseModule,

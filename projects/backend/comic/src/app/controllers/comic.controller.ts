@@ -2,14 +2,14 @@ import { Controller, Inject } from "@nestjs/common";
 
 import { IFindOptions } from "@cjp-back/shared";
 import { MessagePattern } from "@nestjs/microservices";
+import { ComicCommand } from "../core";
+import { ComicScrapingClientProxy } from "@cjp-back/comic-scraping";
 import {
   Comic,
-  ComicCommand,
   ComicCreateWithResourcesDTO,
   ComicService,
   ComicUpdateWithResDTO,
-} from "../core";
-import { ComicScrapingClientProxy } from "@cjp-back/comic-scraping";
+} from "../modules";
 
 interface IUpdateData {
   id: string;
@@ -27,7 +27,7 @@ export class ComicController {
   @Inject()
   protected readonly scrapingProxy: ComicScrapingClientProxy;
 
-  constructor(private readonly comicService: ComicService) {}
+  @Inject() private readonly comicService: ComicService;
 
   @MessagePattern(ComicCommand.GET_ALL)
   getEntities(): Promise<Comic[]> {

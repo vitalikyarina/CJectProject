@@ -1,7 +1,7 @@
 import { ComicStatus, ComicTag, IComic } from "@cjp/shared/comic";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
-import { ComicSchemaName } from "../enums";
+import { SchemaName } from "../enums";
 import { Transform } from "class-transformer";
 import { HostStaticPath } from "@cjp-back/shared";
 import {
@@ -29,7 +29,7 @@ export class Comic implements IComic {
   @IsArray()
   @Prop({
     type: [mongoose.Schema.Types.ObjectId],
-    ref: ComicSchemaName.COMICS_RESOURCE,
+    ref: SchemaName.COMICS_RESOURCE,
     default: [],
     autopopulate: { select: "-__v" },
   })
@@ -38,7 +38,7 @@ export class Comic implements IComic {
   @ApiProperty({ nullable: false })
   @Prop({
     type: [mongoose.Schema.Types.ObjectId],
-    ref: ComicSchemaName.COMICS_CHAPTER,
+    ref: SchemaName.COMICS_CHAPTER,
     default: [],
     autopopulate: { select: "-__v" },
   })
