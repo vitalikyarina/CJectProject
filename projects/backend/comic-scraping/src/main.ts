@@ -9,13 +9,13 @@ import { Transport, MicroserviceOptions } from "@nestjs/microservices";
 
 import { AppModule } from "./app/app.module";
 import { getEnv } from "./app/config";
-import { CScrapingEnvironment } from "./app";
+import { Environment } from "./app";
 
 async function bootstrap(): Promise<void> {
   const env = getEnv();
 
-  const PORT: number = env[CScrapingEnvironment.PORT];
-  const HOST: string = env[CScrapingEnvironment.HOST];
+  const PORT: number = env[Environment.PORT];
+  const HOST: string = env[Environment.HOST];
 
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
