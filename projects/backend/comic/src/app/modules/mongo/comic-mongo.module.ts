@@ -1,7 +1,6 @@
-import { Module } from "@nestjs/common";
-import { Environment } from "../../core";
+import { DynamicModule, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigModule } from "@nestjs/config";
 import mongoose from "mongoose";
 import mongooseAutoPopulate from "mongoose-autopopulate";
 import { SharedModule } from "@cjp-back/shared";
@@ -21,66 +20,69 @@ import {
   SiteService,
 } from "./services";
 
-@Module({
-  imports: [
-    ConfigModule,
-    SharedModule,
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        mongoose.plugin(mongooseAutoPopulate);
-        return {
-          uri: configService.get(Environment.MONGO_URL),
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        };
-      },
-    }),
-    MongooseModule.forFeatureAsync([
-      {
-        name: SchemaName.COMICS_SITE,
-        useFactory: () => {
-          return SiteSchema;
-        },
-      },
-      {
-        name: SchemaName.COMICS_RESOURCE,
-        useFactory: () => {
-          return ResourceSchema;
-        },
-      },
-      {
-        name: SchemaName.COMICS_CHAPTER,
-        useFactory: () => {
-          return ChapterSchema;
-        },
-      },
-      {
-        name: SchemaName.COMIC,
-        useFactory: () => {
-          return ComicSchema;
-        },
-      },
-    ]),
-  ],
-  providers: [
-    SiteAPI,
-    ResourceAPI,
-    ChapterAPI,
-    ComicAPI,
-    SiteService,
-    ResourceService,
-    ChapterService,
-    ComicService,
-    EnvironmentService,
-  ],
-  exports: [
-    MongooseModule,
-    SiteService,
-    ResourceService,
-    ChapterService,
-    ComicService,
-  ],
-})
-export class ComicMongoModule {}
+@Module({})
+export class ComicMongoModule {
+  static forRoot(config: { url: string }): DynamicModule {
+    return {
+      module: ComicMongoModule,
+      imports: [
+        ConfigModule,
+        SharedModule,
+        MongooseModule.forRootAsync({
+          useFactory: () => {
+            mongoose.plugin(mongooseAutoPopulate);
+            return {
+              uri: config.url,
+              useNewUrlParser: true,
+              useUnifiedTopology: true,
+            };
+          },
+        }),
+        MongooseModule.forFeatureAsync([
+          {
+            name: SchemaName.COMICS_SITE,
+            useFactory: () => {
+              return SiteSchema;
+            },
+          },
+          {
+            name: SchemaName.COMICS_RESOURCE,
+            useFactory: () => {
+              return ResourceSchema;
+            },
+          },
+          {
+            name: SchemaName.COMICS_CHAPTER,
+            useFactory: () => {
+              return ChapterSchema;
+            },
+          },
+          {
+            name: SchemaName.COMIC,
+            useFactory: () => {
+              return ComicSchema;
+            },
+          },
+        ]),
+      ],
+      providers: [
+        SiteAPI,
+        ResourceAPI,
+        ChapterAPI,
+        ComicAPI,
+        SiteService,
+        ResourceService,
+        ChapterService,
+        ComicService,
+        EnvironmentService,
+      ],
+      exports: [
+        MongooseModule,
+        SiteService,
+        ResourceService,
+        ChapterService,
+        ComicService,
+      ],
+    };
+  }
+}
