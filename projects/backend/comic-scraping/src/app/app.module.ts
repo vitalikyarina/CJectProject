@@ -25,7 +25,9 @@ import { ComicController } from "./controllers";
       name: ComicQueue.COMIC,
     }),
     ScheduleModule.forRoot(),
-    ComicMongoModule,
+    ComicMongoModule.forRoot({
+      url: "mongodb://127.0.0.1:27017/cject_comic_test",
+    }),
     BrowserModule,
     SharedModule,
   ],
