@@ -1,6 +1,5 @@
 import { DynamicModule, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { ConfigModule } from "@nestjs/config";
 import mongoose from "mongoose";
 import mongooseAutoPopulate from "mongoose-autopopulate";
 import { SharedModule } from "@cjp-back/shared";
@@ -15,10 +14,10 @@ import { ChapterAPI, ComicAPI, ResourceAPI, SiteAPI } from "./apis";
 import {
   ChapterService,
   ComicService,
-  EnvironmentService,
   ResourceService,
   SiteService,
 } from "./services";
+import { EnvironmentModule } from "../environment";
 
 @Module({})
 export class ComicMongoModule {
@@ -26,7 +25,7 @@ export class ComicMongoModule {
     return {
       module: ComicMongoModule,
       imports: [
-        ConfigModule,
+        EnvironmentModule,
         SharedModule,
         MongooseModule.forRootAsync({
           useFactory: () => {
@@ -74,7 +73,6 @@ export class ComicMongoModule {
         ResourceService,
         ChapterService,
         ComicService,
-        EnvironmentService,
       ],
       exports: [
         MongooseModule,

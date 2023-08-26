@@ -15,7 +15,7 @@ import {
   Resource,
   ResourceUpdateDTO,
 } from "../schemas";
-import { EnvironmentService } from "./environment.service";
+import { EnvironmentService } from "../../environment";
 
 @Injectable()
 export class ComicService extends BaseMongoService<
