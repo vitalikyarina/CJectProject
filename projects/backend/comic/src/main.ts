@@ -8,7 +8,7 @@ import { NestFactory } from "@nestjs/core";
 import { Transport, MicroserviceOptions } from "@nestjs/microservices";
 
 import { AppModule } from "./app/app.module";
-import { Environment } from "./app";
+import { Environment } from "./app/core";
 import { getEnv } from "./app/config";
 
 async function bootstrap(): Promise<void> {

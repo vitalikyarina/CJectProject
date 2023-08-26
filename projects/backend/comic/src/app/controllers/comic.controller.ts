@@ -2,14 +2,14 @@ import { Controller, Inject } from "@nestjs/common";
 
 import { IFindOptions } from "@cjp-back/shared";
 import { MessagePattern } from "@nestjs/microservices";
-import { ComicCommand } from "../core";
 import { ComicScrapingClientProxy } from "@cjp-back/comic-scraping";
 import {
   Comic,
   ComicCreateWithResourcesDTO,
   ComicService,
   ComicUpdateWithResDTO,
-} from "../modules";
+} from "@cjp-back/comic";
+import { ComicCommand } from "@cjp-back/comic/microservice";
 
 interface IUpdateData {
   id: string;

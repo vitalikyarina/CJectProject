@@ -1,7 +1,7 @@
 import { Controller, Inject } from "@nestjs/common";
-import { SiteCommand } from "../core";
 import { MessagePattern } from "@nestjs/microservices";
-import { Site, SiteService } from "../modules";
+import { Site, SiteService } from "@cjp-back/comic";
+import { SiteCommand } from "@cjp-back/comic/microservice";
 
 @Controller()
 export class SiteController {

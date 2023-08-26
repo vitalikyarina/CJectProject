@@ -8,7 +8,7 @@ import {
   Comic,
   ComicCreateWithResourcesDTO,
   ComicUpdateDTO,
-} from "../../modules";
+} from "@cjp-back/comic";
 
 @Injectable()
 export class ComicClientProxy extends BaseClientProxy {

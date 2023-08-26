@@ -4,7 +4,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { COMIC_MICROSERVICE } from "../tokens";
 import { Observable } from "rxjs";
 import { SiteCommand } from "../enums";
-import { Site } from "../../modules";
+import { Site } from "@cjp-back/comic";
 
 @Injectable()
 export class SiteClientProxy extends BaseClientProxy {
