@@ -2,7 +2,8 @@ import { Controller, Get } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Observable } from "rxjs";
 import { ComicControllerName } from "../enums";
-import { Site, SiteClientProxy } from "@cjp-back/comic";
+import { Site } from "@cjp-back/comic";
+import { SiteClientProxy } from "@cjp-back/comic/microservice";
 
 @ApiTags("Comic Sites")
 @Controller(ComicControllerName.COMIC_SITES)
