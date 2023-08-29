@@ -15,6 +15,9 @@
       ],
       "@cjp-back/comic-scraping": [
         "projects/backend/comic-scraping/src/index.ts"
+      ],
+      "@cjp-back/comic-scraping/microservice": [
+        "projects/backend/comic-scraping/src/app/modules/microservice/index.ts"
       ]
     }
   }
