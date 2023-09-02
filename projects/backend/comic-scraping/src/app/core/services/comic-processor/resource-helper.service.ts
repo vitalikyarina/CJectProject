@@ -19,7 +19,7 @@ import {
   ResourceService,
 } from "@cjp-back/comic";
 import { ConfigService } from "@nestjs/config";
-import { CScrapingEnvironment } from "../../enums";
+import { Environment } from "../../enums";
 
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
@@ -36,8 +36,7 @@ interface IScrapingChapters {
 
 @Injectable()
 export class ProcessorResourceHelperService {
-  @Inject(Logger)
-  private readonly logger: Logger;
+  @Inject() private readonly logger: Logger;
 
   IMAGE_FOLDER: string;
 
@@ -49,7 +48,7 @@ export class ProcessorResourceHelperService {
     private readonly comicService: ComicService,
     private readonly config: ConfigService,
   ) {
-    this.IMAGE_FOLDER = this.config.get(CScrapingEnvironment.IMAGE_FOLDER);
+    this.IMAGE_FOLDER = this.config.get(Environment.IMAGE_FOLDER);
   }
 
   async getResourceScrapingData(
@@ -64,6 +63,8 @@ export class ProcessorResourceHelperService {
         resource,
         comicId,
       );
+
+      await this.getComicAndCheckChapters(comicId, scrapingData);
 
       return scrapingData;
     } catch (e) {
@@ -95,14 +96,18 @@ export class ProcessorResourceHelperService {
       waitUntil: "networkidle",
     });
 
+    await page.waitForSelector(site.postImagePath, { state: "attached" });
+
     if (await this.isErroredLink(page, link, resource._id)) {
+      console.log("error");
+
       return scrapingData;
     }
 
-    const mainImage = await this.getResourceImage(page, resource, comicId);
+    const postImage = await this.getResourceImage(page, resource, comicId);
 
-    if (mainImage) {
-      scrapingData.postImage = mainImage;
+    if (postImage) {
+      scrapingData.postImage = postImage;
     }
 
     const chapters = await this.getResourceChapters(page, resource);
@@ -130,7 +135,11 @@ export class ProcessorResourceHelperService {
 
       await this.fsHelper.sharpToWebP(mainImagePath, mainImagePathWeb);
 
-      unlinkSync(mainImagePath);
+      try {
+        unlinkSync(mainImagePath);
+      } catch {
+        this.logger.error("Cannot delete post image");
+      }
 
       return `/comics/${comicId}/post.webp`;
     }
@@ -209,9 +218,7 @@ export class ProcessorResourceHelperService {
       link = link.slice(0, -1);
     }
 
-    const basePath = resource.site.baseLink + resource.path;
-
-    return link.replace(basePath, "");
+    return link.replace(resource.site.baseLink, "").replace(resource.path, "");
   }
 
   protected async getChapterDate(

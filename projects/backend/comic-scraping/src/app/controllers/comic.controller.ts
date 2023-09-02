@@ -1,15 +1,16 @@
 import { Controller, Inject } from "@nestjs/common";
 
 import { EventPattern } from "@nestjs/microservices";
-import { ComicScrapingCommand, QueueService } from "../core";
+import { QueueService } from "../core";
 import { Comic } from "@cjp-back/comic";
+import { ComicScrapingEvent } from "@cjp-back/comic-scraping/microservice";
 
 @Controller()
 export class ComicController {
   @Inject() private readonly queue: QueueService;
 
-  @EventPattern(ComicScrapingCommand.ADD)
-  async addComicScraping(comic: Comic): Promise<void> {
+  @EventPattern(ComicScrapingEvent.ADD)
+  async comicScraping(comic: Comic): Promise<void> {
     await this.queue.startComicsScraping([comic]);
   }
 }

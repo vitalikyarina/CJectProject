@@ -6,7 +6,6 @@ import { EnvValidationSchema } from "./config";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: process.env["MODE"] === "dev" ? ".env.dev" : ".env.prod",
       validationSchema: Joi.object({
         ...EnvValidationSchema,
       }),

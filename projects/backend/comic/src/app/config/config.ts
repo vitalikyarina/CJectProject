@@ -1,18 +1,18 @@
 import Joi from "joi";
-import { ComicEnvironment } from "../core";
+import { Environment } from "../core";
 
 interface IComicEnvironment {
-  [ComicEnvironment.PORT]: number;
-  [ComicEnvironment.HOST]: string;
-  [ComicEnvironment.MONGO_URL]: string;
-  [ComicEnvironment.IMAGE_FOLDER]: string;
+  [Environment.PORT]: number;
+  [Environment.HOST]: string;
+  [Environment.MONGO_URL]: string;
+  [Environment.IMAGE_FOLDER]: string;
 }
 
 export const EnvValidationSchema = {
-  [ComicEnvironment.PORT]: Joi.number().positive().default(3001),
-  [ComicEnvironment.HOST]: Joi.string().required(),
-  [ComicEnvironment.MONGO_URL]: Joi.string().required(),
-  [ComicEnvironment.IMAGE_FOLDER]: Joi.string().required(),
+  [Environment.PORT]: Joi.number().positive().default(3001),
+  [Environment.HOST]: Joi.string().default("0.0.0.0"),
+  [Environment.MONGO_URL]: Joi.string().required(),
+  [Environment.IMAGE_FOLDER]: Joi.string().required(),
 };
 
 export function getEnv(): IComicEnvironment {
@@ -27,10 +27,10 @@ export function getEnv(): IComicEnvironment {
   }
 
   const env: IComicEnvironment = {
-    [ComicEnvironment.PORT]: envVars[ComicEnvironment.PORT],
-    [ComicEnvironment.HOST]: envVars[ComicEnvironment.HOST],
-    [ComicEnvironment.MONGO_URL]: envVars[ComicEnvironment.MONGO_URL],
-    [ComicEnvironment.IMAGE_FOLDER]: envVars[ComicEnvironment.IMAGE_FOLDER],
+    [Environment.PORT]: envVars[Environment.PORT],
+    [Environment.HOST]: envVars[Environment.HOST],
+    [Environment.MONGO_URL]: envVars[Environment.MONGO_URL],
+    [Environment.IMAGE_FOLDER]: envVars[Environment.IMAGE_FOLDER],
   };
 
   return env;

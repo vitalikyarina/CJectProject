@@ -12,13 +12,13 @@ import {
 import { AppModule } from "./app.module";
 import { setupSwagger } from "./swagger";
 import { getEnv } from "./config";
-import { HostEnvironment } from "./core";
+import { Environment } from "./core";
 import { HostStaticPath } from "@cjp-back/shared";
 
 async function bootstrap(): Promise<void> {
   const env = getEnv();
-  const PORT = env[HostEnvironment.PORT];
-  const IMAGE_URL = env[HostEnvironment.IMAGE_FOLDER];
+  const PORT = env[Environment.PORT];
+  const IMAGE_URL = env[Environment.IMAGE_FOLDER];
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,

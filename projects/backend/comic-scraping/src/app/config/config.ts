@@ -1,16 +1,16 @@
 import Joi from "joi";
-import { CScrapingEnvironment } from "../core";
+import { Environment } from "../core";
 
 interface ICScrapingEnvironment {
-  [CScrapingEnvironment.PORT]: number;
-  [CScrapingEnvironment.HOST]: string;
-  [CScrapingEnvironment.IMAGE_FOLDER]: string;
+  [Environment.PORT]: number;
+  [Environment.HOST]: string;
+  [Environment.IMAGE_FOLDER]: string;
 }
 
 export const EnvValidationSchema = {
-  [CScrapingEnvironment.PORT]: Joi.number().positive().default(3002),
-  [CScrapingEnvironment.HOST]: Joi.string().required(),
-  [CScrapingEnvironment.IMAGE_FOLDER]: Joi.string().required(),
+  [Environment.PORT]: Joi.number().positive().default(3002),
+  [Environment.HOST]: Joi.string().default("0.0.0.0"),
+  [Environment.IMAGE_FOLDER]: Joi.string().required(),
 };
 
 export function getEnv(): ICScrapingEnvironment {
@@ -25,9 +25,9 @@ export function getEnv(): ICScrapingEnvironment {
   }
 
   const env: ICScrapingEnvironment = {
-    [CScrapingEnvironment.PORT]: envVars[CScrapingEnvironment.PORT],
-    [CScrapingEnvironment.HOST]: envVars[CScrapingEnvironment.HOST],
-    [CScrapingEnvironment.IMAGE_FOLDER]: envVars[CScrapingEnvironment.IMAGE_FOLDER],
+    [Environment.PORT]: envVars[Environment.PORT],
+    [Environment.HOST]: envVars[Environment.HOST],
+    [Environment.IMAGE_FOLDER]: envVars[Environment.IMAGE_FOLDER],
   };
 
   return env;

@@ -14,11 +14,11 @@ import { Observable } from "rxjs";
 import { ComicControllerName } from "../enums";
 import {
   Comic,
-  ComicClientProxy,
   ComicCreateWithResourcesDTO,
   ComicUpdateDTO,
 } from "@cjp-back/comic";
 import { MongooseClassSerializerInterceptor } from "@cjp-back/mongo";
+import { ComicClientProxy } from "@cjp-back/comic/microservice";
 
 @ApiTags(ComicControllerName.COMICS)
 @Controller(ComicControllerName.COMICS)
