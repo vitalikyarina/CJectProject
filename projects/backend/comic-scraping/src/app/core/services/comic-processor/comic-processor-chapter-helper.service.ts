@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ElementHandle } from "playwright";
 import { Logger } from "../logger.service";
 import { CJPQueue, FPromise, FSHelperService } from "@cjp-back/shared";
-import fs from "fs";
+import fs, { unlinkSync } from "fs";
 import { ResourceType } from "@cjp/shared/comic";
 import {
   Chapter,
@@ -133,7 +133,7 @@ export class ComicProcessorChapterHelperService {
         chapter.errorPages,
       );
       if (imagesLoadStatus) {
-        this.logger.debug("Can't load images");
+        this.logger.error("Can't load images");
         if (step < 10 && !lastErrorEqualCurrent) {
           throw new Error("Error");
         }
@@ -156,6 +156,7 @@ export class ComicProcessorChapterHelperService {
         const element = imagesElements[i];
         if (!updateChapterData.errorPages || !updateChapterData.errorPages[i]) {
           const imsPath = `${chapterPath}/${i}.jpg`;
+          const imsPathWeb = `${chapterPath}/${i}.webp`;
           if (!fs.existsSync(imsPath)) {
             const a = await element.evaluate((elem: HTMLImageElement) => {
               const link = elem.src;
@@ -176,6 +177,15 @@ export class ComicProcessorChapterHelperService {
               a,
             ]);
             await download.saveAs(imsPath);
+
+            await this.fsHelper.sharpToWebP(imsPath, imsPathWeb);
+
+            try {
+              unlinkSync(imsPath);
+            } catch {
+              this.logger.error("Cannot delete post image");
+            }
+
             await this.delay(100);
           }
         } else {

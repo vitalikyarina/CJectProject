@@ -26,7 +26,7 @@ import { ComicController } from "./controllers";
     }),
     ScheduleModule.forRoot(),
     ComicMongoModule.forRoot({
-      url: "mongodb://127.0.0.1:27017/cject_comic_test",
+      url: "mongodb://127.0.0.1:27017/cject_comic",
     }),
     BrowserModule,
     SharedModule,

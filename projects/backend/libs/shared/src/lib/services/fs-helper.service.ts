@@ -51,7 +51,7 @@ export class FSHelperService {
     try {
       await sharpToWebP(outputFile);
     } catch (e) {
-      throw new Error(e);
+      fs.copyFileSync(inputFile, outputFile);
     }
   }
 }
