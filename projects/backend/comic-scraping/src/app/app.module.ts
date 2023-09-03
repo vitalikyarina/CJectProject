@@ -9,6 +9,7 @@ import {
   ProcessorResourceHelperService,
   ComicQueue,
   QueueService,
+  EnvironmentService,
 } from "./core";
 import { ComicProcessor } from "./jobs";
 import { ComicCron } from "./tasks";
@@ -25,8 +26,15 @@ import { ComicController } from "./controllers";
       name: ComicQueue.COMIC,
     }),
     ScheduleModule.forRoot(),
-    ComicMongoModule.forRoot({
-      url: "mongodb://127.0.0.1:27017/cject_comic",
+    ComicMongoModule.forRootAsync({
+      useFactory: (env: EnvironmentService) => {
+        return {
+          uri: env.MONGO_URL,
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        };
+      },
+      inject: [EnvironmentService],
     }),
     BrowserModule,
     SharedModule,
@@ -41,6 +49,7 @@ import { ComicController } from "./controllers";
     ProcessorResourceHelperService,
     ProcessorHelperService,
     ComicProcessorChapterHelperService,
+    EnvironmentService,
   ],
 })
 export class AppModule {}
