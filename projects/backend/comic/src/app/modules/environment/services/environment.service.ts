@@ -9,4 +9,8 @@ export class EnvironmentService {
   get IMAGE_FOLDER(): string {
     return this.config.get(Environment.IMAGE_FOLDER);
   }
+
+  get MONGO_URL(): string {
+    return this.config.get(Environment.MONGO_URL);
+  }
 }

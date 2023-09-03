@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ElementHandle } from "playwright";
 import { Logger } from "../logger.service";
 import { CJPQueue, FPromise, FSHelperService } from "@cjp-back/shared";
-import fs, { unlinkSync } from "fs";
+import fs from "fs";
 import { ResourceType } from "@cjp/shared/comic";
 import {
   Chapter,
@@ -155,9 +155,8 @@ export class ComicProcessorChapterHelperService {
       for (let i = 0; i < imagesElements.length; i++) {
         const element = imagesElements[i];
         if (!updateChapterData.errorPages || !updateChapterData.errorPages[i]) {
-          const imsPath = `${chapterPath}/${i}.jpg`;
           const imsPathWeb = `${chapterPath}/${i}.webp`;
-          if (!fs.existsSync(imsPath)) {
+          if (!fs.existsSync(imsPathWeb)) {
             const a = await element.evaluate((elem: HTMLImageElement) => {
               const link = elem.src;
               fetch(link)
@@ -176,14 +175,14 @@ export class ComicProcessorChapterHelperService {
               page.waitForEvent("download"), // wait for download to start
               a,
             ]);
-            await download.saveAs(imsPath);
+            const imgDownloadPath = await download.path();
 
-            await this.fsHelper.sharpToWebP(imsPath, imsPathWeb);
+            await this.fsHelper.sharpToWebP(imgDownloadPath, imsPathWeb);
 
             try {
-              unlinkSync(imsPath);
+              await download.delete();
             } catch {
-              this.logger.error("Cannot delete post image");
+              this.logger.error("Cannot delete download image");
             }
 
             await this.delay(100);
