@@ -22,6 +22,10 @@ export class ComicController {
     sort: {
       latestUpdate: "desc",
     },
+    populate: [
+      { path: "chapters" },
+      { path: "resources", populate: [{ path: "site" }] },
+    ],
   };
 
   @Inject()
