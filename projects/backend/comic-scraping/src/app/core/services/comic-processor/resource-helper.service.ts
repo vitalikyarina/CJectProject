@@ -166,7 +166,7 @@ export class ProcessorResourceHelperService {
         resource: resource,
       };
 
-      if (chp.number > -1) {
+      if (chp.number > -1 && !chapters.includes(chp.number)) {
         chapters.push(chp);
       }
     }
