@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 import { BaseMongoAPIService } from "../api";
-import { IBaseDatabaseDAO, IFindOptions } from "@cjp-back/shared";
+import { IBaseDatabaseDAO, QueryFindOptions } from "@cjp-back/shared";
 
 export class BaseMongoService<TDocument, TCreate, TUpdate>
   implements IBaseDatabaseDAO<TDocument, TCreate, TUpdate>
@@ -9,18 +9,21 @@ export class BaseMongoService<TDocument, TCreate, TUpdate>
     private readonly baseApi: BaseMongoAPIService<TDocument, TCreate, TUpdate>,
   ) {}
 
-  public createOne(newDocument: TCreate): Promise<TDocument> {
-    return this.baseApi.createOne(newDocument);
+  public createOne(
+    newDocument: TCreate,
+    options?: QueryFindOptions,
+  ): Promise<TDocument> {
+    return this.baseApi.createOne(newDocument, options);
   }
 
   public find(
     queryConditions?: FilterQuery<TDocument>,
-    options?: IFindOptions,
+    options?: QueryFindOptions,
   ): Promise<TDocument[]> {
     return this.baseApi.find(queryConditions, options);
   }
 
-  public findById(id: string, options?: IFindOptions): Promise<TDocument> {
+  public findById(id: string, options?: QueryFindOptions): Promise<TDocument> {
     return this.baseApi.findById(id, options);
   }
 

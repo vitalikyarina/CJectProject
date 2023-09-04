@@ -1,4 +1,4 @@
-import { IBaseDatabaseDAO, IFindOptions } from "@cjp-back/shared";
+import { IBaseDatabaseDAO, QueryFindOptions } from "@cjp-back/shared";
 import { FilterQuery, Model } from "mongoose";
 
 export class BaseMongoAPIService<T, TCreate, TUpdate>
@@ -8,7 +8,7 @@ export class BaseMongoAPIService<T, TCreate, TUpdate>
 
   public async find(
     queryConditions: FilterQuery<T> = {},
-    options?: IFindOptions,
+    options?: QueryFindOptions,
   ): Promise<T[]> {
     const selectPattern = "-__v";
     const finedEntities = await this.documentModel
@@ -22,12 +22,18 @@ export class BaseMongoAPIService<T, TCreate, TUpdate>
     return finedEntities;
   }
 
-  public async createOne(newDocument: TCreate): Promise<T> {
+  public async createOne(
+    newDocument: TCreate,
+    options?: QueryFindOptions,
+  ): Promise<T> {
     const createdEntity = await this.documentModel.create(newDocument);
-    return createdEntity;
+    const entity = this.documentModel
+      .findById(createdEntity._id)
+      .populate(options?.populate || []);
+    return entity as T;
   }
 
-  public async findById(id: string, options?: IFindOptions): Promise<T> {
+  public async findById(id: string, options?: QueryFindOptions): Promise<T> {
     const selectPattern = "-__v";
     const finedEntity = await this.documentModel
       .findById(id)
