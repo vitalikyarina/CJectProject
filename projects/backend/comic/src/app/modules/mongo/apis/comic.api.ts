@@ -8,10 +8,10 @@ import {
   ComicUpdateDTO,
 } from "../schemas";
 import { SchemaName } from "../enums";
-import { BaseMongoAPIService } from "@cjp-back/mongo";
+import { MongoAPIService } from "@cjp-back/mongo";
 
 @Injectable()
-export class ComicAPI extends BaseMongoAPIService<
+export class ComicAPI extends MongoAPIService<
   Comic,
   ComicCreateDTO,
   ComicUpdateDTO

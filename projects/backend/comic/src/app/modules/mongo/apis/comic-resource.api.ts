@@ -8,10 +8,10 @@ import {
   ResourceDocument,
   ResourceUpdateDTO,
 } from "../schemas";
-import { BaseMongoAPIService } from "@cjp-back/mongo";
+import { MongoAPIService } from "@cjp-back/mongo";
 
 @Injectable()
-export class ResourceAPI extends BaseMongoAPIService<
+export class ResourceAPI extends MongoAPIService<
   Resource,
   ResourceCreateDTO,
   ResourceUpdateDTO

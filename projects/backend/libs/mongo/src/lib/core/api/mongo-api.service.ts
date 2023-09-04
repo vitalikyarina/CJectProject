@@ -1,8 +1,8 @@
-import { IBaseDatabaseDAO, QueryFindOptions } from "@cjp-back/shared";
+import { DatabaseDAO, QueryFindOptions, QueryOptions } from "@cjp-back/shared";
 import { FilterQuery, Model } from "mongoose";
 
-export class BaseMongoAPIService<T, TCreate, TUpdate>
-  implements IBaseDatabaseDAO<T, TCreate, TUpdate>
+export class MongoAPIService<T, TCreate, TUpdate>
+  implements DatabaseDAO<T, TCreate, TUpdate>
 {
   constructor(private readonly documentModel: Model<T>) {}
 
@@ -24,7 +24,7 @@ export class BaseMongoAPIService<T, TCreate, TUpdate>
 
   public async createOne(
     newDocument: TCreate,
-    options?: QueryFindOptions,
+    options?: QueryOptions,
   ): Promise<T> {
     const createdEntity = await this.documentModel.create(newDocument);
     const entity = this.documentModel
@@ -33,7 +33,7 @@ export class BaseMongoAPIService<T, TCreate, TUpdate>
     return entity as T;
   }
 
-  public async findById(id: string, options?: QueryFindOptions): Promise<T> {
+  public async findById(id: string, options?: QueryOptions): Promise<T> {
     const selectPattern = "-__v";
     const finedEntity = await this.documentModel
       .findById(id)
@@ -43,23 +43,29 @@ export class BaseMongoAPIService<T, TCreate, TUpdate>
     return finedEntity as T;
   }
 
-  public async deleteOneById(id: string): Promise<void> {
+  public async deleteById(id: string): Promise<void> {
     await this.documentModel.deleteOne({ _id: id });
   }
 
   public async updateOne(
     queryConditions: FilterQuery<T>,
-    updateData: TUpdate,
+    updateDocument: TUpdate,
+    options?: QueryOptions,
   ): Promise<T> {
     const updatedEntity = await this.documentModel.findOneAndUpdate(
       queryConditions,
-      updateData!,
+      updateDocument!,
+      options,
     );
 
     return updatedEntity as T;
   }
 
-  public updateOneById(id: string, updateData: TUpdate): Promise<T> {
-    return this.updateOne({ _id: id }, updateData);
+  public updateById(
+    id: string,
+    updateDocument: TUpdate,
+    options?: QueryOptions,
+  ): Promise<T> {
+    return this.updateOne({ _id: id }, updateDocument, options);
   }
 }

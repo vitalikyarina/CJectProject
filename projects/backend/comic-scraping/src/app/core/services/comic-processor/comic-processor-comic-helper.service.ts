@@ -30,8 +30,7 @@ export class ProcessorHelperService {
   ): Promise<Comic> {
     const chapters = comic.chapters;
     chapters.map(
-      async (chapter) =>
-        await this.comicChapterService.deleteOneById(chapter._id),
+      async (chapter) => await this.comicChapterService.deleteById(chapter._id),
     );
 
     const badComic = await this.comicService.updateOne(

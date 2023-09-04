@@ -27,7 +27,22 @@ export class ProcessorService {
   }
 
   async startComicScraping(comicId: string): Promise<void> {
-    const comic = await this.comicService.findById(comicId);
+    const comic = await this.comicService.findById(comicId, {
+      populate: [
+        {
+          path: "chapters",
+          populate: [{ path: "resource", populate: [{ path: "site" }] }],
+        },
+        {
+          path: "resources",
+          populate: [
+            {
+              path: "site",
+            },
+          ],
+        },
+      ],
+    });
 
     const COMIC_FOLDER = `${this.IMAGE_FOLDER}\\comics\\${comic._id}`;
     this.logger.debug("Start parsing - " + comic.name);

@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ComicAPI } from "../apis";
 import { BaseMongoService } from "@cjp-back/mongo";
 import { ResourceService } from "./comic-resource.service";
-import { FSHelperService, IFindOptions } from "@cjp-back/shared";
+import { FSHelperService, QueryFindOptions } from "@cjp-back/shared";
 import { FilterQuery } from "mongoose";
 import { ChapterService } from "./comic-chapter.service";
 import {
@@ -27,13 +27,11 @@ export class ComicService extends BaseMongoService<
   @Inject() private readonly chapterService: ChapterService;
   @Inject() private readonly fs: FSHelperService;
   @Inject() private readonly env: EnvironmentService;
-
-  constructor(private readonly api: ComicAPI) {
-    super(api);
-  }
+  @Inject() protected override readonly api: ComicAPI;
 
   async createOneWithResources(
     comic: ComicCreateWithResourcesDTO,
+    options?: QueryFindOptions,
   ): Promise<Comic> {
     const resources: string[] = [];
 
@@ -49,20 +47,14 @@ export class ComicService extends BaseMongoService<
     const newComic: ComicCreateDTO = new ComicCreateDTO(comic);
     newComic.resources = resources;
 
-    return this.api.createOne(newComic);
+    return this.api.createOne(newComic, options);
   }
 
   override async find(
     queryConditions?: FilterQuery<Comic>,
-    options?: IFindOptions,
+    options?: QueryFindOptions,
   ): Promise<Comic[]> {
     const comics = await super.find(queryConditions, options);
-
-    // comics.map((comic) => {
-    //   if (comic.postImage) {
-    //     comic.postImage = `/${HostStaticPath.IMAGES}` + comic.postImage;
-    //   }
-    // });
 
     return comics;
   }
@@ -71,7 +63,9 @@ export class ComicService extends BaseMongoService<
     id: string,
     updateData: ComicUpdateWithResDTO,
   ): Promise<Comic> {
-    const comic = await super.findById(id);
+    const comic = await super.findById(id, {
+      populate: [{ path: "resources" }],
+    });
 
     const deletingResourceIds = this.getDeletingResourceIds(
       comic.resources,
@@ -94,7 +88,7 @@ export class ComicService extends BaseMongoService<
       updateData.resources,
     );
 
-    await this.updateOneById(id, {
+    await this.updateById(id, {
       resources: resourceIds,
       chapters: newChapterIds,
       altNames: updateData.altNames,
@@ -113,7 +107,7 @@ export class ComicService extends BaseMongoService<
       const resource = resources[i];
 
       const updatedIndex = newResources.findIndex((res) => {
-        return res._id.toString() === resource._id.toString();
+        return res?._id?.toString() === resource._id.toString();
       });
       if (updatedIndex === -1) {
         foundIds.push(resource._id.toString());
@@ -157,7 +151,7 @@ export class ComicService extends BaseMongoService<
   private async deleteResourceByIds(resourceIds: string[]): Promise<void> {
     for (let i = 0; i < resourceIds.length; i++) {
       const id = resourceIds[i];
-      await this.resourceService.deleteOneById(id);
+      await this.resourceService.deleteById(id);
     }
   }
 
@@ -207,4 +201,9 @@ export class ComicService extends BaseMongoService<
 
     return foundIds;
   }
+
+  // async getComics(
+  //   queryConditions?: FilterQuery<Comic>,
+  //   options?: IFindOptions,
+  // ): void {}
 }

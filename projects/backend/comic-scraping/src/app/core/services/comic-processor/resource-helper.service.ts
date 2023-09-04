@@ -250,7 +250,22 @@ export class ProcessorResourceHelperService {
     id: string,
     chaptersData: IScrapingData,
   ): Promise<void> {
-    const comic = await this.comicService.findById(id);
+    const comic = await this.comicService.findById(id, {
+      populate: [
+        {
+          path: "chapters",
+          populate: [{ path: "resource", populate: [{ path: "site" }] }],
+        },
+        {
+          path: "resources",
+          populate: [
+            {
+              path: "site",
+            },
+          ],
+        },
+      ],
+    });
     const chaptersCheckedData = this.checkChapters(
       comic,
       chaptersData.chapters,
@@ -264,7 +279,7 @@ export class ProcessorResourceHelperService {
 
     for (let i = 0; i < chaptersCheckedData.oldChapters.length; i++) {
       const oldChp = chaptersCheckedData.oldChapters[i];
-      await this.comicChapterService.deleteOneById(oldChp.id);
+      await this.comicChapterService.deleteById(oldChp.id);
       this.fsHelper.deleteFolder(
         `${this.IMAGE_FOLDER}\\comics\\${id}\\${oldChp.number}`,
       );
@@ -366,7 +381,22 @@ export class ProcessorResourceHelperService {
   }
 
   protected async sortComicChapters(id: string): Promise<Comic> {
-    const finedComic = await this.comicService.findById(id);
+    const finedComic = await this.comicService.findById(id, {
+      populate: [
+        {
+          path: "chapters",
+          populate: [{ path: "resource", populate: [{ path: "site" }] }],
+        },
+        {
+          path: "resources",
+          populate: [
+            {
+              path: "site",
+            },
+          ],
+        },
+      ],
+    });
     const chapters = finedComic.chapters;
     const sortChapters: string[] = chapters
       .sort((a, b) => a.number - b.number)

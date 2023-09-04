@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ChapterAPI } from "../apis";
 import { BaseMongoService } from "@cjp-back/mongo";
 import { Chapter, ChapterCreateDTO, ChapterUpdateDTO } from "../schemas";
@@ -8,9 +8,7 @@ export class ChapterService extends BaseMongoService<
   ChapterCreateDTO,
   ChapterUpdateDTO
 > {
-  constructor(private readonly api: ChapterAPI) {
-    super(api);
-  }
+  @Inject() protected override readonly api: ChapterAPI;
 
   async deleteChaptersByResourceId(id: string): Promise<Chapter[]> {
     const deletedChapters = [];
@@ -18,7 +16,7 @@ export class ChapterService extends BaseMongoService<
     for (let i = 0; i < chapters.length; i++) {
       const chapter = chapters[i];
 
-      await this.deleteOneById(chapter._id);
+      await this.deleteById(chapter._id);
       deletedChapters.push(chapter);
     }
 

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { BaseMongoService } from "@cjp-back/mongo";
 import { SiteAPI } from "../apis";
 import { Site, SiteCreateDTO, SiteUpdateDTO } from "../schemas";
@@ -9,7 +9,5 @@ export class SiteService extends BaseMongoService<
   SiteCreateDTO,
   SiteUpdateDTO
 > {
-  constructor(protected readonly api: SiteAPI) {
-    super(api);
-  }
+  @Inject() protected override readonly api: SiteAPI;
 }

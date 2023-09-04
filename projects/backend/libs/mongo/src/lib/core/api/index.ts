@@ -1,1 +1,1 @@
-export * from "./base-mongo-api.service";
+export * from "./mongo-api.service";
