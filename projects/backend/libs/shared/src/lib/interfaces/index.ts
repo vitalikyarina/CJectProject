@@ -1,2 +1,2 @@
-export * from "./base-database-dao.interface";
+export * from "./database-dao.interface";
 export * from "./query-options.interface";
