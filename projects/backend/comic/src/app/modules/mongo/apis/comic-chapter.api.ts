@@ -7,11 +7,11 @@ import {
   ChapterDocument,
   ChapterUpdateDTO,
 } from "../schemas";
-import { BaseMongoAPIService } from "@cjp-back/mongo";
+import { MongoAPIService } from "@cjp-back/mongo";
 import { SchemaName } from "../enums";
 
 @Injectable()
-export class ChapterAPI extends BaseMongoAPIService<
+export class ChapterAPI extends MongoAPIService<
   Chapter,
   ChapterCreateDTO,
   ChapterUpdateDTO

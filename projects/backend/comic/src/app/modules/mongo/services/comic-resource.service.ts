@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ResourceAPI } from "../apis";
 import { BaseMongoService } from "@cjp-back/mongo";
 import { Resource, ResourceCreateDTO, ResourceUpdateDTO } from "../schemas";
@@ -9,7 +9,5 @@ export class ResourceService extends BaseMongoService<
   ResourceCreateDTO,
   ResourceUpdateDTO
 > {
-  constructor(private readonly api: ResourceAPI) {
-    super(api);
-  }
+  @Inject() protected override readonly api: ResourceAPI;
 }

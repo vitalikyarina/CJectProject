@@ -9,7 +9,6 @@ import {
   ProcessorResourceHelperService,
   ComicQueue,
   QueueService,
-  EnvironmentService,
 } from "./core";
 import { ComicProcessor } from "./jobs";
 import { ComicCron } from "./tasks";
@@ -18,6 +17,7 @@ import { BrowserModule } from "@cjp-back/browser";
 import { SharedModule } from "@cjp-back/shared";
 import { ScheduleModule } from "@nestjs/schedule";
 import { ComicController } from "./controllers";
+import { EnvironmentModule, EnvironmentService } from "./modules/environment";
 
 @Module({
   imports: [
@@ -34,6 +34,7 @@ import { ComicController } from "./controllers";
           useUnifiedTopology: true,
         };
       },
+      imports: [EnvironmentModule],
       inject: [EnvironmentService],
     }),
     BrowserModule,
@@ -49,7 +50,6 @@ import { ComicController } from "./controllers";
     ProcessorResourceHelperService,
     ProcessorHelperService,
     ComicProcessorChapterHelperService,
-    EnvironmentService,
   ],
 })
 export class AppModule {}

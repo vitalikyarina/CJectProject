@@ -1,6 +1,6 @@
 import { Controller, Inject } from "@nestjs/common";
 
-import { IFindOptions } from "@cjp-back/shared";
+import { QueryFindOptions } from "@cjp-back/shared";
 import { MessagePattern } from "@nestjs/microservices";
 import { ClientProxy } from "@cjp-back/comic-scraping/microservice";
 import {
@@ -18,19 +18,24 @@ interface IUpdateData {
 
 @Controller()
 export class ComicController {
-  private readonly findOptions: IFindOptions = {
+  private readonly findOptions: QueryFindOptions = {
     sort: {
       latestUpdate: "desc",
     },
     populate: [
-      { path: "chapters" },
+      {
+        path: "chapters",
+        populate: [
+          {
+            path: "resource",
+          },
+        ],
+      },
       { path: "resources", populate: [{ path: "site" }] },
     ],
   };
 
-  @Inject()
-  protected readonly scrapingProxy: ClientProxy;
-
+  @Inject() protected readonly scrapingProxy: ClientProxy;
   @Inject() private readonly comicService: ComicService;
 
   @MessagePattern(ComicCommand.GET_ALL)
@@ -40,7 +45,9 @@ export class ComicController {
 
   @MessagePattern(ComicCommand.CREATE)
   async createEntity(createData: ComicCreateWithResourcesDTO): Promise<Comic> {
-    const comic = await this.comicService.createOneWithResources(createData);
+    const comic = await this.comicService.createOneWithResources(createData, {
+      populate: this.findOptions.populate,
+    });
     this.scrapingProxy.emitScrapingEvent(comic);
     return comic;
   }
