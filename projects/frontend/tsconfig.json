@@ -12,7 +12,6 @@
       "@cjp-front/content-section": [
         "projects/frontend/libs/content-section/src/index.ts"
       ],
-      "@cjp-front/image": ["projects/frontend/libs/image/src/index.ts"],
       "@cjp-front/form-content": [
         "projects/frontend/libs/form-content/src/index.ts"
       ]
