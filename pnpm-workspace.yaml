@@ -1,0 +1,4 @@
+packages:
+  - "projects/frontend/*"
+  - "frontend/*"
+  - "projects/frontend/libs/*"
