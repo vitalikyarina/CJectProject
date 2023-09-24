@@ -16,8 +16,11 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: pnpm install
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 7
+          run_install: true
 
       - name: Build
         uses: mansagroup/nrwl-nx-action@v3
