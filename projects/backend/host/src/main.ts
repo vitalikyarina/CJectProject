@@ -5,35 +5,21 @@
 
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from "@nestjs/platform-fastify";
 import { AppModule } from "./app.module";
 import { setupSwagger } from "./swagger";
 import { getEnv } from "./config";
 import { Environment } from "./core";
-import { HostStaticPath } from "@cjp-back/shared";
 
 async function bootstrap(): Promise<void> {
   const env = getEnv();
   const PORT = env[Environment.PORT];
-  const IMAGE_URL = env[Environment.IMAGE_FOLDER];
 
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-  );
+  const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe({}));
 
   const globalPrefix = "api";
   app.setGlobalPrefix(globalPrefix);
-
-  app.useStaticAssets({
-    root: IMAGE_URL,
-    prefix: `/${HostStaticPath.IMAGES}`,
-  });
 
   setupSwagger(app);
 

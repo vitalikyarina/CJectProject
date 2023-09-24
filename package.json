@@ -22,7 +22,6 @@
     "@angular/platform-browser": "^16.2.6",
     "@angular/platform-browser-dynamic": "^16.2.6",
     "@angular/router": "^16.2.6",
-    "@fastify/static": "^6.11.2",
     "@nestjs/bullmq": "^10.0.1",
     "@nestjs/common": "^10.2.6",
     "@nestjs/config": "^3.1.1",
@@ -30,8 +29,8 @@
     "@nestjs/microservices": "^10.2.6",
     "@nestjs/mongoose": "^10.0.1",
     "@nestjs/platform-express": "^10.2.6",
-    "@nestjs/platform-fastify": "^10.2.6",
     "@nestjs/schedule": "^3.0.4",
+    "@nestjs/serve-static": "^4.0.0",
     "@nestjs/swagger": "^7.1.12",
     "@ngneat/until-destroy": "^10.0.0",
     "bullmq": "^4.11.4",
@@ -92,4 +91,3 @@
     "typescript": "~5.1.6"
   }
 }
-
