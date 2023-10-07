@@ -1,18 +1,20 @@
-import { Injectable, Logger as nLogger } from "@nestjs/common";
+import { Injectable, Logger as BaseLogger } from "@nestjs/common";
 
 @Injectable()
-export class Logger {
-  private readonly logger = new nLogger(Logger.name);
+export class Logger extends BaseLogger {
+  constructor() {
+    super(Logger.name);
+  }
 
   public log<T>(message: T): void {
-    this.logger.log(message);
+    super.log(message);
   }
 
   public debug<T>(message: T): void {
-    this.logger.debug(message);
+    super.debug(message);
   }
 
   public error<T>(message: T): void {
-    this.logger.error(message);
+    super.error(message);
   }
 }
