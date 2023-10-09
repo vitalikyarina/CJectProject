@@ -39,6 +39,6 @@ export class ComicCron implements OnModuleInit {
   @Cron(CronExpression.EVERY_12_HOURS)
   public async checkComics(): Promise<void> {
     const comics = await this.comicService.find({}, this.options);
-    await this.queue.startComicsScraping(comics);
+    await this.queue.addComics(comics);
   }
 }

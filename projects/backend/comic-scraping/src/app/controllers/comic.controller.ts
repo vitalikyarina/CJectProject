@@ -11,6 +11,6 @@ export class ComicController {
 
   @EventPattern(ComicScrapingEvent.ADD)
   async comicScraping(comic: Comic): Promise<void> {
-    await this.queue.startComicsScraping([comic]);
+    await this.queue.addComics([comic]);
   }
 }

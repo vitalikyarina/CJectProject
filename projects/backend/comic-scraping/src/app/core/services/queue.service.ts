@@ -1,5 +1,4 @@
-import { InjectQueue } from "@nestjs/bullmq";
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { Queue } from "bullmq";
 import { Logger } from "./logger.service";
 import { ComicQueue, ComicQueuesProcess } from "../enums";
@@ -7,17 +6,14 @@ import { Comic } from "@cjp-back/comic";
 
 @Injectable()
 export class QueueService {
-  constructor(
-    @InjectQueue(ComicQueue.COMIC) private queue: Queue,
-    private logger: Logger,
-  ) {}
+  @Inject() private readonly logger: Logger;
+  private readonly queue: Queue = new Queue(ComicQueue.COMIC);
 
   public async cleanQueue(): Promise<void> {
-    const count = await this.queue.count();
-    await this.queue.clean(100, count, "wait");
+    await this.queue.drain();
   }
 
-  public async startComicsScraping(comics: Comic[]): Promise<void> {
+  public async addComics(comics: Comic[]): Promise<void> {
     this.logger.debug("Start parsing comics...");
     this.logger.debug(`Count of comics = ${comics.length}`);
     for (let i = 0; i < comics.length; i++) {
