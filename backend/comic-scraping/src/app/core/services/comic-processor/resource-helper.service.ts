@@ -6,7 +6,7 @@ import utc from "dayjs/plugin/utc";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { FSHelperService } from "@cjp-back/shared";
 import { BrowserHelperService } from "@cjp-back/browser";
-import { ResourceError } from "@cjp/shared/comic";
+import { ResourceError } from "@cjp/comic";
 import { existsSync, unlinkSync } from "fs";
 import {
   ChapterCreateDTO,
@@ -48,7 +48,7 @@ export class ProcessorResourceHelperService {
     private readonly comicService: ComicService,
     private readonly config: ConfigService,
   ) {
-    this.IMAGE_FOLDER = this.config.get(Environment.IMAGE_FOLDER);
+    this.IMAGE_FOLDER = this.config.get(Environment.IMAGE_FOLDER)!;
   }
 
   async getResourceScrapingData(
@@ -143,6 +143,8 @@ export class ProcessorResourceHelperService {
 
       return `/comics/${comicId}/post.webp`;
     }
+
+    return;
   }
 
   protected async getResourceChapters(
@@ -152,7 +154,12 @@ export class ProcessorResourceHelperService {
     const comicSite = resource.site;
     const chapterElems = (await page.$$(comicSite.chaptersPath)).reverse();
 
-    const chapters = [];
+    const chapters: {
+      number: number;
+      path: string;
+      date: number;
+      resource: Resource;
+    }[] = [];
 
     for (let i = 0; i < chapterElems.length; i++) {
       const chapter = chapterElems[i];
@@ -160,13 +167,14 @@ export class ProcessorResourceHelperService {
       const dateContainer = await chapter.$(comicSite.chapterDatePath);
 
       const chp = {
-        number: await this.getChapterNumber(nameContainer),
-        path: await this.getChapterLink(nameContainer, resource),
-        date: await this.getChapterDate(dateContainer, comicSite.dateFormat),
+        number: await this.getChapterNumber(nameContainer!),
+        path: await this.getChapterLink(nameContainer!, resource),
+        date: await this.getChapterDate(dateContainer!, comicSite.dateFormat),
         resource: resource,
       };
 
-      if (chp.number > -1 && !chapters.includes(chp.number)) {
+      if (chp.number > -1 && !chapters.includes(chp)) {
+        //TODO: Check chapters.includes(chp.number)
         chapters.push(chp);
       }
     }
@@ -212,7 +220,7 @@ export class ProcessorResourceHelperService {
     element: ElementHandle<HTMLElement | SVGElement>,
     resource: Resource,
   ): Promise<string> {
-    let link = await element.getAttribute("href");
+    let link: string = (await element.getAttribute("href")) as string;
 
     if (link[link.length - 1] === "/") {
       link = link.slice(0, -1);
@@ -377,7 +385,7 @@ export class ProcessorResourceHelperService {
   ): number {
     return chapters.length
       ? Math.max(...chapters.map((chp) => chp.date))
-      : null;
+      : null!;
   }
 
   protected async sortComicChapters(id: string): Promise<Comic> {

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
-import { ISite } from "@cjp/shared/comic";
+import { ISite } from "@cjp/comic";
 import { ApiProperty, OmitType, PartialType } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 

@@ -1,6 +1,6 @@
 import { ChapterService, Comic, ComicService } from "@cjp-back/comic";
 import { FSHelperService } from "@cjp-back/shared";
-import { ComicStatus } from "@cjp/shared/comic";
+import { ComicStatus } from "@cjp/comic";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()

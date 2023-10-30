@@ -3,7 +3,7 @@ import { ElementHandle } from "playwright";
 import { Logger } from "../logger.service";
 import { CJPQueue, FPromise, FSHelperService } from "@cjp-back/shared";
 import fs from "fs";
-import { ResourceType } from "@cjp/shared/comic";
+import { ResourceType } from "@cjp/comic";
 import {
   Chapter,
   ChapterService,
@@ -148,7 +148,7 @@ export class ComicProcessorChapterHelperService {
           }
         }
       } else {
-        updateChapterData.errorPages = null;
+        updateChapterData.errorPages = null!;
       }
       const imagesElements = await page.$$(comicSite.chapterImagesPath);
       updateChapterData.countPage = imagesElements.length;
@@ -177,7 +177,7 @@ export class ComicProcessorChapterHelperService {
             ]);
             const imgDownloadPath = await download.path();
 
-            await this.fsHelper.sharpToWebP(imgDownloadPath, imsPathWeb);
+            await this.fsHelper.sharpToWebP(imgDownloadPath!, imsPathWeb);
 
             try {
               await download.delete();
@@ -205,7 +205,7 @@ export class ComicProcessorChapterHelperService {
     }
   }
 
-  protected delay(ms): Promise<void> {
+  protected delay(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 

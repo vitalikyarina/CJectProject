@@ -1,4 +1,4 @@
-import { ComicStatus, ComicTag, IComic } from "@cjp/shared/comic";
+import { ComicStatus, ComicTag, IComic } from "@cjp/comic";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { SchemaName } from "../enums";
@@ -112,8 +112,8 @@ export class ComicCreateWithResourcesDTO extends PickType(Comic, [
   constructor(comic: Partial<ComicCreateWithResourcesDTO> | ComicCreateDTO) {
     super();
     if (typeof comic === typeof ComicCreateDTO) {
-      this.name = comic.name;
-      this.altNames = comic.altNames;
+      this.name = comic.name!;
+      this.altNames = comic.altNames!;
       this.resources = [];
     } else {
       Object.assign(this, comic);

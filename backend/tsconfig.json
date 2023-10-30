@@ -1,31 +1,18 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "types": ["node"],
-    "declaration": true,
-    "target": "ES2021",
-    "module": "esnext",
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "strictBindCallApply": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "sourceMap": true,
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "lib": ["ES2021", "dom"],
     "paths": {
-      "@cjp/comic": ["../shared/comic"],
-      "@cjp-back/mongo": ["../libs/mongo/index.ts"]
+      "@cjp-back/browser": ["backend/libs/browser/src/index.ts"],
+      "@cjp-back/comic": ["backend/comic/src/app/modules/mongo/index.ts"],
+      "@cjp-back/comic/microservice": [
+        "backend/comic/src/app/modules/microservice/index.ts"
+      ],
+      "@cjp-back/comic-scraping/microservice": [
+        "backend/comic-scraping/src/app/modules/microservice/index.ts"
+      ],
+      "@cjp-back/mongo": ["backend/libs/mongo/src/index.ts"],
+      "@cjp-back/shared": ["backend/libs/shared/src/index.ts"],
+      "@cjp/comic": ["shared/comic/index.ts"]
     }
   }
 }

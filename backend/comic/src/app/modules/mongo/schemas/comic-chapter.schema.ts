@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory, raw } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
-import { ChapterError, IChapter } from "@cjp/shared/comic";
+import { ChapterError, IChapter } from "@cjp/comic";
 import { SchemaName } from "../enums";
 import { Resource } from "./comic-resource.schema";
 import { ApiProperty, PartialType, PickType } from "@nestjs/swagger";

@@ -1,7 +1,6 @@
 {
   "name": "backend-comic-scraping",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "backend/comic-scraping/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -11,12 +10,12 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/backend/comic-scraping",
-        "main": "backend/comic-scraping/src/main.ts",
-        "tsConfig": "backend/comic-scraping/tsconfig.app.json",
-        "assets": ["backend/comic-scraping/src/assets"],
+        "outputPath": "{projectRoot}/dist",
+        "main": "{projectRoot}/src/main.ts",
+        "tsConfig": "{projectRoot}/tsconfig.app.json",
+        "assets": ["{projectRoot}/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "backend/comic-scraping/webpack.config.js"
+        "webpackConfig": "{projectRoot}/webpack.config.js"
       },
       "configurations": {
         "development": {},

@@ -6,15 +6,15 @@ export class Logger extends BaseLogger {
     super(Logger.name);
   }
 
-  public log<T>(message: T): void {
+  public override log<T>(message: T): void {
     super.log(message);
   }
 
-  public debug<T>(message: T): void {
+  public override debug<T>(message: T): void {
     super.debug(message);
   }
 
-  public error<T>(message: T): void {
+  public override error<T>(message: T): void {
     super.error(message);
   }
 }

@@ -13,7 +13,7 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/backend/comic",
+        "outputPath": "backend/comic/dist",
         "main": "backend/comic/src/main.ts",
         "tsConfig": "backend/comic/tsconfig.app.json",
         "assets": [

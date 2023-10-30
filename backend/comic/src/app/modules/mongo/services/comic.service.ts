@@ -69,7 +69,7 @@ export class ComicService extends BaseMongoService<
 
     const deletingResourceIds = this.getDeletingResourceIds(
       comic.resources,
-      updateData.resources,
+      updateData.resources!,
     );
 
     await this.deleteResourceByIds(deletingResourceIds);
@@ -85,7 +85,7 @@ export class ComicService extends BaseMongoService<
     );
 
     const resourceIds: string[] = await this.getNewResourceIds(
-      updateData.resources,
+      updateData.resources!,
     );
 
     await this.updateById(id, {
@@ -125,10 +125,10 @@ export class ComicService extends BaseMongoService<
       if (!resource._id) {
         delete resource._id;
         const createdResource = await this.resourceService.createOne({
-          site: resource.site,
-          path: resource.path,
-          priority: resource.priority,
-          type: resource.type,
+          site: resource.site!,
+          path: resource.path!,
+          priority: resource.priority!,
+          type: resource.type!,
         });
         resourceIds.push(createdResource._id.toString());
       } else {
