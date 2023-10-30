@@ -1,0 +1,13 @@
+{
+  "name": "backend-libs-mongo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^10.2.7",
+    "class-transformer": "^0.5.1",
+    "mongoose": "^7.6.2"
+  }
+}

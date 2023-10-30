@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "types": ["node"],
+    "declaration": true,
+    "target": "ES2021",
+    "module": "esnext",
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "lib": ["ES2021", "dom"],
+    "paths": {
+      "@cjp/comic": ["../shared/comic"],
+      "@cjp-back/mongo": ["../libs/mongo/index.ts"]
+    }
+  }
+}

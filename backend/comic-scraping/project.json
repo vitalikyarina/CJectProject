@@ -1,0 +1,43 @@
+{
+  "name": "backend-comic-scraping",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "backend/comic-scraping/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/backend/comic-scraping",
+        "main": "backend/comic-scraping/src/main.ts",
+        "tsConfig": "backend/comic-scraping/tsconfig.app.json",
+        "assets": ["backend/comic-scraping/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "backend/comic-scraping/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "backend-comic-scraping:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "backend-comic-scraping:build:development"
+        },
+        "production": {
+          "buildTarget": "backend-comic-scraping:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}
