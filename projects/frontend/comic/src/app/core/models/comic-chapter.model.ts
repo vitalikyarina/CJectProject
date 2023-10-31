@@ -1,4 +1,4 @@
-import { ChapterError, IChapter } from "@cjp/shared/comic";
+import { ChapterError, IChapter } from "@cjp/comic";
 import { ResourceModel } from "./comic-resource.model";
 
 export class ChapterModel implements IChapter {

@@ -1,7 +1,7 @@
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ComicFormDef, ResourceFormDef } from "../types";
 import { ComicDTO } from "@cjp-front/comic/core";
-import { ResourceType } from "@cjp/shared/comic";
+import { ResourceType } from "@cjp/comic";
 
 export class ComicForm extends FormGroup<ComicFormDef> {
   public get resourceForms(): FormArray<FormGroup<ResourceFormDef>> {
@@ -24,7 +24,7 @@ export class ComicForm extends FormGroup<ComicFormDef> {
   public createEmptyResource(): void {
     const priority = this.controls.resources.controls.length || 0;
 
-    const form: FormGroup<ResourceFormDef> = new FormGroup({
+    const form: FormGroup<ResourceFormDef> = new FormGroup<ResourceFormDef>({
       path: new FormControl("", {
         validators: [Validators.required],
         nonNullable: true,

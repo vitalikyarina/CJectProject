@@ -1,4 +1,4 @@
-import { ResourceType } from "@cjp/shared/comic";
+import { ResourceType } from "@cjp/comic";
 import { ComicDTO, ResourceDTO } from "../models";
 
 export class ComicFactory {

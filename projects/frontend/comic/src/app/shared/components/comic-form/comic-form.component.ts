@@ -15,7 +15,7 @@ import {
   moveItemInArray,
 } from "@angular/cdk/drag-drop";
 import { FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { ResourceType } from "@cjp/shared/comic";
+import { ResourceType } from "@cjp/comic";
 import {
   FormGroupComponent,
   FormGroupRowComponent,

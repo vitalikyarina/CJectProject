@@ -1,4 +1,4 @@
-import { ISite } from "@cjp/shared/comic";
+import { ISite } from "@cjp/comic";
 
 export class SiteModel implements ISite {
   public _id!: string;
