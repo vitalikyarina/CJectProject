@@ -21,11 +21,7 @@ export function getEnv(): ComicEnvironment {
     .validate(process.env);
 
   if (error) {
-    console.log("error");
-
-    console.log(error);
-
-    //throw new Error(`Config validation error: ${error.message}`);
+    throw new Error(`Config validation error: ${error.message}`);
   }
 
   const env: ComicEnvironment = {

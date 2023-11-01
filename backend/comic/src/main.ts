@@ -8,7 +8,8 @@ import { NestFactory } from "@nestjs/core";
 import { Transport, MicroserviceOptions } from "@nestjs/microservices";
 
 import { AppModule } from "./app/app.module";
-import { EnvironmentVars, getEnv } from "./app/config";
+import { getEnv } from "./app/config";
+import { EnvironmentVars } from "./app/config/enums";
 
 async function bootstrap(): Promise<void> {
   const env = getEnv();
