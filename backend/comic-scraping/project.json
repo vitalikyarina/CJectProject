@@ -1,6 +1,7 @@
 {
   "name": "backend-comic-scraping",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "backend/comic-scraping/src",
   "projectType": "application",
   "targets": {
     "build": {

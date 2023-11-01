@@ -19,7 +19,7 @@ import {
   ResourceService,
 } from "@cjp-back/comic";
 import { ConfigService } from "@nestjs/config";
-import { Environment } from "../../enums";
+import { EnvironmentVars } from "../../../modules/configuration/enums";
 
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
@@ -48,7 +48,7 @@ export class ProcessorResourceHelperService {
     private readonly comicService: ComicService,
     private readonly config: ConfigService,
   ) {
-    this.IMAGE_FOLDER = this.config.get(Environment.IMAGE_FOLDER)!;
+    this.IMAGE_FOLDER = this.config.get(EnvironmentVars.IMAGE_FOLDER)!;
   }
 
   async getResourceScrapingData(

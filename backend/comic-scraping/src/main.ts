@@ -6,16 +6,15 @@
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { Transport, MicroserviceOptions } from "@nestjs/microservices";
-
-import { AppModule } from "./app/app.module";
-import { getEnv } from "./app/config";
-import { Environment } from "./app";
+import { AppModule } from "./app.module";
+import { getEnv } from "./modules/configuration";
+import { EnvironmentVars } from "./modules/configuration/enums";
 
 async function bootstrap(): Promise<void> {
   const env = getEnv();
 
-  const PORT: number = env[Environment.PORT];
-  const HOST: string = env[Environment.HOST];
+  const PORT: number = env[EnvironmentVars.PORT];
+  const HOST: string = env[EnvironmentVars.HOST];
 
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,

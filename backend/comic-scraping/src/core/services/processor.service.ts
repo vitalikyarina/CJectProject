@@ -7,7 +7,7 @@ import {
   ProcessorResourceHelperService,
 } from "./comic-processor";
 import { Comic, ComicService } from "@cjp-back/comic";
-import { Environment } from "../enums";
+import { EnvironmentVars } from "../../modules/configuration/enums";
 import { ComicStatus, ResourceType } from "@cjp/comic";
 
 @Injectable()
@@ -23,7 +23,7 @@ export class ProcessorService {
     private readonly comicHelper: ProcessorHelperService,
     private readonly comicService: ComicService,
   ) {
-    this.IMAGE_FOLDER = this.config.get(Environment.IMAGE_FOLDER)!;
+    this.IMAGE_FOLDER = this.config.get(EnvironmentVars.IMAGE_FOLDER)!;
   }
 
   async startComicScraping(comicId: string): Promise<void> {

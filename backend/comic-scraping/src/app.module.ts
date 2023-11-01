@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { ConfigurationModule } from "./config";
 import { BullModule } from "@nestjs/bullmq";
 import {
   Logger,
@@ -17,7 +16,10 @@ import { BrowserModule } from "@cjp-back/browser";
 import { SharedModule } from "@cjp-back/shared";
 import { ScheduleModule } from "@nestjs/schedule";
 import { ComicController } from "./controllers";
-import { EnvironmentModule, EnvironmentService } from "./modules/environment";
+import {
+  ConfigurationModule,
+  EnvironmentService,
+} from "./modules/configuration";
 
 @Module({
   imports: [
@@ -34,7 +36,7 @@ import { EnvironmentModule, EnvironmentService } from "./modules/environment";
           useUnifiedTopology: true,
         };
       },
-      imports: [EnvironmentModule],
+      imports: [ConfigurationModule],
       inject: [EnvironmentService],
     }),
     BrowserModule,

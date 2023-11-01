@@ -1,4 +1,4 @@
-export enum Environment {
+export enum EnvironmentVars {
   PORT = "PORT",
   HOST = "HOST",
   IMAGE_FOLDER = "IMAGE_FOLDER",
