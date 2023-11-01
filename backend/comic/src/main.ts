@@ -8,14 +8,13 @@ import { NestFactory } from "@nestjs/core";
 import { Transport, MicroserviceOptions } from "@nestjs/microservices";
 
 import { AppModule } from "./app/app.module";
-import { Environment } from "./app/core";
-import { getEnv } from "./app/config";
+import { EnvironmentVars, getEnv } from "./app/config";
 
 async function bootstrap(): Promise<void> {
   const env = getEnv();
 
-  const PORT: number = env[Environment.PORT];
-  const HOST: string = env[Environment.HOST];
+  const PORT: number = env[EnvironmentVars.PORT];
+  const HOST: string = env[EnvironmentVars.HOST];
 
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,

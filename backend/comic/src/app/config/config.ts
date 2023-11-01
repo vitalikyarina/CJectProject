@@ -1,21 +1,19 @@
 import Joi from "joi";
-import { Environment } from "../core";
-
-interface IComicEnvironment {
-  [Environment.PORT]: number;
-  [Environment.HOST]: string;
-  [Environment.MONGO_URL]: string;
-  [Environment.IMAGE_FOLDER]: string;
-}
+import { EnvironmentVars } from "./enums";
+import { ComicEnvironment } from "./interfaces";
 
 export const EnvValidationSchema = {
-  [Environment.PORT]: Joi.number().positive().default(3001),
-  [Environment.HOST]: Joi.string().default("0.0.0.0"),
-  [Environment.MONGO_URL]: Joi.string().required(),
-  [Environment.IMAGE_FOLDER]: Joi.string().required(),
+  [EnvironmentVars.PORT]: Joi.number().positive().default(3001),
+  [EnvironmentVars.HOST]: Joi.string().default("0.0.0.0"),
+  [EnvironmentVars.MONGO_URL]: Joi.string().required(),
+  [EnvironmentVars.IMAGE_FOLDER]: Joi.string().required(),
 };
 
-export function getEnv(): IComicEnvironment {
+export function getEnvValidationSchema() {
+  return EnvValidationSchema;
+}
+
+export function getEnv(): ComicEnvironment {
   const envVarsSchema = Joi.object().keys(EnvValidationSchema).unknown();
 
   const { value: envVars, error } = envVarsSchema
@@ -23,14 +21,18 @@ export function getEnv(): IComicEnvironment {
     .validate(process.env);
 
   if (error) {
-    throw new Error(`Config validation error: ${error.message}`);
+    console.log("error");
+
+    console.log(error);
+
+    //throw new Error(`Config validation error: ${error.message}`);
   }
 
-  const env: IComicEnvironment = {
-    [Environment.PORT]: envVars[Environment.PORT],
-    [Environment.HOST]: envVars[Environment.HOST],
-    [Environment.MONGO_URL]: envVars[Environment.MONGO_URL],
-    [Environment.IMAGE_FOLDER]: envVars[Environment.IMAGE_FOLDER],
+  const env: ComicEnvironment = {
+    [EnvironmentVars.PORT]: envVars[EnvironmentVars.PORT],
+    [EnvironmentVars.HOST]: envVars[EnvironmentVars.HOST],
+    [EnvironmentVars.MONGO_URL]: envVars[EnvironmentVars.MONGO_URL],
+    [EnvironmentVars.IMAGE_FOLDER]: envVars[EnvironmentVars.IMAGE_FOLDER],
   };
 
   return env;
