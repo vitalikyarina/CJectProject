@@ -48,6 +48,6 @@ Thumbs.db
 .env.development
 .env.production
 
-yarn.lock
-
 .angular
+
+.nx

@@ -1,0 +1,43 @@
+{
+  "name": "backend-host",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "backend/host/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "backend/host/dist",
+        "main": "backend/host/src/main.ts",
+        "tsConfig": "backend/host/tsconfig.app.json",
+        "assets": ["backend/host/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "backend/host/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "backend-host:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "backend-host:build:development"
+        },
+        "production": {
+          "buildTarget": "backend-host:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}

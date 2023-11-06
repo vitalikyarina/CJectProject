@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ResourceType } from "@cjp/shared/comic";
+import { ResourceType } from "@cjp/comic";
 import { RouterLink } from "@angular/router";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ImageComponent } from "@cjp-front/image";

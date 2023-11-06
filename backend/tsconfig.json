@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@cjp-back/browser": ["backend/libs/browser/src/index.ts"],
+      "@cjp-back/comic": ["backend/comic/src/app/modules/mongo/index.ts"],
+      "@cjp-back/comic/microservice": [
+        "backend/comic/src/app/modules/microservice/index.ts"
+      ],
+      "@cjp-back/comic-scraping/microservice": [
+        "backend/comic-scraping/src/modules/microservice/index.ts"
+      ],
+      "@cjp-back/mongo": ["backend/libs/mongo/src/index.ts"],
+      "@cjp-back/shared": ["backend/libs/shared/src/index.ts"],
+      "@cjp/comic": ["shared/comic/index.ts"]
+    }
+  }
+}

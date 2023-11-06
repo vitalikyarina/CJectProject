@@ -1,4 +1,4 @@
-import { IResource, ResourceError, ResourceType } from "@cjp/shared/comic";
+import { IResource, ResourceError, ResourceType } from "@cjp/comic";
 import { SiteModel } from "./comic-site.model";
 
 export class ResourceModel implements IResource {

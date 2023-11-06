@@ -1,4 +1,4 @@
-import { ComicStatus, ComicTag, IComic } from "@cjp/shared/comic";
+import { ComicStatus, ComicTag, IComic } from "@cjp/comic";
 import { ResourceDTO, ResourceModel } from "./comic-resource.model";
 import { ChapterModel } from "./comic-chapter.model";
 
