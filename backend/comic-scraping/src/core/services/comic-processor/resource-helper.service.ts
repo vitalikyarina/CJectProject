@@ -1,10 +1,10 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, OnModuleInit } from "@nestjs/common";
 import { Browser, ElementHandle, Page } from "playwright";
 import { Logger } from "../logger.service";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { FSHelperService } from "@cjp-back/shared";
+import { FSService } from "@cjp-back/shared";
 import { BrowserHelperService } from "@cjp-back/browser";
 import { ResourceError } from "@cjp/comic";
 import { existsSync, unlinkSync } from "fs";
@@ -20,71 +20,55 @@ import {
 } from "@cjp-back/comic";
 import { ConfigService } from "@nestjs/config";
 import { EnvironmentVars } from "../../../modules/configuration/enums";
+import { ScrapingChaptersData, ScrapingData } from "../../interfaces";
 
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
 
-interface IScrapingData {
-  postImage?: string;
-  chapters: ChapterScrapingDTO[];
-}
-
-interface IScrapingChapters {
-  newChapters: ChapterCreateDTO[];
-  oldChapters: { id: string; number: number }[];
-}
-
 @Injectable()
-export class ProcessorResourceHelperService {
+export class ResourceHelperService implements OnModuleInit {
   @Inject() private readonly logger: Logger;
+  @Inject() private readonly browser: BrowserHelperService;
+  @Inject() private readonly resourceService: ResourceService;
+  @Inject() private readonly comicService: ComicService;
+  @Inject() private readonly chapterService: ChapterService;
+  @Inject() private readonly fsHelper: FSService;
+  @Inject() private readonly config: ConfigService;
 
-  IMAGE_FOLDER: string;
+  protected IMAGE_FOLDER: string;
 
-  constructor(
-    private readonly browser: BrowserHelperService,
-    private readonly resourceService: ResourceService,
-    private readonly comicChapterService: ChapterService,
-    private readonly fsHelper: FSHelperService,
-    private readonly comicService: ComicService,
-    private readonly config: ConfigService,
-  ) {
+  onModuleInit() {
     this.IMAGE_FOLDER = this.config.get(EnvironmentVars.IMAGE_FOLDER)!;
   }
 
-  async getResourceScrapingData(
+  async startResourceScraping(
     resource: Resource,
     comicId: string,
     step = 0,
-  ): Promise<IScrapingData> {
+  ): Promise<void> {
     const browser = await this.browser.getBrowser();
     try {
-      const scrapingData = await this.startResourceScraping(
+      const scrapingData = await this.getResourceScrapingData(
         browser,
         resource,
         comicId,
       );
 
       await this.getComicAndCheckChapters(comicId, scrapingData);
-
-      return scrapingData;
     } catch (e) {
       this.logger.error(e);
-      if (step < 10)
-        return this.getResourceScrapingData(resource, comicId, step + 1);
-      return {
-        chapters: [],
-      };
+      if (step < 10) this.startResourceScraping(resource, comicId, step + 1);
     } finally {
       await browser.close();
     }
   }
 
-  protected async startResourceScraping(
+  protected async getResourceScrapingData(
     browser: Browser,
     resource: Resource,
     comicId: string,
-  ): Promise<IScrapingData> {
-    const scrapingData: IScrapingData = {
+  ): Promise<ScrapingData> {
+    const scrapingData: ScrapingData = {
       chapters: [],
     };
     const site = resource.site;
@@ -256,7 +240,7 @@ export class ProcessorResourceHelperService {
 
   async getComicAndCheckChapters(
     id: string,
-    chaptersData: IScrapingData,
+    chaptersData: ScrapingData,
   ): Promise<void> {
     const comic = await this.comicService.findById(id, {
       populate: [
@@ -287,7 +271,7 @@ export class ProcessorResourceHelperService {
 
     for (let i = 0; i < chaptersCheckedData.oldChapters.length; i++) {
       const oldChp = chaptersCheckedData.oldChapters[i];
-      await this.comicChapterService.deleteById(oldChp.id);
+      await this.chapterService.deleteById(oldChp.id);
       this.fsHelper.deleteFolder(
         `${this.IMAGE_FOLDER}\\comics\\${id}\\${oldChp.number}`,
       );
@@ -299,7 +283,7 @@ export class ProcessorResourceHelperService {
 
     for (let i = 0; i < chaptersCheckedData.newChapters.length; i++) {
       const chp = chaptersCheckedData.newChapters[i];
-      const newChp = await this.comicChapterService.createOne(chp);
+      const newChp = await this.chapterService.createOne(chp);
       updateChaptersIds.push(newChp._id);
     }
 
@@ -323,7 +307,7 @@ export class ProcessorResourceHelperService {
   protected checkChapters(
     comic: Comic,
     chaptersData: ChapterScrapingDTO[],
-  ): IScrapingChapters {
+  ): ScrapingChaptersData {
     const chapters = comic.chapters;
     const newChapters: ChapterCreateDTO[] = [];
     const oldChapters: { id: string; number: number }[] = [];

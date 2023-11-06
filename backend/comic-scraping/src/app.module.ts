@@ -5,7 +5,7 @@ import {
   ComicProcessorChapterHelperService,
   ProcessorHelperService,
   ProcessorService,
-  ProcessorResourceHelperService,
+  ResourceHelperService,
   ComicQueue,
   QueueService,
 } from "./core";
@@ -49,7 +49,7 @@ import {
     ComicProcessor,
     ComicCron,
     ProcessorService,
-    ProcessorResourceHelperService,
+    ResourceHelperService,
     ProcessorHelperService,
     ComicProcessorChapterHelperService,
   ],

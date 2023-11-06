@@ -1,5 +1,5 @@
 import { ChapterService, Comic, ComicService } from "@cjp-back/comic";
-import { FSHelperService } from "@cjp-back/shared";
+import { FSService } from "@cjp-back/shared";
 import { ComicStatus } from "@cjp/comic";
 import { Injectable } from "@nestjs/common";
 
@@ -8,7 +8,7 @@ export class ProcessorHelperService {
   constructor(
     private readonly comicService: ComicService,
     private readonly comicChapterService: ChapterService,
-    private readonly fsHelper: FSHelperService,
+    private readonly fsHelper: FSService,
   ) {}
 
   public checkScrapingStatus(comic: Comic): boolean {

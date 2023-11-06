@@ -4,16 +4,18 @@ import { ConfigService } from "@nestjs/config";
 import {
   ComicProcessorChapterHelperService,
   ProcessorHelperService,
-  ProcessorResourceHelperService,
+  ResourceHelperService,
 } from "./comic-processor";
 import { Comic, ComicService } from "@cjp-back/comic";
 import { EnvironmentVars } from "../../modules/configuration/enums";
 import { ComicStatus, ResourceType } from "@cjp/comic";
+import { baseFindById } from "../data";
 
 @Injectable()
 export class ProcessorService {
   @Inject() private readonly logger: Logger;
-  @Inject() private readonly resourceHelper: ProcessorResourceHelperService;
+  @Inject() private readonly resourceHelper: ResourceHelperService;
+  @Inject() private readonly comicService: ComicService;
 
   IMAGE_FOLDER: string;
 
@@ -21,41 +23,27 @@ export class ProcessorService {
     protected readonly config: ConfigService,
     private readonly comicChapterHelper: ComicProcessorChapterHelperService,
     private readonly comicHelper: ProcessorHelperService,
-    private readonly comicService: ComicService,
   ) {
     this.IMAGE_FOLDER = this.config.get(EnvironmentVars.IMAGE_FOLDER)!;
   }
 
   async startComicScraping(comicId: string): Promise<void> {
-    const comic = await this.comicService.findById(comicId, {
-      populate: [
-        {
-          path: "chapters",
-          populate: [{ path: "resource", populate: [{ path: "site" }] }],
-        },
-        {
-          path: "resources",
-          populate: [
-            {
-              path: "site",
-            },
-          ],
-        },
-      ],
-    });
-
+    const comic = await this.comicService.findById(comicId, baseFindById);
     const COMIC_FOLDER = `${this.IMAGE_FOLDER}\\comics\\${comic._id}`;
+
     this.logger.debug("Start parsing - " + comic.name);
+
     if (this.comicHelper.checkScrapingStatus(comic)) {
       if (comic.status === ComicStatus.DROPPED) {
-        this.logger.debug("Deleting all comic chapters");
+        this.logger.debug("Start deletng comic data");
         await this.comicHelper.clearComicData(comic, COMIC_FOLDER);
+        this.logger.debug("Deleted all comic chapters");
       }
 
       return;
     }
-    await this.startResourcesScraping(comic);
 
+    await this.startResourcesScraping(comic);
     await this.startChaptersScraping(comic);
 
     this.logger.debug("End parsing - " + comic.name);
@@ -63,6 +51,7 @@ export class ProcessorService {
 
   async startResourcesScraping(comic: Comic): Promise<void> {
     const resources = comic.resources;
+
     for (let i = 0; i < resources.length; i++) {
       const resource = resources[i];
 
@@ -72,7 +61,7 @@ export class ProcessorService {
         }`,
       );
 
-      await this.resourceHelper.getResourceScrapingData(resource, comic._id);
+      await this.resourceHelper.startResourceScraping(resource, comic._id);
     }
   }
 

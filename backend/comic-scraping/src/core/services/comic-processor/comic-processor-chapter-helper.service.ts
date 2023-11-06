@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ElementHandle } from "playwright";
 import { Logger } from "../logger.service";
-import { CJPQueue, FPromise, FSHelperService } from "@cjp-back/shared";
+import { CJPQueue, FPromise, FSService } from "@cjp-back/shared";
 import fs from "fs";
 import { ResourceType } from "@cjp/comic";
 import {
@@ -23,7 +23,7 @@ export class ComicProcessorChapterHelperService {
   constructor(
     private readonly comicService: ComicService,
     private readonly comicChapterService: ChapterService,
-    private readonly fsHelper: FSHelperService,
+    private readonly fsHelper: FSService,
     private readonly logger: Logger,
     private readonly browser: BrowserHelperService,
   ) {}

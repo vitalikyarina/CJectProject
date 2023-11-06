@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ComicAPI } from "../apis";
 import { BaseMongoService } from "@cjp-back/mongo";
 import { ResourceService } from "./comic-resource.service";
-import { FSHelperService, QueryFindOptions } from "@cjp-back/shared";
+import { FSService, QueryFindOptions } from "@cjp-back/shared";
 import { FilterQuery } from "mongoose";
 import { ChapterService } from "./comic-chapter.service";
 import {
@@ -25,7 +25,7 @@ export class ComicService extends BaseMongoService<
 > {
   @Inject() private readonly resourceService: ResourceService;
   @Inject() private readonly chapterService: ChapterService;
-  @Inject() private readonly fs: FSHelperService;
+  @Inject() private readonly fs: FSService;
   @Inject() private readonly env: EnvironmentService;
   @Inject() protected override readonly api: ComicAPI;
 
