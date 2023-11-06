@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 import { MongoAPIService } from "../api";
-import { DatabaseDAO, QueryFindOptions } from "@cjp-back/shared";
+import { DatabaseDAO, QueryFindOptions, UpdatedData } from "@cjp-back/shared";
 
 export class BaseMongoService<TDocument, TCreate, TUpdate>
   implements DatabaseDAO<TDocument, TCreate, TUpdate>
@@ -38,5 +38,12 @@ export class BaseMongoService<TDocument, TCreate, TUpdate>
 
   public updateById(id: string, updateData: TUpdate): Promise<TDocument> {
     return this.api.updateById(id, updateData);
+  }
+
+  public update(
+    queryConditions: FilterQuery<TDocument>,
+    updateData: TUpdate,
+  ): Promise<UpdatedData> {
+    return this.api.update(queryConditions, updateData);
   }
 }

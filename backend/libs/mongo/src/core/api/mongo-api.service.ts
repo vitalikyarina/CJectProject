@@ -1,4 +1,9 @@
-import { DatabaseDAO, QueryFindOptions, QueryOptions } from "@cjp-back/shared";
+import {
+  DatabaseDAO,
+  QueryFindOptions,
+  QueryOptions,
+  UpdatedData,
+} from "@cjp-back/shared";
 import { FilterQuery, Model } from "mongoose";
 
 export class MongoAPIService<T, TCreate, TUpdate>
@@ -67,5 +72,22 @@ export class MongoAPIService<T, TCreate, TUpdate>
     options?: QueryOptions,
   ): Promise<T> {
     return this.updateOne({ _id: id }, updateDocument, options);
+  }
+
+  public async update(
+    queryConditions: FilterQuery<T>,
+    updateDocument: TUpdate,
+    options?: QueryOptions,
+  ): Promise<UpdatedData> {
+    const updatedEntities = await this.documentModel.updateMany(
+      queryConditions,
+      updateDocument!,
+      options,
+    );
+
+    return {
+      matchedCount: updatedEntities.matchedCount,
+      modifiedCount: updatedEntities.modifiedCount,
+    };
   }
 }
