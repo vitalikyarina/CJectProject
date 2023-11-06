@@ -6,6 +6,9 @@
       [title]="comic.name">
       {{ comic.name }}
     </a>
+    <p *ngIf="comic.latestUpdate" class="card__title">
+      [{{ comic.latestUpdate | date: "dd.MM.yy" }}]
+    </p>
   </div>
   <div class="card__img-container">
     <cjp-image
