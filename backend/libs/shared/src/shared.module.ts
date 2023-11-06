@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
-import { FSHelperService } from "./services";
+import { FSService } from "./services";
 
 @Module({
-  providers: [FSHelperService],
-  exports: [FSHelperService],
+  providers: [FSService],
+  exports: [FSService],
 })
 export class SharedModule {}

@@ -5,7 +5,7 @@ import { promisify } from "util";
 import sharp from "sharp";
 
 @Injectable()
-export class FSHelperService {
+export class FSService {
   public deleteFolder(dirPath: string): void {
     if (fs.existsSync(dirPath)) {
       fs.readdirSync(dirPath).forEach((file) => {
